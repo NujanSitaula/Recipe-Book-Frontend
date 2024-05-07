@@ -2,6 +2,8 @@
 import TheWelcome from '../components/TheWelcome.vue'
 </script>
 <script>
+
+
 export default {
   data() {
     return {
@@ -9,7 +11,13 @@ export default {
     };
   },
   created() {
-    fetch('https://smc.schost.me/api/v1/asset')
+    fetch(config.BASE_URL + '/api/v1/branch', {
+      method: 'GET',
+      headers: {
+        'Authorization' : 'Bearer ' + '',
+        'Content-Type': 'application/json',
+      }
+    })
         .then(response => response.json())
         .then(data => {
           this.apiData = data;
