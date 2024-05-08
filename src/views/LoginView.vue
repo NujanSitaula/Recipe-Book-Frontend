@@ -1,12 +1,5 @@
 <template>
-    <!--
-      This example requires updating your template:
-
-      ```
-      <html class="h-full bg-white">
-      <body class="h-full">
-      ```
-    -->
+  <Toaster ref="toaster" />
     <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
@@ -47,27 +40,37 @@
       </div>
     </div>
 </template>
-<script setup>
 
-import {reactive} from "vue";
+<script setup>
+import { config } from '../../config.js';
+import {reactive, ref} from "vue";
 import axios from "axios";
+import Toaster from './Toaster.vue';
+
+axios.defaults.baseURL = config.BASE_URL;
 
 const data = reactive({
   email: null,
   password: null
 });
-  const handleLogin = () => {
-    axios.post('http://recipe-book-backend.test/api/v1/user/login', {
-      email: data.email,
-      password: data.password
-    })
-        .then(response => {
-          alert(response.data.message)
-          console.log(response.data);
-        })
-        .catch(error => {
-          alert(error.response.data.message)
-          console.error('Error:', error);
-        });
-  };
+
+const toaster = ref();
+
+const handleLogin = () => {
+  axios.post('/user/login', {
+    email: data.email,
+    password: data.password
+  })
+      .then(response => {
+        // Store the access_token in local storage
+        localStorage.setItem('access_token', response.data.access_token);
+
+        // Show success toast
+        toaster.value.showToast('Login successful');
+      })
+      .catch(error => {
+        alert(error.response.data.message)
+        console.error('Error:', error);
+      });
+};
 </script>
