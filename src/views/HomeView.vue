@@ -13,7 +13,6 @@
           </h1>
         </div>
         <!-- End Title -->
-
         <!-- Avatar Group -->
         <div class="sm:flex sm:justify-center sm:items-center text-center sm:text-start">
           <div class="flex-shrink-0 pb-5 sm:flex sm:pb-0 sm:pe-5">
@@ -94,31 +93,34 @@
     <!-- Grid -->
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <!-- Card -->
-      <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
-        <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
-          <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
-        </div>
-        <div class="p-4 md:p-6">
+      <div v-for="recipe in recipes.data" :key="recipe.id">
+        <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
+          <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
+            <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
+          </div>
+          <div class="p-4 md:p-6">
         <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
-             Time: 30 Min | Serving: 2 | Difficulty: Easy
+             Time: {{ recipe.prep_time }} Min | Serving: {{ recipe.servings }} | Difficulty: {{ recipe.difficulty }}
         </span>
-          <h3 class="text-xl font-semibold text-gray-800">
-            Super Cheese Pasta
-          </h3>
-          <p class="mt-3 text-gray-500">
-           It is a super cheese Pasta.
-          </p>
+            <h3 class="text-xl font-semibold text-gray-800">
+              {{ recipe.name }}
+            </h3>
+            <p class="mt-3 text-gray-500">
+              {{ recipe.description }}
+            </p>
+          </div>
+          <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
+            <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
+              Start Cooking
+            </a>
+            <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
+              Save Recipe
+            </a>
+          </div>
         </div>
-        <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
-          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-            Start Cooking
-          </a>
-          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-            Save Recipe
-          </a>
-        </div>
+        <!-- End Card -->
       </div>
-      <!-- End Card -->
+
 
       <!-- Card -->
       <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
@@ -521,5 +523,22 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
+import { onMounted, reactive } from 'vue';
+import axios from 'axios';
+import { config } from '../../config.js';
+
+const recipes = reactive({ data: [] });
+axios.defaults.baseURL = config.BASE_URL;
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('/recipe');
+    if (response.data.status === 'success') {
+      recipes.data = response.data.data;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+});
 </script>
