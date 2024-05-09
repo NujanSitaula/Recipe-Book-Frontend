@@ -508,35 +508,18 @@
     <!-- End Grid -->
   </div>
   <!-- End Card Blog -->
-
-  <!-- Card Section -->
-<div class="max-w-5xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-  <!-- Grid -->
-  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-    <!-- Card -->
-    <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition" href="#">
-      <div class="p-4 md:p-5">
-        <div class="flex">
-          <svg class="mt-1 flex-shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-
-          <div class="grow ms-5">
-            <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
-              Ask our community
-            </h3>
-            <p class="text-sm text-gray-500">
-              Get help from 40k+ Preline users
-            </p>
-          </div>
+  <div class="max-w-[85rem] sm:px-6 lg:px-8 lg:py-14 mx-auto">
+    <div class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition py-16 px-10">
+      <div class="grid grid-cols-2">
+        <div class="grid-cols-6 text-4xl">
+          <h1 class="text-2xl font-bold md:text-4xl md:leading-tight">Want to post your own recipe? </h1>
+        </div>
+        <div class="grid-cols-6">
+          <button class="py-3 px-4 inline-flex justify-center float-end gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Register Now</button>
         </div>
       </div>
-    </a>
-    <!-- End Card -->
-
-
+    </div>
   </div>
-  <!-- End Grid -->
-</div>
-<!-- End Card Section -->
 </template>
 <script setup lang="ts">
 </script>
