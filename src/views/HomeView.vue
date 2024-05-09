@@ -82,6 +82,7 @@
     </div>
   </div>
   <!-- End Hero -->
+
   <!-- Title -->
   <div class="max-w-2xl text-center mx-auto">
     <h2 class="text-2xl font-bold md:text-4xl md:leading-tight">Trending Recipes</h2>
@@ -176,6 +177,366 @@
     <!-- End Grid -->
   </div>
   <!-- End Card Blog -->
+
+   <!-- Title -->
+   <div class="max-w-2xl text-center mx-auto">
+    <h2 class="text-2xl font-bold md:text-4xl md:leading-tight">Recipe Categories</h2>
+    <p class="mt-1 text-gray-600">These mouthwatering recipes are breaking the internet! </p>
+  </div>
+  <!-- End Title -->
+
+  <!-- Card Section -->
+<div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+  <!-- Grid -->
+  <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+    <!-- Card -->
+    <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition" href="#">
+      <div class="p-4 md:p-5">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <img class="size-[38px] rounded-full" src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image Description">
+            <div class="ms-3">
+              <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+                Chinese
+              </h3>
+            </div>
+          </div>
+          <div class="ps-3">
+            <svg class="flex-shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!-- End Card -->
+
+    <!-- Card -->
+    <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition" href="#">
+      <div class="p-4 md:p-5">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <img class="size-[38px] rounded-full" src="https://images.unsplash.com/photo-1596797038530-2c107229654b?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image Description">
+            <div class="ms-3">
+              <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+                Indian
+              </h3>
+            </div>
+          </div>
+          <div class="ps-3">
+            <svg class="flex-shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!-- End Card -->
+
+    <!-- Card -->
+    <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition" href="#">
+      <div class="p-4 md:p-5">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <img class="size-[38px] rounded-full" src="https://images.unsplash.com/photo-1485963631004-f2f00b1d6606?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image Description">
+            <div class="ms-3">
+              <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+                Meditteranean
+              </h3>
+            </div>
+          </div>
+          <div class="ps-3">
+            <svg class="flex-shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!-- End Card -->
+
+    <!-- Card -->
+    <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition" href="#">
+      <div class="p-4 md:p-5">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <img class="size-[38px] rounded-full" src="https://plus.unsplash.com/premium_photo-1664648184173-efaaeccd8548?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image Description">
+            <div class="ms-3">
+              <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+                Japanese
+              </h3>
+            </div>
+          </div>
+          <div class="ps-3">
+            <svg class="flex-shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!-- End Card -->
+
+    <!-- Card -->
+    <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition" href="#">
+      <div class="p-4 md:p-5">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <img class="size-[38px] rounded-full" src="https://junifoods.com/wp-content/uploads/2023/12/Chicken-momo-restaurant-style-1024x693.jpg" alt="Image Description">
+            <div class="ms-3">
+              <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+                Nepalese
+              </h3>
+            </div>
+          </div>
+          <div class="ps-3">
+            <svg class="flex-shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!-- End Card -->
+
+    <!-- Card -->
+    <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition" href="#">
+      <div class="p-4 md:p-5">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <img class="size-[38px] rounded-full" src="https://images.unsplash.com/photo-1566328386401-b2980125f6c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80" alt="Image Description">
+            <div class="ms-3">
+              <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+                Tibetan
+              </h3>
+            </div>
+          </div>
+          <div class="ps-3">
+            <svg class="flex-shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!-- End Card -->
+
+    <!-- Card -->
+    <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition" href="#">
+      <div class="p-4 md:p-5">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <img class="size-[38px] rounded-full" src="https://images.unsplash.com/photo-1465014925804-7b9ede58d0d7?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image Description">
+            <div class="ms-3">
+              <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+                Continental
+              </h3>
+            </div>
+          </div>
+          <div class="ps-3">
+            <svg class="flex-shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!-- End Card -->
+  </div>
+  <!-- End Grid -->
+</div>
+<!-- End Card Section -->
+
+  <!-- Title -->
+  <div class="max-w-2xl text-center mx-auto">
+    <h2 class="text-2xl font-bold md:text-4xl md:leading-tight">People's Favorites</h2>
+    <p class="mt-1 text-gray-600">These mouthwatering recipes are breaking the internet! </p>
+  </div>
+  <!-- End Title -->
+  <!-- Card Blog -->
+  <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+    <!-- Grid -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Card -->
+      <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
+        <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
+          <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
+        </div>
+        <div class="p-4 md:p-6">
+        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+             Time: 30 Min | Serving: 2 | Difficulty: Easy
+        </span>
+          <h3 class="text-xl font-semibold text-gray-800">
+            Super Cheese Pasta
+          </h3>
+          <p class="mt-3 text-gray-500">
+           It is a super cheese Pasta.
+          </p>
+        </div>
+        <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
+          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
+            Start Cooking
+          </a>
+          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
+            Save Recipe
+          </a>
+        </div>
+      </div>
+      <!-- End Card -->
+
+      <!-- Card -->
+      <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
+        <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
+          <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
+        </div>
+        <div class="p-4 md:p-6">
+        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+             Time: 30 Min | Serving: 2 | Difficulty: Easy
+        </span>
+          <h3 class="text-xl font-semibold text-gray-800">
+            Super Cheese Pasta
+          </h3>
+          <p class="mt-3 text-gray-500">
+            It is a super cheese Pasta.
+          </p>
+        </div>
+        <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
+          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
+            Start Cooking
+          </a>
+          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
+            Save Recipe
+          </a>
+        </div>
+      </div>
+      <!-- End Card -->
+
+      <!-- Card -->
+      <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
+        <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
+          <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
+        </div>
+        <div class="p-4 md:p-6">
+        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+             Time: 30 Min | Serving: 2 | Difficulty: Easy
+        </span>
+          <h3 class="text-xl font-semibold text-gray-800">
+            Super Cheese Pasta
+          </h3>
+          <p class="mt-3 text-gray-500">
+            It is a super cheese Pasta.
+          </p>
+        </div>
+        <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
+          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
+            Start Cooking
+          </a>
+          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
+            Save Recipe
+          </a>
+        </div>
+      </div>
+      <!-- End Card -->
+
+       <!-- Card -->
+       <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
+        <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
+          <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
+        </div>
+        <div class="p-4 md:p-6">
+        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+             Time: 30 Min | Serving: 2 | Difficulty: Easy
+        </span>
+          <h3 class="text-xl font-semibold text-gray-800">
+            Super Cheese Pasta
+          </h3>
+          <p class="mt-3 text-gray-500">
+            It is a super cheese Pasta.
+          </p>
+        </div>
+        <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
+          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
+            Start Cooking
+          </a>
+          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
+            Save Recipe
+          </a>
+        </div>
+      </div>
+      <!-- End Card -->
+
+       <!-- Card -->
+       <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
+        <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
+          <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
+        </div>
+        <div class="p-4 md:p-6">
+        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+             Time: 30 Min | Serving: 2 | Difficulty: Easy
+        </span>
+          <h3 class="text-xl font-semibold text-gray-800">
+            Super Cheese Pasta
+          </h3>
+          <p class="mt-3 text-gray-500">
+            It is a super cheese Pasta.
+          </p>
+        </div>
+        <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
+          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
+            Start Cooking
+          </a>
+          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
+            Save Recipe
+          </a>
+        </div>
+      </div>
+      <!-- End Card -->
+
+       <!-- Card -->
+       <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
+        <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
+          <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
+        </div>
+        <div class="p-4 md:p-6">
+        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+             Time: 30 Min | Serving: 2 | Difficulty: Easy
+        </span>
+          <h3 class="text-xl font-semibold text-gray-800">
+            Super Cheese Pasta
+          </h3>
+          <p class="mt-3 text-gray-500">
+            It is a super cheese Pasta.
+          </p>
+        </div>
+        <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
+          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
+            Start Cooking
+          </a>
+          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
+            Save Recipe
+          </a>
+        </div>
+      </div>
+      <!-- End Card -->
+    </div>
+    <!-- End Grid -->
+  </div>
+  <!-- End Card Blog -->
+
+  <!-- Card Section -->
+<div class="max-w-5xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+  <!-- Grid -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+    <!-- Card -->
+    <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition" href="#">
+      <div class="p-4 md:p-5">
+        <div class="flex">
+          <svg class="mt-1 flex-shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+
+          <div class="grow ms-5">
+            <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+              Ask our community
+            </h3>
+            <p class="text-sm text-gray-500">
+              Get help from 40k+ Preline users
+            </p>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!-- End Card -->
+
+
+  </div>
+  <!-- End Grid -->
+</div>
+<!-- End Card Section -->
 </template>
 <script setup lang="ts">
 </script>
