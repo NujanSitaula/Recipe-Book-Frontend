@@ -1,10 +1,13 @@
 import './assets/main.css'
+import "preline/preline";
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
+
 import App from './App.vue'
 import router from './router'
+
 
 const app = createApp(App)
 

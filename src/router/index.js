@@ -1,4 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+import { IStaticMethods } from "preline/preline";
+
 import HomeView from '../views/HomeView.vue'
 import LoginView from "@/views/LoginView.vue";
 
