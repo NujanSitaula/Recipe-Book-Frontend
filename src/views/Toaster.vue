@@ -2,7 +2,7 @@
 <template>
   <transition name="slide-fade">
     <div v-if="show" class="fixed top-0 right-0 m-6 max-w-sm w-full">
-      <div class="rounded-lg shadow-lg overflow-hidden">
+      <div class="rounded-lg shadow-lg overflow-hidden toaster">
         <div class="p-4">
           <div class="flex items-start">
             <div class="flex-shrink-0">
@@ -47,3 +47,10 @@ const showToast = (msg) => {
 // Expose showToast function
 defineExpose({ showToast });
 </script>
+<style scoped>
+.toaster {
+  background-color: #f0f9eb;
+    z-index: 9999;
+
+}
+</style>
