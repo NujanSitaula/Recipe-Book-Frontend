@@ -183,6 +183,7 @@ import { config } from '../../config.js';
 import {reactive, ref} from "vue";
 import axios from "axios";
 import Toaster from './Toaster.vue';
+import { useUserStore } from '@/stores/userStore';
 
 axios.defaults.baseURL = config.BASE_URL;
 
@@ -202,11 +203,31 @@ const handleLogin = () => {
         // Store the access_token in local storage
         localStorage.setItem('access_token', response.data.access_token);
 
+        // Get the user store
+        const userStore = useUserStore();
+        const responseData = response.data;
+
+        // Extract the image URL
+        const imageUrl = responseData.data.image;
+
+        // Update the user profile in the store
+        userStore.setUserProfile({ imageUrl: imageUrl });
+
         // Show success toast
-        toaster.value.showToast('Login successful');
+        // toaster.value.showToast('Login successful');
       })
       .catch(error => {
-        alert(error.response.data.message)
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          alert(error.response.data.message);
+        } else if (error.request) {
+          // The request was made but no response was received
+          alert('Request made but no response received, might be a network issue.');
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          alert('Error', error.message);
+        }
         console.error('Error:', error);
       });
 };
