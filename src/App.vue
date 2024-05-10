@@ -1,6 +1,10 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import { IStaticMethods } from "preline/preline"
+import { useUserStore } from '@/stores/userStore';
+
+const userStore = useUserStore();
+
 </script>
 
 <template>
@@ -44,7 +48,7 @@ import { IStaticMethods } from "preline/preline"
           </button>
           <div class="hs-dropdown relative inline-flex" data-hs-dropdown-placement="bottom-right">
             <button id="hs-dropdown-with-header" type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-white hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
-              <img class="inline-block size-[38px] rounded-full" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80" alt="Image Description">
+              <img class="inline-block size-[38px] rounded-full" :src="userStore.userProfile?.imageUrl" alt="Image Description">
             </button>
            
             <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 z-10 bg-white shadow-md rounded-lg p-2" aria-labelledby="hs-dropdown-with-header">
