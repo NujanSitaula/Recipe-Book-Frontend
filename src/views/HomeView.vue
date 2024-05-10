@@ -526,9 +526,19 @@
         <div class="grid-cols-6 text-4xl">
           <h1 class="text-2xl font-bold md:text-4xl md:leading-tight">Want to post your own recipe? </h1>
         </div>
-        <div class="grid-cols-6">
-          <button class="py-3 px-4 inline-flex justify-center float-end gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Register Now</button>
-        </div>
+        
+        <div class="grid-cols-6"> 
+  <RouterLink v-if="!isLoggedIn" to="/register"> 
+    <button class="py-3 px-4 inline-flex justify-center float-end gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"> 
+      Register Now
+    </button>
+  </RouterLink>
+  <RouterLink v-else to="/add-recipe"> 
+    <button class="py-3 px-4 inline-flex justify-center float-end gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"> 
+      Add Recipe
+    </button>
+  </RouterLink>
+</div>
       </div>
     </div>
   </div>
@@ -537,6 +547,10 @@
 import { onMounted, reactive } from 'vue';
 import axios from 'axios';
 import { config } from '../../config.js';
+import { RouterLink } from 'vue-router';
+import { computed } from 'vue';
+
+const isLoggedIn = computed(() => !!localStorage.getItem('access_token'));
 
 const recipes = reactive({ data: [] });
 axios.defaults.baseURL = config.BASE_URL;

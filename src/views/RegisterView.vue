@@ -217,7 +217,7 @@ const handleLogin = () => {
         localStorage.setItem('access_token', response.data.access_token);
 
         // Show success toast
-        toaster.value.showToast('Login successful');
+        toaster.value.showToast('Registration successfully');
       })
       .catch(error => {
         alert(error.response.data.message)
