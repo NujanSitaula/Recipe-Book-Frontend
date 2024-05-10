@@ -99,9 +99,16 @@
             <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
           </div>
           <div class="p-4 md:p-6">
+            <span class="float-end">
+            <img width="30" class="inline mr-1"  src ="https://svgshare.com/i/15vL.svg " title="Vegetarian">
+            <img width="30" class="inline" src ="https://svgshare.com/i/15tx.svg" title="Dairy Free">
+          
+        </span>
         <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
              Time: {{ recipe.prep_time }} Min | Serving: {{ recipe.servings }} | Difficulty: {{ recipe.difficulty }}
         </span>
+
+    
             <h3 class="text-xl font-semibold text-gray-800">
               {{ recipe.name }}
             </h3>
@@ -109,6 +116,7 @@
               {{ recipe.description }}
             </p>
           </div>
+        
           <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
             <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
               Start Cooking
@@ -192,6 +200,7 @@
   <!-- Grid -->
   <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
     <!-- Card -->
+    <div v-for="category in categories.data" :key="category.id">
     <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition" href="#">
       <div class="p-4 md:p-5">
         <div class="flex justify-between items-center">
@@ -199,7 +208,7 @@
             <img class="size-[38px] rounded-full" src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image Description">
             <div class="ms-3">
               <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
-                Chinese
+                {{ category.name }}
               </h3>
             </div>
           </div>
@@ -209,6 +218,7 @@
         </div>
       </div>
     </a>
+  </div>
     <!-- End Card -->
 
     <!-- Card -->
@@ -536,6 +546,20 @@ onMounted(async () => {
     const response = await axios.get('/recipe');
     if (response.data.status === 'success') {
       recipes.data = response.data.data;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+});
+
+const categories = reactive({ data: [] });
+axios.defaults.baseURL = config.BASE_URL;
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('/category');
+    if (response.data.status === 'success') {
+      categories.data = response.data.data;
     }
   } catch (error) {
     console.error('Error:', error);
