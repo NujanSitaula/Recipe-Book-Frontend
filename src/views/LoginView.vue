@@ -178,13 +178,12 @@
   </div>
 </template>
 
-<<script setup>
+<script setup>
 import { config } from '../../config.js';
 import { reactive, ref } from "vue";
 import axios from "axios";
 import { useUserStore } from '@/stores/userStore';
 import Toaster from './Toaster.vue';
-import router from '@/router';
 
 axios.defaults.baseURL = config.BASE_URL;
 
@@ -210,9 +209,6 @@ const handleLogin = () => {
         // Manually update isLoggedIn value
         userStore.setLoggedIn(true);
 
-        // Get the user store
-        const userStore = useUserStore();
-        const responseData = response.data;
         // Extract the image URL
         const imageUrl = response.data.data.image;
         const email = response.data.data.email;
@@ -221,12 +217,6 @@ const handleLogin = () => {
         // Update the user profile in the store
         userStore.setUserProfile({ imageUrl: imageUrl, email: email });
 
-        userStore.setUserProfile({ ...userStore.userProfile, imageUrl: imageUrl });
-      
-        // When the user logs in...
-        userStore.setLoggedIn(true);
-
-        router.push({ name: 'profile' });
 
         // Show success toast
         // toaster.value.showToast('Login successful');
