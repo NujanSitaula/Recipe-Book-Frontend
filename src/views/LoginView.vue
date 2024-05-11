@@ -197,7 +197,7 @@ const toaster = ref();
 // Define userStore here
 const userStore = useUserStore();
 
-const handleLogin = message => {
+const handleLogin = () => {
   axios.post('/user/login', {
     email: data.email,
     password: data.password
