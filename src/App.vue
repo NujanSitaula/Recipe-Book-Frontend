@@ -1,8 +1,18 @@
 <script setup>
+import { ref, watchEffect } from 'vue';
 import { RouterView } from 'vue-router'
-import { useUserStore } from '@/stores/userStore';
+import { useUserStore } from './stores/userStore';
 
 const userStore = useUserStore();
+
+// Create a reactive property
+const isLoggedIn = ref(!!localStorage.getItem('access_token'));
+
+// Watch the local storage for changes
+watchEffect(() => {
+  isLoggedIn.value = !!localStorage.getItem('access_token');
+  userStore.setLoggedIn(isLoggedIn.value);
+});
 
 </script>
 
@@ -33,7 +43,7 @@ const userStore = useUserStore();
             </div>
           </div>
         </div>
-        <div v-if ="!isLoggedIn">
+        <div v-if ="!userStore.isLoggedIn">
             <RouterLink to="/register">
             <button>Sign up </button></RouterLink> / 
             <RouterLink to="/login">

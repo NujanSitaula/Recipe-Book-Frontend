@@ -6,6 +6,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import { useUserStore } from './stores/userStore';
+import { reactive } from 'vue';
 
 const app = createApp(App)
 
@@ -18,13 +19,14 @@ if (token) {
     const userStore = useUserStore(); // Moved after app.use(pinia)
     // Set user as logged in
     userStore.setLoggedIn(true);
-    // You can also set other user details here if you have them stored in local storage
-
-    const userProfileString = localStorage.getItem('userProfile');
             // Set the user profile data in the store
     userStore.setUserProfile({imageUrl: localStorage.getItem('userProfile')});
             console.log(localStorage.getItem('userProfile'));
 }
+const state = reactive({
+    isLoggedIn: !!localStorage.getItem('access_token')
+});
 
+app.provide('state', state);
 
 app.mount('#app')
