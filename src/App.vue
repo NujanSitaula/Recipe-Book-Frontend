@@ -1,8 +1,23 @@
 <script setup>
+import { ref, watchEffect } from 'vue';
 import { RouterView } from 'vue-router'
-import { useUserStore } from '@/stores/userStore';
+import { RouterLink } from 'vue-router'
+
+import { useUserStore } from './stores/userStore';
 
 const userStore = useUserStore();
+
+// Create a reactive property
+const isLoggedIn = ref(!!localStorage.getItem('access_token'));
+
+// Watch the local storage for changes
+watchEffect(() => {
+  isLoggedIn.value = !!localStorage.getItem('access_token');
+  userStore.setLoggedIn(isLoggedIn.value);
+});
+const logout = () => {
+  userStore.logout();
+};
 
 </script>
 
@@ -33,11 +48,11 @@ const userStore = useUserStore();
             </div>
           </div>
         </div>
-        <div v-if ="!isLoggedIn">
-            <RouterLink to="/register">
-            <button>Sign up </button></RouterLink> / 
-            <RouterLink to="/login">
-            <button>Sign in </button></RouterLink>
+        <div v-if ="!userStore.isLoggedIn">
+          <router-link to="/register">
+            <button>Sign up </button></router-link> /
+          <router-link to="/login">
+            <button>Sign in </button></router-link>
         </div>
         <div v-else class="flex flex-row items-center justify-end gap-2">
           <button type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-dark hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
@@ -54,7 +69,7 @@ const userStore = useUserStore();
             <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 z-10 bg-white shadow-md rounded-lg p-2" aria-labelledby="hs-dropdown-with-header">
               <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg">
                 <p class="text-sm text-gray-500">Signed in as</p>
-                <p class="text-sm font-medium text-gray-800">james@site.com</p>
+                <p class="text-sm font-medium text-gray-800">{{ userStore.userEmail }}</p>
               </div>
               <div class="mt-2 py-2 first:pt-0 last:pb-0">
                 <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
@@ -69,9 +84,9 @@ const userStore = useUserStore();
                   <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m8 17 4 4 4-4"/></svg>
                   Downloads
                 </a>
-                <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
+                <a @click="logout" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
                   <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                  Team Account
+                  Log Out
                 </a>
               </div> 
             </div>
@@ -102,12 +117,12 @@ const userStore = useUserStore();
         <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
           <a class="inline-flex items-center gap-x-2 hover:text-gray-500" href="#">Foodie</a>
         </div>
-        <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-          <a class="inline-flex items-center gap-x-2 hover:text-gray-500" href="#">
-           <RouterLink to="/login"> Login </RouterLink>
-            <span class="inline bg-gray-100 text-xs text-gray-500 font-semibold rounded-full py-1 px-2">v12.7</span>
-          </a>
-        </div>
+<!--        <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">-->
+<!--          <a class="inline-flex items-center gap-x-2 hover:text-gray-500" href="#">-->
+<!--           <RouterLink to="/login"> Login </RouterLink>-->
+<!--            <span class="inline bg-gray-100 text-xs text-gray-500 font-semibold rounded-full py-1 px-2">v12.7</span>-->
+<!--          </a>-->
+<!--        </div>-->
       </div>
     </nav>
     <!-- End Nav -->
@@ -306,15 +321,12 @@ const userStore = useUserStore();
 </template>
 
 <script>
-import { useUserStore } from '@/stores/userStore' // adjust the import path according to your project structure
+import { computed } from 'vue';
 
-export default {
-  computed: {
-    isLoggedIn() {
-      return useUserStore().isLoggedIn;
-    }
-  }
-}
+const isLoggedIn = computed(() => !!localStorage.getItem('access_token'));
+
+
+
 </script>
 
 
