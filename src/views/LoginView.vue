@@ -15,7 +15,7 @@
         </div>
 
         <div class="mt-5">
-          <button type="button" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+          <button @click="signIn" type="button" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
             <svg class="w-4 h-auto" width="46" height="47" viewBox="0 0 46 47" fill="none">
               <path d="M46 24.0287C46 22.09 45.8533 20.68 45.5013 19.2112H23.4694V27.9356H36.4069C36.1429 30.1094 34.7347 33.37 31.5957 35.5731L31.5663 35.8669L38.5191 41.2719L38.9885 41.3306C43.4477 37.2181 46 31.1669 46 24.0287Z" fill="#4285F4"/>
               <path d="M23.4694 47C29.8061 47 35.1161 44.9144 39.0179 41.3012L31.625 35.5437C29.6301 36.9244 26.9898 37.8937 23.4987 37.8937C17.2793 37.8937 12.0281 33.7812 10.1505 28.1412L9.88649 28.1706L2.61097 33.7812L2.52296 34.0456C6.36608 41.7125 14.287 47 23.4694 47Z" fill="#34A853"/>
@@ -180,10 +180,10 @@
 
 <script setup>
 import { config } from '../../config.js';
-import {reactive, ref} from "vue";
+import { reactive, ref } from "vue";
 import axios from "axios";
-import Toaster from './Toaster.vue';
 import { useUserStore } from '@/stores/userStore';
+import Toaster from './Toaster.vue';
 
 axios.defaults.baseURL = config.BASE_URL;
 
@@ -194,7 +194,7 @@ const data = reactive({
 
 const toaster = ref();
 
-const handleLogin = () => {
+const handleLogin = message => {
   axios.post('/user/login', {
     email: data.email,
     password: data.password
@@ -203,13 +203,14 @@ const handleLogin = () => {
         // Store the access_token in local storage
         localStorage.setItem('access_token', response.data.access_token);
 
+
+
         // Get the user store
         const userStore = useUserStore();
         const responseData = response.data;
-
         // Extract the image URL
         const imageUrl = responseData.data.image;
-
+        localStorage.setItem('userProfile', imageUrl);
         // Update the user profile in the store
         userStore.setUserProfile({ imageUrl: imageUrl });
 
