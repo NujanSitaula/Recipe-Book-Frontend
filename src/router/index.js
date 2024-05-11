@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { IStaticMethods } from "preline/preline";
+import { useUserStore } from '../stores/userStore';
 
 import HomeView from '../views/HomeView.vue'
 import LoginView from "@/views/LoginView.vue";
@@ -19,12 +19,14 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: LoginView,
+      meta: { requiresGuest: true }
     },
     {
       path: '/register',
       name: 'register',
-      component: RegisterView
+      component: RegisterView,
+      meta: { requiresGuest: true }
     },
     {
       path: '/recipe/:id', // Add a new route for the RecipeSingleView
@@ -33,11 +35,40 @@ const router = createRouter({
       props: true
     },
     {
+      path: '/search',
+      name: 'search',
+      component: () => import('../views/RecipeSearchView.vue')
+    },
+    {
       path: '/profile',
       name: 'profile',
       component: ProfileView
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+
+  if (to.matched.some(record => record.meta.requiresGuest) && userStore.isLoggedIn) {
+    // This route requires guest, check if logged in
+    // if yes, redirect to home page.
+    next({ name: 'home' })
+  } else {
+    next() // make sure to always call next()!
+  }
+})
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+
+  if (to.matched.some(record => record.meta.requiresGuest) && userStore.isLoggedIn) {
+    // This route requires guest, check if logged in
+    // if yes, redirect to home page.
+    next({ name: 'home' })
+  } else {
+    next() // make sure to always call next()!
+  }
 })
 
 export default router

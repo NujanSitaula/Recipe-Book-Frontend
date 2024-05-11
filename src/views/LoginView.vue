@@ -178,7 +178,7 @@
   </div>
 </template>
 
-<script setup>
+<<script setup>
 import { config } from '../../config.js';
 import { reactive, ref } from "vue";
 import axios from "axios";
@@ -195,7 +195,10 @@ const data = reactive({
 
 const toaster = ref();
 
-const handleLogin = message => {
+// Define userStore here
+const userStore = useUserStore();
+
+const handleLogin = () => {
   axios.post('/user/login', {
     email: data.email,
     password: data.password
@@ -203,13 +206,21 @@ const handleLogin = message => {
       .then(response => {
         // Store the access_token in local storage
         localStorage.setItem('access_token', response.data.access_token);
+
+        // Manually update isLoggedIn value
+        userStore.setLoggedIn(true);
+
         // Get the user store
         const userStore = useUserStore();
         const responseData = response.data;
         // Extract the image URL
-        const imageUrl = responseData.data.image;
+        const imageUrl = response.data.data.image;
+        const email = response.data.data.email;
         localStorage.setItem('userProfile', imageUrl);
+        localStorage.setItem('userEmail', email);
         // Update the user profile in the store
+        userStore.setUserProfile({ imageUrl: imageUrl, email: email });
+
         userStore.setUserProfile({ ...userStore.userProfile, imageUrl: imageUrl });
       
         // When the user logs in...
