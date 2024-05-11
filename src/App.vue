@@ -306,13 +306,15 @@ const userStore = useUserStore();
 </template>
 
 <script>
-import { computed } from 'vue';
+import { useUserStore } from '@/stores/userStore' // adjust the import path according to your project structure
 
-const isLoggedIn = computed(() => !!localStorage.getItem('access_token'));
-
-
-
-
+export default {
+  computed: {
+    isLoggedIn() {
+      return useUserStore().isLoggedIn;
+    }
+  }
+}
 </script>
 
 

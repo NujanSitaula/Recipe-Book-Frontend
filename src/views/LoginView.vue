@@ -184,6 +184,7 @@ import { reactive, ref } from "vue";
 import axios from "axios";
 import { useUserStore } from '@/stores/userStore';
 import Toaster from './Toaster.vue';
+import router from '@/router';
 
 axios.defaults.baseURL = config.BASE_URL;
 
@@ -202,9 +203,6 @@ const handleLogin = message => {
       .then(response => {
         // Store the access_token in local storage
         localStorage.setItem('access_token', response.data.access_token);
-
-
-
         // Get the user store
         const userStore = useUserStore();
         const responseData = response.data;
@@ -212,7 +210,12 @@ const handleLogin = message => {
         const imageUrl = responseData.data.image;
         localStorage.setItem('userProfile', imageUrl);
         // Update the user profile in the store
-        userStore.setUserProfile({ imageUrl: imageUrl });
+        userStore.setUserProfile({ ...userStore.userProfile, imageUrl: imageUrl });
+      
+        // When the user logs in...
+        userStore.setLoggedIn(true);
+
+        router.push({ name: 'profile' });
 
         // Show success toast
         // toaster.value.showToast('Login successful');
