@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watchEffect } from 'vue';
 import { RouterView } from 'vue-router'
-import { RouterLink } from 'vue-router'
 
 import { useUserStore } from './stores/userStore';
 
@@ -320,17 +319,17 @@ const logout = () => {
   <!-- ========== END FOOTER ========== -->
 </template>
 
-<script>
-import { useUserStore } from '@/stores/userStore' // adjust the import path according to your project structure
+<!--<script>-->
+<!--import { useUserStore } from '@/stores/userStore' // adjust the import path according to your project structure-->
 
-export default {
-  computed: {
-    isLoggedIn() {
-      return useUserStore().isLoggedIn;
-    }
-  }
-}
-</script>
+<!--export default {-->
+<!--  computed: {-->
+<!--    isLoggedIn() {-->
+<!--      return useUserStore().isLoggedIn;-->
+<!--    }-->
+<!--  }-->
+<!--}-->
+<!--</script>-->
 
 
 
