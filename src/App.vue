@@ -9,10 +9,10 @@ const userStore = useUserStore();
 
 <template>
   <!-- ========== HEADER ========== -->
-  <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-gray-900 border-b border-gray-700 text-sm py-2.5 sm:py-4">
+  <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white-900 border-b border-gray-700 text-sm py-2.5 sm:py-4">
     <nav class="max-w-7xl flex basis-full items-center w-full mx-auto px-4 sm:px-6 lg:px-8" aria-label="Global">
       <div class="me-5 md:me-8">
-       <RouterLink to="/"> <a class="flex-none text-xl font-semibold text-white" href="#" aria-label="Recipe Book">Recipe</a></RouterLink>
+       <RouterLink to="/"> <a class="flex-none text-xl font-semibold text-dark" href="#" aria-label="Recipe Book">Recipe</a></RouterLink>
       </div>
 
       <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3 sm:order-3">
@@ -35,19 +35,22 @@ const userStore = useUserStore();
           </div>
         </div>
 
-        <div class="flex flex-row items-center justify-end gap-2">
-          <button type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-white hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
+        <RouterLink v-if="!isLoggedIn" to="/register">
+            <button>Sign up / Sign in</button>
+        </RouterLink>
+
+        <div v-else class="flex flex-row items-center justify-end gap-2">
+          <button type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-dark hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
             <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
           </button>
-          <button type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-white hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600" data-hs-offcanvas="#hs-offcanvas-right">
+          <button type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-dark hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600" data-hs-offcanvas="#hs-offcanvas-right">
             <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
           </button>
-
           <div class="hs-dropdown relative inline-flex" data-hs-dropdown-placement="bottom-right">
             <button id="hs-dropdown-with-header" type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-white hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
               <img class="inline-block size-[38px] rounded-full" :src="userStore.userProfile?.imageUrl" alt="Image Description">
             </button>
-
+           
             <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 z-10 bg-white shadow-md rounded-lg p-2" aria-labelledby="hs-dropdown-with-header">
               <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg">
                 <p class="text-sm text-gray-500">Signed in as</p>
@@ -70,7 +73,7 @@ const userStore = useUserStore();
                   <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                   Team Account
                 </a>
-              </div>
+              </div> 
             </div>
           </div>
         </div>
@@ -301,5 +304,16 @@ const userStore = useUserStore();
   </footer>
   <!-- ========== END FOOTER ========== -->
 </template>
+
+<script>
+import { computed } from 'vue';
+
+
+const isLoggedIn = computed(() => !!localStorage.getItem('access_token'));
+
+
+
+
+</script>
 
 
