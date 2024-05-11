@@ -6,10 +6,11 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import { useUserStore } from './stores/userStore';
+import InstantSearch from 'vue-instantsearch/vue3/es';
 import { reactive } from 'vue';
 
 const app = createApp(App)
-
+app.use(InstantSearch);
 app.use(createPinia())
 app.use(router)
 
