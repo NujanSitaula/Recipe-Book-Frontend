@@ -311,13 +311,6 @@ const userStore = useUserStore();
 
 <script>
 import { computed } from 'vue';
-import GoogleSignIn from './views/LoginView.vue';
-
-export default {
-  components: {
-    GoogleSignIn
-  }
-};
 
 const isLoggedIn = computed(() => !!localStorage.getItem('access_token'));
 
