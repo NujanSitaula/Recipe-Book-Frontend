@@ -1,6 +1,5 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import { IStaticMethods } from "preline/preline"
 import { useUserStore } from '@/stores/userStore';
 
 const userStore = useUserStore();
@@ -304,9 +303,6 @@ const userStore = useUserStore();
     </div>
   </footer>
   <!-- ========== END FOOTER ========== -->
-  <div id="app">
-    <GoogleSignIn />
-  </div>
 </template>
 
 <script>
