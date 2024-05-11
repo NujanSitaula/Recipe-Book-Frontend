@@ -6,6 +6,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import { useUserStore } from './stores/userStore';
+import { reactive, provide } from 'vue';
 
 const app = createApp(App)
 
@@ -25,6 +26,10 @@ if (token) {
     userStore.setUserProfile({imageUrl: localStorage.getItem('userProfile')});
             console.log(localStorage.getItem('userProfile'));
 }
+const state = reactive({
+    isLoggedIn: !!localStorage.getItem('access_token')
+});
 
+app.provide('state', state);
 
 app.mount('#app')
