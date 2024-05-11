@@ -4,6 +4,7 @@ import { IStaticMethods } from "preline/preline";
 import HomeView from '../views/HomeView.vue'
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
+import RecipeSingleView from "@/views/RecipeSingleView.vue";
 
 
 const router = createRouter({
@@ -23,6 +24,12 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: RegisterView
+    },
+    {
+      path: '/recipe/:id', // Add a new route for the RecipeSingleView
+      name: 'recipeSingle',
+      component: RecipeSingleView,
+      props: true
     }
   ]
 })
