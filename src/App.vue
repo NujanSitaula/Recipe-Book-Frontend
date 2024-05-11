@@ -1,6 +1,5 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import { IStaticMethods } from "preline/preline"
 import { useUserStore } from '@/stores/userStore';
 
 const userStore = useUserStore();
@@ -304,20 +303,10 @@ const userStore = useUserStore();
     </div>
   </footer>
   <!-- ========== END FOOTER ========== -->
-  <div id="app">
-    <GoogleSignIn />
-  </div>
 </template>
 
 <script>
 import { computed } from 'vue';
-import GoogleSignIn from './views/LoginView.vue';
-
-export default {
-  components: {
-    GoogleSignIn
-  }
-};
 
 const isLoggedIn = computed(() => !!localStorage.getItem('access_token'));
 
