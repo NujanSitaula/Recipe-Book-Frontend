@@ -197,7 +197,7 @@ const toaster = ref();
 // Define userStore here
 const userStore = useUserStore();
 
-const handleLogin = message => {
+const handleLogin = () => {
   axios.post('/user/login', {
     email: data.email,
     password: data.password
@@ -211,9 +211,12 @@ const handleLogin = message => {
 
         // Extract the image URL
         const imageUrl = response.data.data.image;
+        const email = response.data.data.email;
         localStorage.setItem('userProfile', imageUrl);
+        localStorage.setItem('userEmail', email);
         // Update the user profile in the store
-        userStore.setUserProfile({ imageUrl: imageUrl });
+        userStore.setUserProfile({ imageUrl: imageUrl, email: email });
+
 
         // Show success toast
         // toaster.value.showToast('Login successful');
