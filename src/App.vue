@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watchEffect } from 'vue';
 import { RouterView } from 'vue-router'
-import { RouterLink } from 'vue-router'
 
 import { useUserStore } from './stores/userStore';
 
@@ -319,15 +318,4 @@ const logout = () => {
   </footer>
   <!-- ========== END FOOTER ========== -->
 </template>
-
-<script>
-import { computed } from 'vue';
-
-const isLoggedIn = computed(() => !!localStorage.getItem('access_token'));
-
-
-
-</script>
-
-
 
