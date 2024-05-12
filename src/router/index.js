@@ -42,7 +42,8 @@ const router = createRouter({
     {
       path: '/profile',
       name: 'profile',
-      component: ProfileView
+      component: ProfileView,
+      meta: { requiresAuth: true }
     }
   ]
 })
@@ -50,19 +51,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
 
-  if (to.matched.some(record => record.meta.requiresGuest) && userStore.isLoggedIn) {
-    // This route requires guest, check if logged in
-    // if yes, redirect to home page.
-    next({ name: 'home' })
-  } else {
-    next() // make sure to always call next()!
-  }
-})
-
-router.beforeEach((to, from, next) => {
-  const userStore = useUserStore();
-
-  if (to.matched.some(record => record.meta.requiresGuest) && userStore.isLoggedIn) {
+  if (to.matched.some(record => record.meta.requiresAuth) && !userStore.isLoggedIn) {
+    // This route requires auth, check if logged in
+    // if not, redirect to login page.
+    next({ name: 'login' })
+  } else if (to.matched.some(record => record.meta.requiresGuest) && userStore.isLoggedIn) {
     // This route requires guest, check if logged in
     // if yes, redirect to home page.
     next({ name: 'home' })
