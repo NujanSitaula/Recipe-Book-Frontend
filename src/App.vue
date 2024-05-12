@@ -320,7 +320,7 @@ const logout = () => {
   <!-- ========== END FOOTER ========== -->
 </template>
 
-<script>
+<!-- <script>
 import { useUserStore } from '@/stores/userStore' // adjust the import path according to your project structure
 
 export default {
@@ -330,7 +330,7 @@ export default {
     }
   }
 }
-</script>
+</script> -->
 
 
 

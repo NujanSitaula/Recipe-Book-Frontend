@@ -184,6 +184,7 @@ import { reactive, ref } from "vue";
 import axios from "axios";
 import { useUserStore } from '@/stores/userStore';
 import Toaster from './Toaster.vue';
+import router from '@/router';
 
 axios.defaults.baseURL = config.BASE_URL;
 
@@ -216,6 +217,9 @@ const handleLogin = () => {
         localStorage.setItem('userEmail', email);
         // Update the user profile in the store
         userStore.setUserProfile({ imageUrl: imageUrl, email: email });
+
+        // Redirect to the profile page
+        router.push('/profile');
 
 
         // Show success toast
