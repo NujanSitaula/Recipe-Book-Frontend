@@ -7,6 +7,9 @@ import RegisterView from "@/views/RegisterView.vue";
 import RecipeSingleView from "@/views/RecipeSingleView.vue";
 import RecipeSearchView from "@/views/RecipeSearchView.vue";
 import ProfileView from '@/views/ProfileView.vue';
+import ProfileDetailsView from '@/components/profile/ProfileDetailsView.vue';
+import ProfileSavedView from '@/components/profile/ProfileSavedView.vue';
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +47,16 @@ const router = createRouter({
       name: 'profile',
       component: ProfileView,
       meta: { requiresAuth: true }
+      children: [{
+        path: 'details',
+        name: 'details',
+        component: ProfileDetailsView
+      },{
+        path: 'saved',
+        name: 'saved',
+        component: ProfileSavedView
+      }
+    ]
     }
   ]
 })
