@@ -318,18 +318,3 @@ const logout = () => {
   </footer>
   <!-- ========== END FOOTER ========== -->
 </template>
-
-<!--<script>-->
-<!--import { useUserStore } from '@/stores/userStore' // adjust the import path according to your project structure-->
-
-<!--export default {-->
-<!--  computed: {-->
-<!--    isLoggedIn() {-->
-<!--      return useUserStore().isLoggedIn;-->
-<!--    }-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
-
-
-
