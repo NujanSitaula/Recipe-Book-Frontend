@@ -318,4 +318,3 @@ const logout = () => {
   </footer>
   <!-- ========== END FOOTER ========== -->
 </template>
-
