@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watchEffect } from 'vue';
 import { RouterView } from 'vue-router'
-import { RouterLink } from 'vue-router'
 
 import { useUserStore } from './stores/userStore';
 
@@ -320,14 +319,17 @@ const logout = () => {
   <!-- ========== END FOOTER ========== -->
 </template>
 
-<script>
-import { computed } from 'vue';
+<!--<script>-->
+<!--import { useUserStore } from '@/stores/userStore' // adjust the import path according to your project structure-->
 
-const isLoggedIn = computed(() => !!localStorage.getItem('access_token'));
-
-
-
-</script>
+<!--export default {-->
+<!--  computed: {-->
+<!--    isLoggedIn() {-->
+<!--      return useUserStore().isLoggedIn;-->
+<!--    }-->
+<!--  }-->
+<!--}-->
+<!--</script>-->
 
 
 
