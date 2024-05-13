@@ -1,10 +1,12 @@
 <script>
 import { defineComponent, ref } from 'vue';
 import { useUserStore } from '@/stores/userStore';
+import Toaster from "@/views/Toaster.vue";
 
 
 export default defineComponent({
   name: 'ProfileView',
+  components: {Toaster},
   setup() {
     const userStore = useUserStore();
     const currentTab = ref('profile');
@@ -54,6 +56,7 @@ export default defineComponent({
 </style>
 
 <template>
+
   <!-- <div class="mt-7 w-full max-w-[85rem] sm:px-6 lg:px-8 mx-auto relative bg-white shadow-sm rounded-lg border"> -->
     <div class="overflow-hidden">
     <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -81,10 +84,15 @@ export default defineComponent({
       <p class="pb-2">Saved Recipes</p>
     </router-link>
 
+    <router-link to="/profile/password" active-class="active-link" class="inline-flex mr-8">
+      <p class="pb-2">Password</p>
+    </router-link>
+
     <router-link to="/profile/settings" active-class="active-link" class="inline-flex mr-8">
       <p class="pb-2">Preferences</p>
     </router-link>
 </nav>
+      <hr>
 <router-view></router-view>
 </div>
   </div>
