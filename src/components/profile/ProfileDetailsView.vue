@@ -8,7 +8,6 @@
 }
 </style>
 <template>
-  <Toaster ref="toaster" />
   <div class="mt-6">
     <h3 class="my-6">Update your photo and personal details here</h3>
     <hr>
@@ -40,27 +39,39 @@
 </template>
 
 <script>
-import { onMounted, watchEffect } from 'vue';
-import { useUserData } from '@/stores/userData';
+import { onMounted, watchEffect, ref } from 'vue';
+import { useUserStore } from '@/stores/userStore';
 
 export default {
   setup() {
-    const userData = useUserData();
+    const userStore = useUserStore();
+    const user = ref(null);
 
     onMounted(() => {
-      userData.fetchUser();
+      // Try to load the user data from local storage first
+      const storedData = localStorage.getItem('user');
+      if (storedData) {
+        user.value = JSON.parse(storedData);
+      } else {
+        // If there's no data in local storage, fetch it from the server
+        userStore.fetchUser();
+      }
     });
 
     watchEffect(() => {
-      if (userData.user === null) {
-        userData.fetchUser();
+      if (userStore.user === null) {
+        userStore.fetchUser();
+      } else {
+        // Store the user data in local storage for future use
+        localStorage.setItem('user', JSON.stringify(userStore.user));
+        user.value = userStore.user;
       }
     });
 
     return {
-      user: userData.user,
-      isLoading: userData.isLoading,
-      error: userData.error,
+      user,
+      isLoading: userStore.isLoading,
+      error: userStore.error,
     };
   },
 };

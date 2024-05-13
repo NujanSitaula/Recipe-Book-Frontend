@@ -2,7 +2,7 @@
 import { ref, watchEffect } from 'vue';
 import { RouterView } from 'vue-router'
 
-import { useUserStore } from './stores/userStore';
+import { useUserStore } from './stores/userStore.js';
 
 const userStore = useUserStore();
 

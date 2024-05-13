@@ -182,7 +182,7 @@
 import { config } from '../../config.js';
 import { reactive, ref } from "vue";
 import axios from "axios";
-import { useUserStore } from '@/stores/userStore';
+import { useUserStore } from '@/stores/userStore.js';
 import Toaster from './Toaster.vue';
 import router from '@/router';
 
