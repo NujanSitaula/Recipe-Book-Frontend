@@ -9,6 +9,7 @@ import RecipeSearchView from "@/views/RecipeSearchView.vue";
 import ProfileView from '@/views/ProfileView.vue';
 import ProfileDetailsView from '@/components/profile/ProfileDetailsView.vue';
 import ProfileSavedView from '@/components/profile/ProfileSavedView.vue';
+import ProfilePasswordView from '@/components/profile/ProfilePasswordView.vue';
 
 
 const router = createRouter({
@@ -55,6 +56,10 @@ const router = createRouter({
         path: 'saved',
         name: 'saved',
         component: ProfileSavedView
+      },{
+        path: 'password',
+        name: 'password',
+        component: ProfilePasswordView
       }
     ]
     }
