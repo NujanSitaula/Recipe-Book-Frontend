@@ -8,7 +8,6 @@
 }
 </style>
 <template>
-  <Toaster ref="toaster" />
   <div class="mt-6">
     <h3 class="my-6">Update your photo and personal details here</h3>
     <hr>
