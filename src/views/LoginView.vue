@@ -182,7 +182,7 @@
 import { config } from '../../config.js';
 import { reactive, ref } from "vue";
 import axios from "axios";
-import { useUserData } from '@/stores/userData.js';
+import { useUserStore } from '@/stores/userStore.js';
 import Toaster from './Toaster.vue';
 import router from '@/router';
 
@@ -196,7 +196,7 @@ const data = reactive({
 const toaster = ref();
 
 // Define userStore here
-const userData = useUserData();
+const userStore = useUserStore();
 
 const handleLogin = () => {
   axios.post('/user/login', {
@@ -208,7 +208,7 @@ const handleLogin = () => {
         localStorage.setItem('access_token', response.data.access_token);
 
         // Manually update isLoggedIn value
-        userData.setLoggedIn(true);
+        userStore.setLoggedIn(true);
 
         // Extract the image URL
         const imageUrl = response.data.data.image;
@@ -216,7 +216,7 @@ const handleLogin = () => {
         localStorage.setItem('userProfile', imageUrl);
         localStorage.setItem('userEmail', email);
         // Update the user profile in the store
-        userData.setUserProfile({ imageUrl: imageUrl, email: email });
+        userStore.setUserProfile({ imageUrl: imageUrl, email: email });
 
         // Redirect to the profile page
         router.push('/profile');

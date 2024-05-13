@@ -2,9 +2,9 @@
 import { ref, watchEffect } from 'vue';
 import { RouterView } from 'vue-router'
 
-import { useUserData } from './stores/userData.js';
+import { useUserStore } from './stores/userStore.js';
 
-const userData = useUserData();
+const userStore = useUserStore();
 
 // Create a reactive property
 const isLoggedIn = ref(!!localStorage.getItem('access_token'));
@@ -12,10 +12,10 @@ const isLoggedIn = ref(!!localStorage.getItem('access_token'));
 // Watch the local storage for changes
 watchEffect(() => {
   isLoggedIn.value = !!localStorage.getItem('access_token');
-  userData.setLoggedIn(isLoggedIn.value);
+  userStore.setLoggedIn(isLoggedIn.value);
 });
 const logout = () => {
-  userData.logout();
+  userStore.logout();
 };
 
 </script>
@@ -47,7 +47,7 @@ const logout = () => {
             </div>
           </div>
         </div>
-        <div v-if ="!userData.isLoggedIn">
+        <div v-if ="!userStore.isLoggedIn">
           <router-link to="/register">
             <button>Sign up </button></router-link> /
           <router-link to="/login">
@@ -62,13 +62,13 @@ const logout = () => {
           </button>
           <div class="hs-dropdown relative inline-flex" data-hs-dropdown-placement="bottom-right">
             <button id="hs-dropdown-with-header" type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-white hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
-              <img class="inline-block size-[38px] rounded-full" :src="userData.userProfile?.imageUrl" alt="Image Description">
+              <img class="inline-block size-[38px] rounded-full" :src="userStore.userProfile?.imageUrl" alt="Image Description">
             </button>
            
             <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 z-10 bg-white shadow-md rounded-lg p-2" aria-labelledby="hs-dropdown-with-header">
               <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg">
                 <p class="text-sm text-gray-500">Signed in as</p>
-                <p class="text-sm font-medium text-gray-800">{{ userData.userEmail }}</p>
+                <p class="text-sm font-medium text-gray-800">{{ userStore.userEmail }}</p>
               </div>
               <div class="mt-2 py-2 first:pt-0 last:pb-0">
                 <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
