@@ -20,6 +20,145 @@
               <p class="text-xs sm:text-sm text-gray-800">January 18, 2023</p>
             </div>
 
+            <!-- Team -->
+            <div class="max-w-5xl mx-auto">
+              <!-- Grid -->
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 md:gap-12  border rounded-2xl p-5">
+                <!-- Prep Time -->
+                <div class="text-center accordion-item">
+                  <button class="accordion-btn">
+                    <!-- Icon -->
+                    <span class="inline-flex justify-center items-center size-[62px] rounded-full bg-blue-100 text-blue-800">
+          <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="6" x2="12" y2="12"></line>
+            <line x1="12" y1="18" x2="12" y2="18"></line>
+          </svg>
+        </span>
+                    <!-- End Icon -->
+                    <div class="mt-2 sm:mt-4">
+                      <h3 class="font-medium text-gray-800">
+                        10 Min
+                      </h3>
+                      <p class="text-sm text-gray-600">
+                        Prep Time
+                      </p>
+                    </div>
+                  </button>
+                  <div class="accordion-content">
+                    <!-- Content Here -->
+                  </div>
+                </div>
+                <!-- End Prep Time -->
+                <!-- Cook Time -->
+                <div class="text-center accordion-item">
+                  <button class="accordion-btn">
+                    <!-- Icon -->
+                    <span class="inline-flex justify-center items-center size-[62px] rounded-full bg-blue-100 text-blue-800">
+          <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="6" x2="12" y2="12"></line>
+            <line x1="12" y1="18" x2="12" y2="18"></line>
+          </svg>
+        </span>
+                    <!-- End Icon -->
+                    <div class="mt-2 sm:mt-4">
+                      <h3 class="font-medium text-gray-800">
+                        30 Min
+                      </h3>
+                      <p class="text-sm text-gray-600">
+                        Cook Time
+                      </p>
+                    </div>
+                  </button>
+                  <div class="accordion-content">
+                    <!-- Content Here -->
+                  </div>
+                </div>
+                <!-- End Cook Time -->
+                <!-- Ingredients -->
+                <div class="text-center accordion-item">
+                  <button class="accordion-btn">
+                    <!-- Icon -->
+                    <span class="inline-flex justify-center items-center size-[62px] rounded-full bg-blue-100 text-blue-800">
+          <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+          </svg>
+        </span>
+                    <!-- End Icon -->
+                    <div class="mt-2 sm:mt-4">
+                      <h3 class="font-medium text-gray-800">
+                        20 Approx
+                      </h3>
+                      <p class="text-sm text-gray-600">
+                        Ingredients
+                      </p>
+                    </div>
+                  </button>
+                  <div class="accordion-content">
+                    <!-- Content Here -->
+                  </div>
+                </div>
+                <!-- End Ingredients -->
+                <!-- Servings -->
+                <div class="text-center accordion-item">
+                  <button class="accordion-btn">
+                    <!-- Icon -->
+                    <span class="inline-flex justify-center items-center size-[62px] rounded-full bg-blue-100 text-blue-800">
+          <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </span>
+                    <!-- End Icon -->
+                    <div class="mt-2 sm:mt-4">
+                      <h3 class="font-medium text-gray-800">
+                        2 Person
+                      </h3>
+                      <p class="text-sm text-gray-600">
+                        Servings
+                      </p>
+                    </div>
+                  </button>
+                  <div class="accordion-content">
+                    <!-- Content Here -->
+                  </div>
+                </div>
+                <!-- End Servings -->
+                <!-- Difficulty -->
+                <div class="text-center accordion-item">
+                  <button class="accordion-btn">
+                    <!-- Icon -->
+                    <span class="inline-flex justify-center items-center size-[62px] rounded-full bg-blue-100 text-blue-800">
+          <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </span>
+                    <!-- End Icon -->
+                    <div class="mt-2 sm:mt-4">
+                      <h3 class="font-medium text-gray-800">
+                        Hard
+                      </h3>
+                      <p class="text-sm text-gray-600">
+                        Difficulty
+                      </p>
+                    </div>
+                  </button>
+                  <div class="accordion-content">
+                    <!-- Content Here -->
+                  </div>
+                </div>
+                <!-- End Difficulty -->
+              </div>
+              <!-- End Grid -->
+            </div>
+            <!-- End Team -->
+
+
+
             <p class="text-lg text-gray-800">At preline, our mission has always been focused on bringing openness and transparency to the design process. We've always believed that by providing a space where designers can share ongoing work not only empowers them to make better products, it also helps them grow.</p>
 
             <p class="text-lg text-gray-800">We're proud to be a part of creating a more open culture and to continue building a product that supports this vision.</p>
@@ -269,5 +408,23 @@ onMounted(async () => {
   } catch (error) {
     console.error('Error:', error);
   }
+});
+const accordionItems = document.querySelectorAll('.accordion-item');
+
+accordionItems.forEach(item => {
+  const btn = item.querySelector('.accordion-btn');
+  const content = item.querySelector('.accordion-content');
+
+  btn.addEventListener('click', () => {
+    // Toggle active class on button
+    btn.classList.toggle('active');
+
+    // Toggle accordion content visibility
+    if (content.style.maxHeight) {
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + 'px';
+    }
+  });
 });
 </script>

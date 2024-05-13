@@ -5,7 +5,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
-import { useUserStore } from './stores/userStore';
+import { useUserData } from './stores/userData.js';
 import InstantSearch from 'vue-instantsearch/vue3/es';
 import { reactive } from 'vue';
 
@@ -17,11 +17,11 @@ app.use(router)
 // Check if user is logged in
 const token = localStorage.getItem('access_token');
 if (token) {
-    const userStore = useUserStore(); // Moved after app.use(pinia)
+    const userData = useUserData(); // Moved after app.use(pinia)
     // Set user as logged in
-    userStore.setLoggedIn(true);
+    userData.setLoggedIn(true);
             // Set the user profile data in the store
-    userStore.setUserProfile({imageUrl: localStorage.getItem('userProfile')});
+    userData.setUserProfile({imageUrl: localStorage.getItem('userProfile')});
             console.log(localStorage.getItem('userProfile'));
 }
 const state = reactive({

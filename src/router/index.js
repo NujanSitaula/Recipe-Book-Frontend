@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { useUserStore } from '../stores/userStore';
+import { useUserData } from '../stores/userData.js';
 
 import HomeView from '../views/HomeView.vue'
 import LoginView from "@/views/LoginView.vue";
@@ -62,13 +62,13 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const userStore = useUserStore();
+  const userData = useUserData();
 
-  if (to.matched.some(record => record.meta.requiresAuth) && !userStore.isLoggedIn) {
+  if (to.matched.some(record => record.meta.requiresAuth) && !userData.isLoggedIn) {
     // This route requires auth, check if logged in
     // if not, redirect to login page.
     next({ name: 'login' })
-  } else if (to.matched.some(record => record.meta.requiresGuest) && userStore.isLoggedIn) {
+  } else if (to.matched.some(record => record.meta.requiresGuest) && userData.isLoggedIn) {
     // This route requires guest, check if logged in
     // if yes, redirect to home page.
     next({ name: 'home' })

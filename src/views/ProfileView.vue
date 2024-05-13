@@ -1,21 +1,22 @@
 <script>
 import { defineComponent, ref } from 'vue';
-import { useUserStore } from '@/stores/userStore';
+import { useUserData } from '@/stores/userData.js';
 
 
 export default defineComponent({
   name: 'ProfileView',
   setup() {
-    const userStore = useUserStore();
+    const userData = useUserData();
     const currentTab = ref('profile');
 
     return {
-      userStore,
+      userData,
       currentTab
     };
   }
 });
 </script>
+
 <style scoped>
 .active-link {
   border-bottom: 2px solid blue;
@@ -61,10 +62,10 @@ export default defineComponent({
     <div class="w-full h-52 bg-gray-300 shadow-lg shadow-gray-100" style="background-image: url('https://marketplace.canva.com/EAFIddmg8b0/1/0/1600w/canva-white-minimalist-corporate-personal-profile-linkedin-banner-t5iKXmGyEtU.jpg'); background-repeat: none; background-position: center; background-size: cover;"></div>
     <div class="flex flex-col items-center absolute ml-5 pro_main" style="margin-top: -40px;">
       <div class=" rounded-full flex items-center justify-center pro_image">
-        <img class="w-28 h-28 rounded-full border-2 border-white image " :src="userStore.userProfile?.imageUrl" alt="Profile Picture">
+        <img class="w-28 h-28 rounded-full border-2 border-white image " :src="userData.userProfile?.imageUrl" alt="Profile Picture">
         <div class="mt-7 ml-2 profile-name">
-        <p class="text-2xl font-semibold text-gray-800">Kripa Didi</p>
-      <p class="text-l font-semibold text-gray-500">@its_kripa</p>
+        <p class="text-2xl font-semibold text-gray-800">Nujan Sitaula</p>
+      <p class="text-l font-semibold text-gray-500">@its_nujan</p>
       </div>
       </div>
       
