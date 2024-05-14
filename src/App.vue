@@ -273,7 +273,6 @@ const logout = () => {
                   <use width="30" height="20" transform="rotate(-74 272.4 -114) scale(25.6137)" xlink:href="#a"/>
                   <use width="30" height="20" transform="matrix(16 -19.968 19.968 16 256 230.4)" xlink:href="#a"/>
                 </svg>
-                中文 (繁體)
               </a>
             </div>
           </div>
