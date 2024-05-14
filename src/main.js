@@ -14,10 +14,12 @@ app.use(InstantSearch);
 app.use(createPinia())
 app.use(router)
 
+
 // Check if user is logged in
 const token = localStorage.getItem('access_token');
 if (token) {
     const userStore = useUserStore(); // Moved after app.use(pinia)
+
     // Set user as logged in
     userStore.setLoggedIn(true);
             // Set the user profile data in the store

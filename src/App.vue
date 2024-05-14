@@ -5,6 +5,17 @@ import { RouterView } from 'vue-router'
 import { useUserStore } from './stores/userStore.js';
 
 const userStore = useUserStore();
+const user = ref(null);
+
+watchEffect(() => {
+  if (userStore.user === null) {
+    userStore.fetchUser();
+  } else {
+    // Store the user data in local storage for future use
+    localStorage.setItem('user', JSON.stringify(userStore.user));
+    user.value = userStore.user;
+  }
+});
 
 // Create a reactive property
 const isLoggedIn = ref(!!localStorage.getItem('access_token'));
@@ -66,9 +77,9 @@ const logout = () => {
             </button>
            
             <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 z-10 bg-white shadow-md rounded-lg p-2" aria-labelledby="hs-dropdown-with-header">
-              <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg">
+              <div v-if="user" class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg">
                 <p class="text-sm text-gray-500">Signed in as</p>
-                <p class="text-sm font-medium text-gray-800">{{ userStore.userEmail }}</p>
+                <p class="text-sm font-medium text-gray-800">{{ user.data.email }}</p>
               </div>
               <div class="mt-2 py-2 first:pt-0 last:pb-0">
                 <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
@@ -102,7 +113,7 @@ const logout = () => {
     <nav class="sticky -top-px bg-white text-sm font-medium text-black ring-1 ring-gray-900 ring-opacity-5 border-t shadow-sm shadow-gray-100 pt-6 md:pb-6 -mt-px" aria-label="Jump links">
       <div class="max-w-7xl snap-x w-full flex items-center overflow-x-auto px-4 sm:px-6 lg:px-8 pb-4 md:pb-0 mx-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
         <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last-pe-0">
-          <a class="inline-flex items-center gap-x-2 hover:text-gray-500" href="#">Profile</a>
+          <RouterLink to="/profile" class="inline-flex items-center gap-x-2 hover:text-gray-500" href="#">Profile</RouterLink>
         </div>
         <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
           <a class="inline-flex items-center gap-x-2 hover:text-gray-500" href="#">My Recipe</a>
