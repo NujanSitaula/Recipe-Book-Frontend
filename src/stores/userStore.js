@@ -41,6 +41,7 @@ export const useUserStore = defineStore('userData', {
                 }
 
                 this.user = response.data;
+                localStorage.setItem('user', JSON.stringify(this.user));
             } catch (error) {
                 this.error = error.message;
             } finally {
@@ -61,6 +62,7 @@ export const useUserStore = defineStore('userData', {
             localStorage.removeItem('access_token');
             localStorage.removeItem('userEmail');
             localStorage.removeItem('userProfile');
+            localStorage.removeItem('user');
         }
     }
 });

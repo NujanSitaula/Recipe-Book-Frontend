@@ -180,7 +180,7 @@
 
 <script setup>
 import { config } from '../../config.js';
-import { reactive, ref } from "vue";
+import {reactive, ref, watchEffect} from "vue";
 import axios from "axios";
 import { useUserStore } from '@/stores/userStore.js';
 import Toaster from './Toaster.vue';
@@ -215,7 +215,18 @@ const handleLogin = () => {
         const email = response.data.data.email;
         localStorage.setItem('userProfile', imageUrl);
         localStorage.setItem('userEmail', email);
+        const user = ref(null);
+
+        watchEffect(() => {
+          if (userStore.user === null) {
+            userStore.fetchUser();
+          } else {
+            // Store the user data in local storage for future use
+            localStorage.setItem('user', JSON.stringify(userStore.user));
+          }
+        });
         // Update the user profile in the store
+
         userStore.setUserProfile({ imageUrl: imageUrl, email: email });
 
         // Redirect to the profile page
