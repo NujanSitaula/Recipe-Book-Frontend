@@ -309,12 +309,12 @@
           <!-- Avatar Media -->
           <div class="group flex items-center gap-x-3 border-b border-gray-200 pb-8 mb-8">
             <a class="block flex-shrink-0" href="#">
-              <img class="size-10 rounded-full" src="https://images.unsplash.com/photo-1669837401587-f9a4cfe3126e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80" alt="Image Description">
+              <img class="size-10 rounded-full" :src="recipe.user.image" alt="Image Description">
             </a>
 
             <a class="group grow block" href="">
               <h5 class="group-hover:text-gray-600 text-sm font-semibold text-gray-800">
-                Leyla Ludic
+                {{ recipe.user.firstName }} {{ recipe.user.lastName }}
               </h5>
               <p class="text-sm text-gray-500">
                 UI/UX enthusiast
@@ -382,7 +382,7 @@
   </div>
   <!-- End Blog Article -->
   <div v-if="recipe">
-    <h1>{{ recipe.name }}</h1>
+    <h1>{{ recipe.user.firstName }}</h1>
     <img :src="recipe.image" alt="Recipe Image">
     <p>{{ recipe.description }}</p>
     <!-- Add more fields as needed -->
@@ -404,6 +404,7 @@ onMounted(async () => {
     const response = await axios.get(`/recipe/${route.params.id}`);
     if (response.data.status === 'success') {
       recipe.value = response.data.data;
+      console.log(recipe.value);
     }
   } catch (error) {
     console.error('Error:', error);
