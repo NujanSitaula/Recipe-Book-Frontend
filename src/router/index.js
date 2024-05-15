@@ -62,6 +62,11 @@ const router = createRouter({
         component: ProfilePasswordView
       }
     ]
+    },
+    {
+      path: '/checkuser',
+      name: 'checkuser',
+      component: () => import('../views/CheckView.vue')
     }
   ]
 })

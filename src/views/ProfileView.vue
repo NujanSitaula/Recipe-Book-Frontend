@@ -78,9 +78,9 @@ export default defineComponent({
     <div class="w-full h-52 bg-gray-300 shadow-lg shadow-gray-100" style="background-image: url('https://marketplace.canva.com/EAFIddmg8b0/1/0/1600w/canva-white-minimalist-corporate-personal-profile-linkedin-banner-t5iKXmGyEtU.jpg'); background-repeat: none; background-position: center; background-size: cover;"></div>
     <div class="flex flex-col items-center absolute ml-5 pro_main" style="margin-top: -40px;">
       <div class=" rounded-full flex items-center justify-center pro_image">
-        <img class="w-28 h-28 rounded-full border-2 border-white image " :src="user.data.image" alt="Profile Picture">
+        <img class="w-28 h-28 rounded-full border-2 border-white image "  alt="Profile Picture">
         <div class="mt-7 ml-2 profile-name">
-        <p class="text-2xl font-semibold text-gray-800">{{ user.data.firstName}} {{ user.data.lastName }}</p>
+        <p class="text-2xl font-semibold text-gray-800"></p>
       <p class="text-l font-semibold text-gray-500">@its_kripa</p>
       </div>
       </div>
