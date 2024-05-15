@@ -38,7 +38,7 @@ export const useUserStore = defineStore('userData', {
                 });
 
                 if (response.status !== 200) {
-                    throw new Error('Failed to fetch user data');
+                    alert('Failed to fetch user data');
                 }
 
                 this.user = response.data;
