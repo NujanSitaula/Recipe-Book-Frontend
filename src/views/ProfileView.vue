@@ -31,14 +31,8 @@ export default defineComponent({
 
 </script>
 <style scoped>
-.active-link {
-  border-bottom: 2px solid blue;
-}
 
 @media (max-width: 700px) {
-  .active-link {
-    border-bottom: 2px solid blue;
-  }
   .pro_main{
     align-items: center;
     margin-left: auto;
@@ -60,7 +54,7 @@ export default defineComponent({
   }
   .profile-name{
     text-align: center;
-    margin-top: 0px;
+    margin-top: 0;
     margin-bottom: 100px;
   }
   
@@ -73,7 +67,7 @@ export default defineComponent({
     <div class="overflow-hidden">
     <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
   <div class="mb-28 main">
-    <div class="w-full h-52 bg-gray-300 shadow-lg shadow-gray-100" style="background-image: url('https://marketplace.canva.com/EAFIddmg8b0/1/0/1600w/canva-white-minimalist-corporate-personal-profile-linkedin-banner-t5iKXmGyEtU.jpg'); background-repeat: none; background-position: center; background-size: cover;"></div>
+    <div class="w-full h-52 bg-gray-300 shadow-lg shadow-gray-100" style="background-image: url('https://marketplace.canva.com/EAFIddmg8b0/1/0/1600w/canva-white-minimalist-corporate-personal-profile-linkedin-banner-t5iKXmGyEtU.jpg'); background-position: center; background-size: cover;"></div>
     <div class="flex flex-col items-center absolute ml-5 pro_main" style="margin-top: -40px;">
       <div class=" rounded-full flex items-center justify-center pro_image">
         <img class="w-28 h-28 rounded-full border-2 border-white image " :src="userStore.user && userStore.user.data ? userStore.user.data.image : 'Dwfault.png'" alt="Profile Picture">
