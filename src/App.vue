@@ -1,36 +1,31 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
+import { watchEffect, ref } from 'vue';
 import { RouterView } from 'vue-router'
-
 import { useUserStore } from './stores/userStore.js';
 
 const userStore = useUserStore();
-const user = ref(null);
+const dropdownOpen = ref(false);
+
+const toggleDropdown = () => {
+  dropdownOpen.value = !dropdownOpen.value;
+};
+
+const closeDropdown = () => {
+  dropdownOpen.value = false;
+};
 
 watchEffect(() => {
   if (userStore.user === null) {
     userStore.fetchUser();
   } else {
-    // Store the user data in local storage for future use
     localStorage.setItem('user', JSON.stringify(userStore.user));
-    user.value = userStore.user;
   }
 });
 
-// Create a reactive property
-const isLoggedIn = ref(!!localStorage.getItem('access_token'));
-
-// Watch the local storage for changes
-watchEffect(() => {
-  isLoggedIn.value = !!localStorage.getItem('access_token');
-  userStore.setLoggedIn(isLoggedIn.value);
-});
 const logout = () => {
   userStore.logout();
 };
-
 </script>
-
 <template>
   <!-- ========== HEADER ========== -->
   <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white-900 border-b border-gray-700 text-sm py-2.5 sm:py-4">
@@ -58,13 +53,8 @@ const logout = () => {
             </div>
           </div>
         </div>
-        <div v-if ="!userStore.isLoggedIn">
-          <router-link to="/register">
-            <button>Sign up </button></router-link> /
-          <router-link to="/login">
-            <button>Sign in </button></router-link>
-        </div>
-        <div v-else class="flex flex-row items-center justify-end gap-2">
+
+        <div v-if="userStore.isLoggedIn" class="flex flex-row items-center justify-end gap-2">
           <button type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-dark hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
             <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
           </button>
@@ -72,16 +62,16 @@ const logout = () => {
             <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
           </button>
           <div class="hs-dropdown relative inline-flex" data-hs-dropdown-placement="bottom-right">
-            <button id="hs-dropdown-with-header" type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-white hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
-              <img class="inline-block size-[38px] rounded-full" :src="userStore.userProfile?.imageUrl" alt="Image Description">
+            <button @click="toggleDropdown"  id="hs-dropdown-with-header" type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-white hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
+              <img class="inline-block size-[38px] rounded-full" :src="userStore.user && userStore.user.data ? userStore.user.data.image : 'image/image.png'" alt="Image Description">
             </button>
-           
-            <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 z-10 bg-white shadow-md rounded-lg p-2" aria-labelledby="hs-dropdown-with-header">
-              <div v-if="user" class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg">
-                <p class="text-sm text-gray-500">Signed in as</p>
-                <p class="text-sm font-medium text-gray-800">{{ user.data.email }}</p>
-              </div>
-              <div class="mt-2 py-2 first:pt-0 last:pb-0">
+            <div v-show="dropdownOpen">
+              <div class="hs-dropdown-menu transition-[opacity,margin] duration mt-10 min-w-60 z-10 bg-white shadow-md rounded-lg p-2 absolute right-0"  aria-labelledby="hs-dropdown-with-header"  :class="{ 'block': dropdownOpen, 'hidden': !dropdownOpen }">
+                <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg">
+                  <p class="text-sm text-gray-500">Signed in as</p>
+                  <p class="text-sm font-medium text-gray-800">{{userStore.user && userStore.user.data ? userStore.user.data.email : 'Loading Name...'}}</p>
+                </div>
+                <div class="mt-2 py-2 first:pt-0 last:pb-0">
                 <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
                   <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
                   Newsletter
@@ -98,14 +88,22 @@ const logout = () => {
                   <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                   Log Out
                 </a>
-              </div> 
+                  </div>
+              </div>
             </div>
           </div>
+        </div>
+        <div v-show="!userStore.isLoggedIn">
+          <router-link to="/register">
+            <button>Sign up </button></router-link> /
+          <router-link to="/login">
+            <button>Sign in </button></router-link>
         </div>
       </div>
     </nav>
   </header>
   <!-- ========== END HEADER ========== -->
+
 
   <!-- ========== MAIN CONTENT ========== -->
   <main id="content">

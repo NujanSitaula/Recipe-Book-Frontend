@@ -1,17 +1,18 @@
 import { defineStore } from 'pinia';
 import { config } from '../../config.js';
 import axios from 'axios';
+import {reactive} from "vue";
 
 axios.defaults.baseURL = config.BASE_URL;
 
 export const useUserStore = defineStore('userData', {
     state: () => ({
-        userProfile: {
+        userProfile: reactive({
             imageUrl: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80'
-        },
+        }),
         userEmail: localStorage.getItem('userEmail') || '',
         isLoggedIn: false,
-        user: null,
+        user: reactive(null),
         isLoading: false,
         error: null,
     }),
@@ -37,7 +38,7 @@ export const useUserStore = defineStore('userData', {
                 });
 
                 if (response.status !== 200) {
-                    throw new Error('Failed to fetch user data');
+                    alert('Failed to fetch user data');
                 }
 
                 this.user = response.data;
