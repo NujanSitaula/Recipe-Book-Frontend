@@ -83,9 +83,9 @@ export default {
   setup() {
     const toaster = ref(null);
     const userStore = useUserStore();
-    const user = ref(null);
     const file = ref(null); // Add this line
 
+    const user = ref(null);
     const firstName = ref(userStore.user ? userStore.user.data.firstName : '');
     const lastName = ref(userStore.user ? userStore.user.data.lastName : '');
     const email = ref(userStore.user ? userStore.user.data.email : '');
@@ -155,7 +155,7 @@ export default {
             firstName.value = userStore.user.data.firstName;
             lastName.value = userStore.user.data.lastName;
             email.value = userStore.user.data.email;
-            image.value = userStore.user.data.image;
+
           }
         });
       } else {
@@ -176,7 +176,6 @@ export default {
       handleFileUpload,
       submitForm,
       toaster,
-      file // Add this line
     };
   },
 };
