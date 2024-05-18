@@ -333,10 +333,10 @@
             <div class="flex justify-between items-center mb-6">
               <h2 class="text-lg lg:text-2xl font-bold text-gray-900">Discussion ({{ comments ? comments.length : 0 }})</h2>
             </div>
-            <form class="mb-6">
+            <form class="mb-6" @submit.prevent="postComment">
               <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200">
                 <label for="comment" class="sr-only">Your comment</label>
-                <textarea id="comment" rows="6" class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none" placeholder="Write a comment..." required></textarea>
+                <textarea v-model="commentContent" id="comment" rows="6" class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none" placeholder="Write a comment..." required></textarea>
               </div>
               <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800">
                 Post comment
@@ -547,10 +547,25 @@ const isLoading = ref(false); // Add this line
 const comments = ref(null);
 const replyingTo = ref(null);
 const replyContent = ref('');
+const commentContent = ref('');
 axios.defaults.baseURL = config.BASE_URL;
 
 const showReplyField = (commentId) => {
   replyingTo.value = commentId;
+};
+
+const postComment = async () => {
+  try {
+    const response = await axios.post(`/comment`, { comment: commentContent.value, recipe_id: recipe.value.id });
+    if (response.data.status === 'success') {
+      // Add the new comment to the comments in the local state
+      comments.value.push(response.data.data[0]);
+      // Clear the comment field
+      commentContent.value = '';
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
 };
 
 const postReply = async (commentId) => {
