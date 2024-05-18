@@ -544,7 +544,7 @@ import {config} from "../../config.js";
 const route = useRoute();
 const recipe = ref(null);
 const isLoading = ref(false); // Add this line
-const comments = ref(null);
+const comments = ref([]);
 const replyingTo = ref(null);
 const replyContent = ref('');
 const commentContent = ref('');
@@ -572,9 +572,14 @@ const postReply = async (commentId) => {
   try {
     const response = await axios.post(`/comment/${commentId}/reply`, {reply: replyContent.value});
     if (response.data.status === 'success') {
-      // Add the new reply to the comment's replies in the local state
-      const comment = comments.value.find(comment => comment.id === commentId);
-      comment.replies.push(response.data.data[0]);
+      // Find the index of the comment in the comments array
+      const commentIndex = comments.value.findIndex(comment => comment.id === commentId);
+      // Create a new copy of the comment
+      const newComment = { ...comments.value[commentIndex] };
+      // Add the new reply to the comment's replies
+      newComment.replies = [...(newComment.replies || []), response.data.data[0]];
+      // Replace the old comment with the new comment in the comments array
+      comments.value.splice(commentIndex, 1, newComment);
       // Clear the reply field and close it
       replyContent.value = '';
       replyingTo.value = null;
