@@ -93,7 +93,8 @@ router.afterEach((to, from, failure) => {
       window.HSStaticMethods.autoInit();
     }, 100)
   }
-
 });
+
+
 
 export default router

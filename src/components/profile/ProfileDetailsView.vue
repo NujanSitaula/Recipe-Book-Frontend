@@ -25,7 +25,7 @@
           <input type="text" id="firstName"  v-model="firstName" name="firstName" placeholder="Firstname" class="w-full h-11 px-2 py-3 text-sm text-gray-800 bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" />
         </div>
         <div class="col-span-1 px-6">
-          <input type="text" id="lastName" v-model="lastName" name="lastName" class="w-full h-11 px-2 py-3 text-sm text-gray-800 bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" />
+          <input type="text" id="lastName" v-model="lastName" name="lastName" placeholder="Lastname" class="w-full h-11 px-2 py-3 text-sm text-gray-800 bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" />
         </div>
       </div>
       <hr>
@@ -42,8 +42,8 @@
         <div class="col-span-1 w-30">
           <h1 class="text-xl font-medium text-gray-800 ">Your Photo</h1>
         </div>
-        <div class="col-span-2 px-6 flex" v-if="user">
-          <img class="w-24 h-24 rounded-full border-2 border-white image " :src="user.data.image" alt="Profile Picture">
+        <div class="col-span-2 px-6 flex">
+          <img class="w-24 h-24 rounded-full border-2 border-white image " :src="tempImageUrl" alt="Profile Picture">
 <!--        </div>-->
 <!--        <div class="col-span-1 px-6">-->
 
@@ -83,9 +83,10 @@ export default {
   setup() {
     const toaster = ref(null);
     const userStore = useUserStore();
-    const user = ref(null);
-    const file = ref(null); // Add this line
+    const file = ref(null); // Add this
+    const tempImageUrl = ref(localStorage.getItem('tempImageUrl') || null);
 
+    const user = ref(null);
     const firstName = ref(userStore.user ? userStore.user.data.firstName : '');
     const lastName = ref(userStore.user ? userStore.user.data.lastName : '');
     const email = ref(userStore.user ? userStore.user.data.email : '');
@@ -95,9 +96,10 @@ export default {
         file.value = event.target.files[0]; // Update this line
         const reader = new FileReader();
         reader.onload = () => {
-          user.value.data.image = reader.result;
+          tempImageUrl.value = reader.result;
+          localStorage.setItem('tempImageUrl', reader.result); // Add this line
         };
-        reader.readAsDataURL(file.value); // Update this line
+        reader.readAsDataURL(event.target.files[0]); // Update this line
       } else {
         console.log('No file selected');
       }
@@ -110,14 +112,40 @@ export default {
         const token = localStorage.getItem('access_token');
         const formData = new FormData();
 
-        if (file.value) { // Update this line
-          formData.append('image', file.value); // Update this line
+        // Fetch user's data from userStore
+        const userData = userStore.user.data;
+
+        // Append user's data to formData
+        for (const key in userData) {
+          if (key !== 'image') {
+            formData.append(key, userData[key]);
+          }
         }
 
+        // Check if a new image is selected
+        if (tempImageUrl.value) {
+          const response = await fetch(tempImageUrl.value);
+          const blob = await response.blob();
+          const file = new File([blob], "profile.jpg", { type: blob.type });
+          formData.append('image', file);
+          try {
+            userStore.user.data.image = tempImageUrl.value; // Update userStore.user.data.image
+            localStorage.setItem('userImage', tempImageUrl.value); // Update local storage
+            tempImageUrl.value = null;
+          } catch (error) {
+            if (error instanceof DOMException && error.name === 'QuotaExceededError') {
+              toaster.value.showToast('Failed to save image. Local storage quota exceeded.', 'failure');
+              return;
+            } else {
+              throw error;
+            }
+          }
+        }
         formData.append('firstName', firstName.value);
         formData.append('lastName', lastName.value);
         formData.append('email', email.value);
 
+        // Send the form data to update user details
         const response = await axios({
           method: 'post',
           url: '/user/update',
@@ -132,15 +160,25 @@ export default {
           userStore.user.data.firstName = firstName.value;
           userStore.user.data.lastName = lastName.value;
           userStore.user.data.email = email.value;
+          // If a new image is selected, update tempImageUrl and local storage
+          if (tempImageUrl.value) {
+            userStore.user.data.image = tempImageUrl.value;
+            localStorage.setItem('userImage', tempImageUrl.value);
+            tempImageUrl.value = null;
+          }
+
+          // Show success message
           if (toaster.value) {
             toaster.value.showToast(response.data.message, 'success');
           }
         } else {
+          // Show failure message
           if (toaster.value) {
             toaster.value.showToast('Failed to update user details', 'failure');
           }
         }
       } catch (error) {
+        // Show failure message and log error
         if (toaster.value) {
           toaster.value.showToast(error.message, 'failure');
           console.log(error);
@@ -155,7 +193,6 @@ export default {
             firstName.value = userStore.user.data.firstName;
             lastName.value = userStore.user.data.lastName;
             email.value = userStore.user.data.email;
-            image.value = userStore.user.data.image;
           }
         });
       } else {
@@ -165,7 +202,6 @@ export default {
         email.value = userStore.user.data.email;
       }
     });
-
     return {
       user,
       isLoading: userStore.isLoading,
@@ -176,7 +212,7 @@ export default {
       handleFileUpload,
       submitForm,
       toaster,
-      file // Add this line
+      tempImageUrl,
     };
   },
 };
