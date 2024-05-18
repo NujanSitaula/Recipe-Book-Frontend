@@ -1,5 +1,5 @@
 import './assets/main.css'
-import "preline/preline";
+import 'preline'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -13,6 +13,7 @@ const app = createApp(App)
 app.use(InstantSearch);
 app.use(createPinia())
 app.use(router)
+
 
 
 // Check if user is logged in

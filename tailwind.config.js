@@ -2,7 +2,7 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{vue, js}",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
     './node_modules/preline/preline.js',
   ],
   theme: {
