@@ -602,6 +602,23 @@ import { computed } from 'vue';
 export default {
   components: { RouterLink },
 
+  beforeRouteEnter(to, from, next) {
+    const modal = document.getElementById('hs-scroll-inside-body-modal-backdrop');
+    if (modal) {
+      modal.classList.add('hidden'); // Assuming 'hidden' class hides the modal
+    }
+    document.body.style.overflow = '';
+    next();
+  },
+  beforeRouteUpdate(to, from, next) {
+    const modal = document.getElementById('hs-scroll-inside-body-modal-backdrop');
+    if (modal) {
+      modal.classList.add('hidden'); // Assuming 'hidden' class hides the modal
+    }
+    document.body.style.overflow = '';
+    next();
+  },
+
   setup() {
     const isLoggedIn = computed(() => !!localStorage.getItem('access_token'));
 
