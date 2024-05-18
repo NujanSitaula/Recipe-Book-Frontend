@@ -59,6 +59,13 @@ export default defineComponent({
   }
   
 }
+.active-link {
+
+  border-bottom: 2px solid #2563EB;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
 </style>
 
 <template>
