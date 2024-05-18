@@ -375,12 +375,18 @@
                   </footer>
                   <p class="text-gray-500">{{ comment.comment }}</p>
                   <div class="flex items-center mt-4 space-x-4">
-                    <button type="button" class="flex items-center text-sm text-gray-500 hover:underline font-medium">
+                    <button  @click="showReplyField(comment.id)" type="button" class="flex items-center text-sm text-gray-500 hover:underline font-medium">
                       <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
                       </svg>
                       Reply
                     </button>
+                    <div v-if="replyingTo === comment.id">
+                      <form @submit.prevent="postReply(comment.id)">
+                        <input v-model="replyContent" type="text" placeholder="Write a reply..." required>
+                        <button type="submit">Post Reply</button>
+                      </form>
+                    </div>
                   </div>
                 </article>
                 <div v-for="reply in comment.replies" :key="reply.id">
@@ -539,7 +545,29 @@ const route = useRoute();
 const recipe = ref(null);
 const isLoading = ref(false); // Add this line
 const comments = ref(null);
+const replyingTo = ref(null);
+const replyContent = ref('');
 axios.defaults.baseURL = config.BASE_URL;
+
+const showReplyField = (commentId) => {
+  replyingTo.value = commentId;
+};
+
+const postReply = async (commentId) => {
+  try {
+    const response = await axios.post(`/comment/${commentId}/reply`, {reply: replyContent.value});
+    if (response.data.status === 'success') {
+      // Add the new reply to the comment's replies in the local state
+      const comment = comments.value.find(comment => comment.id === commentId);
+      comment.replies.push(response.data.data[0]);
+      // Clear the reply field and close it
+      replyContent.value = '';
+      replyingTo.value = null;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
 
 onMounted(async () => {
   isLoading.value = true; // Set isLoading to true when data fetching starts
