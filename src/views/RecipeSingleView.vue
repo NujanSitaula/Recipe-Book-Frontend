@@ -10,6 +10,13 @@
               <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
               Back to Recipes
             </a>
+            <div v-if="isLoading">
+              <div role="status" class="max-w-sm animate-pulse">
+                <div class="h-10 bg-gray-200 rounded-full w-96 mb-4"></div>
+                <div class="h-2 bg-gray-200 rounded-full max-w-[360px] mb-2.5"></div>
+                <span class="sr-only">Loading...</span>
+              </div>
+              </div>
 
             <h2 class="text-3xl font-bold lg:text-5xl">{{ recipe.name }}</h2>
 
@@ -19,7 +26,6 @@
               </a>
               <p class="text-xs sm:text-sm text-gray-800">January 18, 2023</p>
             </div>
-
             <!-- Team -->
             <div class="max-w-5xl mx-auto">
               <!-- Grid -->
@@ -564,9 +570,11 @@ import {config} from "../../config.js";
 
 const route = useRoute();
 const recipe = ref(null);
+const isLoading = ref(false); // Add this line
 axios.defaults.baseURL = config.BASE_URL;
 
 onMounted(async () => {
+  isLoading.value = true; // Set isLoading to true when data fetching starts
   try {
     const response = await axios.get(`/recipe/${route.params.id}`);
     if (response.data.status === 'success') {
@@ -575,8 +583,11 @@ onMounted(async () => {
     }
   } catch (error) {
     console.error('Error:', error);
+  } finally {
+    isLoading.value = false; // Set isLoading to false when data fetching is completed
   }
 });
+
 const accordionItems = document.querySelectorAll('.accordion-item');
 
 accordionItems.forEach(item => {
