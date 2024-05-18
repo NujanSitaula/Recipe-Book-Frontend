@@ -97,6 +97,10 @@ export default defineComponent({
       <p class="pb-2">Saved Recipes</p>
     </router-link>
 
+    <router-link to="/profile/addRecipes" active-class="active-link" class="inline-flex mr-8">
+      <p class="pb-2">Add Recipes</p>
+    </router-link>
+
     <router-link to="/profile/password" active-class="active-link" class="inline-flex mr-8">
       <p class="pb-2">Password</p>
     </router-link>
