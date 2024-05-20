@@ -2,15 +2,17 @@
 import {defineComponent, ref, watchEffect} from 'vue';
 import { useUserStore } from '@/stores/userStore';
 import Toaster from "@/views/Toaster.vue";
-
+import Modal from "@/components/profile/ProfileDetailsView.vue";
 
 export default defineComponent({
   name: 'ProfileView',
-  components: {Toaster},
+  components: {Toaster, Modal},
+
   setup() {
     const userStore = useUserStore();
     const currentTab = ref('profile');
     const user = ref(null);
+    const isModalOpen = ref(false); // Add this line
 
     watchEffect(() => {
       if (userStore.user === null) {
@@ -20,15 +22,24 @@ export default defineComponent({
       }
     });
 
+    const openModal = () => { // Add this method
+      isModalOpen.value = true;
+    };
+
+    const closeModal = () => { // Add this method
+      isModalOpen.value = false;
+    };
+
     return {
       userStore,
       currentTab,
-      user
+      user,
+      isModalOpen, // Add this line
+      openModal, // Add this line
+      closeModal // Add this line
     };
   }
 });
-
-
 </script>
 <style scoped>
 
@@ -82,19 +93,29 @@ export default defineComponent({
         <p class="text-2xl font-semibold text-gray-800">{{userStore.user && userStore.user.data ? userStore.user.data.firstName : 'Loading Name...'}} {{userStore.user && userStore.user.data ? userStore.user.data.lastName : 'Loading Name...'}}</p>
       <p class="text-l font-semibold text-gray-500">@its_kripa</p>
       </div>
+        <div class="flex justify-end ml-2 mt-3">
+          <button class="flex p-2.5 bg-blue-500 rounded-xl hover:rounded-3xl hover:bg-blue-500 transition-all duration-300 text-white" @click="openModal">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+          </button>
+          <Modal v-if="isModalOpen" :isOpen="isModalOpen" @close="closeModal" />
+        </div>
       </div>
+
       
 
     </div>
     
   </div>
   <nav class="mt-7 ml-5">
-    <router-link to="/profile/details"  active-class="active-link" class="inline-flex mr-8">
-      <p class="pb-2">Profile Details</p>
-    </router-link>
 
     <router-link to="/profile/saved" active-class="active-link" class="inline-flex mr-8">
       <p class="pb-2">Saved Recipes</p>
+    </router-link>
+
+    <router-link to="/profile/addRecipes" active-class="active-link" class="inline-flex mr-8">
+      <p class="pb-2">Add Recipes</p>
     </router-link>
 
     <router-link to="/profile/password" active-class="active-link" class="inline-flex mr-8">
@@ -104,7 +125,7 @@ export default defineComponent({
     <router-link to="/profile/settings" active-class="active-link" class="inline-flex mr-8">
       <p class="pb-2">Preferences</p>
     </router-link>
-</nav>
+  </nav>
       <hr>
 <router-view></router-view>
 </div>
