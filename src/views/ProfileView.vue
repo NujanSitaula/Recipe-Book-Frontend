@@ -80,13 +80,12 @@ export default defineComponent({
 </style>
 
 <template>
-
   <!-- <div class="mt-7 w-full max-w-[85rem] sm:px-6 lg:px-8 mx-auto relative bg-white shadow-sm rounded-lg border"> -->
     <div class="overflow-hidden">
     <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
-  <div class="mb-28 main">
+  <div class="mb-20 main">
     <div class="w-full h-52 bg-gray-300 shadow-lg shadow-gray-100" style="background-image: url('https://marketplace.canva.com/EAFIddmg8b0/1/0/1600w/canva-white-minimalist-corporate-personal-profile-linkedin-banner-t5iKXmGyEtU.jpg'); background-position: center; background-size: cover;"></div>
-    <div class="flex flex-col items-center absolute ml-5 pro_main" style="margin-top: -40px;">
+    <div class="flex flex-col absolute ml-5 pro_main" style="margin-top: -40px;">
       <div class=" rounded-full flex items-center justify-center pro_image">
         <img class="w-28 h-28 rounded-full border-2 border-white image " :src="userStore.user && userStore.user.data ? userStore.user.data.image : 'Dwfault.png'" alt="Profile Picture">
         <div class="mt-7 ml-2 profile-name">
@@ -94,21 +93,47 @@ export default defineComponent({
       <p class="text-l font-semibold text-gray-500">@its_kripa</p>
       </div>
         <div class="flex justify-end ml-2 mt-3">
-          <button class="flex p-2.5 bg-blue-500 rounded-xl hover:rounded-3xl hover:bg-blue-500 transition-all duration-300 text-white" @click="openModal">
+          <button class="flex p-2.5 rounded-xl hover:rounded-3xl hover:bg-gray-100 transition-all duration-300 text-black" @click="openModal">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
             </svg>
           </button>
           <Modal v-if="isModalOpen" :isOpen="isModalOpen" @close="closeModal" />
         </div>
+
       </div>
 
-      
+    </div>
+    <div class="flex justify-end mt-1 ml-2">
+      <button type="button" class="flex p-2  hover:rounded-3xl rounded-3xl text-gray-800 hover:bg-gray-100 transition duration-300" data-hs-overlay="#hs-overlay-right">
+        <svg class="h-6 w-6 text-black-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v22H0z"/>  <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />  <circle cx="12" cy="12" r="3" /></svg>
+        <span class="sr-only">Icon description</span>
+        <p class="ml-1">Settings</p>
+      </button>
 
     </div>
-    
   </div>
-  <nav class="mt-7 ml-5">
+
+      <div id="hs-overlay-right" class="hs-overlay hs-overlay-open:translate-x-0 hidden translate-x-full fixed top-0 end-0 transition-all duration-300 transform h-full max-w-xl w-full z-[80] bg-white border-sx" tabindex="-1">
+        <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
+          <h3 class="font-bold text-gray-800">
+            Settings
+          </h3>
+          <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none  " data-hs-overlay="#hs-overlay-right">
+            <span class="sr-only">Close modal</span>
+            <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 6 6 18"></path>
+              <path d="m6 6 12 12"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="p-4">
+          <p class="text-gray-800">
+            Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+          </p>
+        </div>
+      </div>
+      <nav class="mt-7 ml-5">
 
     <router-link to="/profile/saved" active-class="active-link" class="inline-flex mr-8">
       <p class="pb-2">Saved Recipes</p>
@@ -131,4 +156,8 @@ export default defineComponent({
 </div>
   </div>
 </template>
+
+<style>
+
+</style>
 

@@ -18,7 +18,7 @@
   <!-- Include Toaster component -->
   <Toaster ref="toaster" />
   <div v-if="isOpen" id="hs-bg-gray-on-hover-cards" class="fixed inset-0 z-[80] overflow-x-hidden overflow-y-auto flex justify-center items-center bg-gray-900 bg-opacity-50" @click.self="closeModal">
-    <div class="bg-white border shadow-sm rounded-xl w-full sm:max-w-4xl m-3 p-4" :class="{ 'closing': isClosing }" @click.stop>
+    <div class="bg-white border shadow-sm rounded-xl w-full sm:max-w-2xl m-6" :class="{ 'closing': isClosing }" @click.stop>
       <div class="flex justify-between items-center py-3 px-4 border-b">
         <h3 class="font-bold text-gray-800">
           Edit Profile
@@ -37,38 +37,37 @@
             <h3 class="my-6">Update your photo and personal details here</h3>
             <hr />
             <form @submit.prevent="submitForm">
-              <div class="grid grid-cols-4 my-8 input-field">
+              <div class="grid grid-cols-3 my-6 input-field">
                 <div class="col-span-1 w-30">
                   <h1 class="text-xl font-medium text-gray-800">Name</h1>
                 </div>
-                <div class="col-span-1 px-6">
+                <div class="col-span-1 px-4">
                   <input type="text" id="firstName" v-model="firstName" name="firstName" placeholder="Firstname" class="w-full h-11 px-2 py-3 text-sm text-gray-800 bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" />
                 </div>
-                <div class="col-span-1 px-6">
+                <div class="col-span-1 px-4">
                   <input type="text" id="lastName" v-model="lastName" name="lastName" placeholder="Lastname"  class="w-full h-11 px-2 py-3 text-sm text-gray-800 bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"/>
                 </div>
               </div>
               <hr />
-              <div class="grid grid-cols-4 my-8 input-field">
+              <div class="grid grid-cols-3 my-4 input-field">
                 <div class="col-span-1 w-30">
                   <h1 class="text-xl font-medium text-gray-800">Email</h1>
                 </div>
-                <div class="col-span-2 px-6">
+                <div class="col-span-2 px-4">
                   <input type="email" id="email" v-model="email" name="email" disabled class="w-full h-11 px-2 py-3 text-sm text-gray-800 bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 disabled:opacity-50"/>
                 </div>
               </div>
               <hr />
-              <div class="grid grid-cols-4 my-8 input-field">
+              <div class="grid grid-cols-3 my-6 input-field">
                 <div class="col-span-1 w-30">
                   <h1 class="text-xl font-medium text-gray-800">Your Photo</h1>
                 </div>
-                <div class="col-span-2 px-6 flex">
-                  <img class="w-24 h-24 rounded-full border-2 border-white" :src="tempImageUrl" alt="Profile Picture"/>
+                <div class="col-span-2 px-4 flex">
+                  <img class="w-20 h-20 rounded-full border-2 border-white" :src="tempImageUrl" alt="Profile Picture"/>
                   <div class="flex items-center justify-center w-full ml-10">
-                    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
+                    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-44 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
                       <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.
-                    5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                       </svg>
                       <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                       <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
@@ -77,6 +76,7 @@
                   </div>
                 </div>
               </div>
+              <hr>
               <div class="flex justify-end mt-5">
                 <button class="px-4 py-2 mr-2 text-black border-2 rounded-lg" type="reset">Cancel</button>
                 <button class="px-4 py-2 text-sm text-white bg-blue-500 rounded-lg" type="submit">Save</button>
