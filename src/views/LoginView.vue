@@ -8,7 +8,7 @@
           <h1 class="block text-2xl font-bold text-gray-800">Sign in</h1>
           <p class="mt-2 text-sm text-gray-600">
             Don't have an account yet?
-            <a class="text-blue-600 decoration-2 hover:underline font-medium" href="../examples/html/signup.html">
+            <a class="text-primary-100 decoration-2 hover:underline font-medium" href="../examples/html/signup.html">
               Sign up here
             </a>
           </p>
@@ -49,7 +49,7 @@
               <div>
                 <div class="flex justify-between items-center">
                   <label for="password" class="block text-sm mb-2">Password</label>
-                  <a class="text-sm text-blue-600 decoration-2 hover:underline font-medium" href="../examples/html/recover-account.html">Forgot password?</a>
+                  <a class="text-sm text-primary-100 decoration-2 hover:underline font-medium" href="../examples/html/recover-account.html">Forgot password?</a>
                 </div>
                 <div class="relative">
                   <input type="password" v-model="data.password" id="password" name="password" class="py-3 px-4 block w-full border-0 border-gray-200 shadow-sm ring-inset ring-gray-300 ring-1 rounded-lg text-sm focus:border-blue-5 focus:ring-blue-5 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="password-error">
@@ -66,7 +66,7 @@
               <!-- Checkbox -->
               <div class="flex items-center">
                 <div class="flex">
-                  <input id="remember-me" name="remember-me" type="checkbox" class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500">
+                  <input id="remember-me" name="remember-me" type="checkbox" class="shrink-0 mt-0.5 border-gray-200 rounded text-primary-100 focus:ring-blue-500">
                 </div>
                 <div class="ms-3">
                   <label for="remember-me" class="text-sm">Remember me</label>
@@ -74,7 +74,7 @@
               </div>
               <!-- End Checkbox -->
 
-              <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Sign in</button>
+              <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Sign in</button>
             </div>
           </form>
           <!-- End Form -->

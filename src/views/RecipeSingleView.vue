@@ -195,7 +195,7 @@
             <p class="text-lg text-gray-800">As we've grown, we've seen how Preline has helped companies such as Spotify, Microsoft, Airbnb, Facebook, and Intercom bring their designers closer together to create amazing things. We've also learned that when the culture of
               sharing is brought in earlier, the better teams adapt and communicate with one another.</p>
 
-            <p class="text-lg text-gray-800">That's why we are excited to share that we now have a <a class="text-blue-600 decoration-2 hover:underline font-medium" href="#">free version of Preline</a>, which will allow individual designers, startups and other small teams
+            <p class="text-lg text-gray-800">That's why we are excited to share that we now have a <a class="text-primary-100 decoration-2 hover:underline font-medium" href="#">free version of Preline</a>, which will allow individual designers, startups and other small teams
               a chance to create a culture of openness early on.</p>
 
             <blockquote class="text-center p-4 sm:px-7">
@@ -222,8 +222,8 @@
             </div>
 
             <ul class="list-disc list-outside space-y-5 ps-5 text-lg text-gray-800">
-              <li class="ps-2">Preline allows us to collaborate in real time and is a really great way for leadership on the team to stay up-to-date with what everybody is working on," <a class="text-blue-600 decoration-2 hover:underline font-medium" href="#">said</a>                                Stewart Scott-Curran, Intercom's Director of Brand Design.</li>
-              <li class="ps-2">Preline opened a new way of sharing. It's a persistent way for everyone to see and absorb each other's work," said David Scott, Creative Director at <a class="text-blue-600 decoration-2 hover:underline font-medium" href="#">Eventbrite</a>.</li>
+              <li class="ps-2">Preline allows us to collaborate in real time and is a really great way for leadership on the team to stay up-to-date with what everybody is working on," <a class="text-primary-100 decoration-2 hover:underline font-medium" href="#">said</a>                                Stewart Scott-Curran, Intercom's Director of Brand Design.</li>
+              <li class="ps-2">Preline opened a new way of sharing. It's a persistent way for everyone to see and absorb each other's work," said David Scott, Creative Director at <a class="text-primary-100 decoration-2 hover:underline font-medium" href="#">Eventbrite</a>.</li>
             </ul>
 
             <p class="text-lg text-gray-800">Small teams and individual designers need a space where they can watch the design process unfold, both for themselves and for the people they work with – no matter if it's a fellow designer, product manager, developer or client.
@@ -469,7 +469,7 @@
 
             <div class="grow">
               <div class="flex justify-end">
-                <button type="button" class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                <button type="button" class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                   <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                     <circle cx="9" cy="7" r="4" />
@@ -487,7 +487,7 @@
             <!-- Media -->
             <a class="group flex items-center gap-x-6" href="#">
               <div class="grow">
-                                <span class="text-sm font-bold text-gray-800 group-hover:text-blue-600">
+                                <span class="text-sm font-bold text-gray-800 group-hover:text-primary-100">
                 5 Reasons to Not start a UX Designer Career in 2022/2023
               </span>
               </div>
@@ -501,7 +501,7 @@
             <!-- Media -->
             <a class="group flex items-center gap-x-6" href="#">
               <div class="grow">
-                                <span class="text-sm font-bold text-gray-800 group-hover:text-blue-600">
+                                <span class="text-sm font-bold text-gray-800 group-hover:text-primary-100">
                 If your UX Portfolio has this 20% Well Done, it Will Give You an 80% Result
               </span>
               </div>
@@ -515,7 +515,7 @@
             <!-- Media -->
             <a class="group flex items-center gap-x-6" href="#">
               <div class="grow">
-                                <span class="text-sm font-bold text-gray-800 group-hover:text-blue-600">
+                                <span class="text-sm font-bold text-gray-800 group-hover:text-primary-100">
                 7 Principles of Icon Design
               </span>
               </div>

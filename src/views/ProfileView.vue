@@ -42,7 +42,8 @@ export default defineComponent({
       isModalOpen,
       openModal,
       closeModal,
-      toaster // Add this line
+      toaster,// Add this line
+
     };
   },
   data() {
@@ -53,25 +54,33 @@ export default defineComponent({
       userStore: useUserStore(),
       currentTab: 'profile',
       user: null,
-      isModalOpen: false
+      isModalOpen: false,
+      buttonState: 'default',
     };
   },
   methods: {
     validateForm() {
+
       if (!this.currentPassword) {
-        this.toaster.showToast('Current password is required', 'failure');
+        this.currentPasswordError = 'Current password is required';
         return false;
+      } else {
+        this.currentPasswordError = ''; // Clear the error message when the input field is not empty
       }
 
+      // ... other validation checks
+
+      return true;
       if (this.newPassword !== this.confirmPassword) {
         this.toaster.showToast("Confirm password do not match", 'failure');
         return false;
       }
-
-      // If all checks pass, return true
-      return true;
+;
     },
     submitForm() {
+      this.buttonState = 'loading'; // Set button state to loading
+
+
       if (this.validateForm()) {
         const token = localStorage.getItem('access_token');
         const formData = {
@@ -93,6 +102,12 @@ export default defineComponent({
               this.currentPassword = '';
               this.newPassword = '';
               this.confirmPassword = '';
+
+              this.buttonState = 'success'; // Set button state to success
+              setTimeout(() => {
+                this.buttonState = 'default';
+              }, 2000);
+
             })
             .catch(error => {
               if (error.response && error.response.data) {
@@ -100,7 +115,11 @@ export default defineComponent({
               } else {
                 alert('An error occurred');
               }
+              this.buttonState = 'default'; // Set button state back to default
+
             });
+      } else {
+        this.buttonState = 'default'; // Set button state back to default
       }
     },
     openModal() {
@@ -145,8 +164,7 @@ export default defineComponent({
   
 }
 .active-link {
-
-  border-bottom: 2px solid #2563EB;
+  border-bottom: 2px solid #DB2B39;
   padding-right: 5px;
   padding-left: 5px;
 }
@@ -191,7 +209,7 @@ export default defineComponent({
 
       <div id="hs-overlay-right" class="hs-overlay hs-overlay-open:translate-x-0 hidden translate-x-full fixed top-0 end-0 transition-all duration-300 transform h-full overflow-auto w-[448px] z-[80] bg-white border-sx" tabindex="-1">
         <div class="flex justify-between items-center py-3 px-4 border-b ">
-          <h3 class="font-bold text-gray-800">
+          <h3 class="text-xl font-bold text-gray-800">
             Settings
           </h3>
           <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none  " data-hs-overlay="#hs-overlay-right">
@@ -204,34 +222,46 @@ export default defineComponent({
         </div>
         <div class="p-4">
           <div class="">
-            <h1 class="font-bold">Password</h1>
+            <h1 class="font-medium">Password</h1>
             <form action="#" @submit.prevent="submitForm">
               <div class="grid grid-cols-1 my-6 input-field">
                 <div class="col-span-1 w-30">
-                  <p class="font-small text-gray-800 ">Current Password</p>
-                  <input type="password" id="currentPassword" name="currentPassword" v-model="currentPassword" class="w-full h-11 px-2 py-3 text-sm text-gray-800 bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" />
+                  <input type="password" id="currentPassword" name="currentPassword" v-model="currentPassword" placeholder="Current Password" class="w-full h-11 px-2 py-3 text-sm text-gray-800 bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" />
                 </div>
               </div>
               <div class="grid grid-cols-1 my-6 input-field">
                 <div class="col-span-1 w-30">
-                  <p class="text-l font-small text-gray-800 ">New Password</p>
-                  <input type="password" id="newPassword" name="newPassword" v-model="newPassword" class="w-full h-11 px-2 py-3 text-sm text-gray-800 bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" />
+                  <input type="password" id="newPassword" name="newPassword" v-model="newPassword" placeholder="New Password" class="w-full h-11 px-2 py-3 text-sm text-gray-800 bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" />
                 </div>
               </div>
               <div class="grid grid-cols-1 my-6 input-field">
                 <div class="col-span-1 w-30">
-                  <p class="text-l font-small text-gray-800 ">Confirm Password</p>
-                  <input type="password" id="confirmPassword" name="confirmPassword" v-model="confirmPassword" class="w-full h-11 px-2 py-3 text-sm text-gray-800 bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" />
+                  <input type="password" id="confirmPassword" name="confirmPassword" v-model="confirmPassword" placeholder="Confirm Password" class="w-full h-11 px-2 py-3 text-sm text-gray-800 bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" />
                 </div>
               </div>
               <div class="mt-5">
 
-                <button class="w-full px-4 py-2 text-sm text-white bg-blue-500 rounded-lg" type="button" @click="submitForm">Update Password</button>
+                <button class="w-full px-4 py-2 text-sm rounded-lg transition duration-75" :class="{'bg-primary-100 text-white': buttonState === 'default', 'bg-gray-500 text-white': buttonState === 'loading', 'bg-green-500 text-white': buttonState === 'success'}" type="button" @click="submitForm">
+                  <span v-if="buttonState === 'default'">Update Password</span>
+                  <span v-else-if="buttonState === 'loading'">Updating...</span>
+                  <span v-else-if="buttonState === 'success'">Success</span>
+                </button>
               </div>
             </form>
           </div>
 
+
         </div>
+        <div class="p-4">
+          <div class="">
+            <h1 class="font-medium">Notification</h1>
+            
+          </div>
+
+
+        </div>
+
+
       </div>
       <nav class="mt-7 ml-5">
 
@@ -241,10 +271,6 @@ export default defineComponent({
 
     <router-link to="/profile/addRecipes" active-class="active-link" class="inline-flex mr-8">
       <p class="pb-2">Add Recipes</p>
-    </router-link>
-
-    <router-link to="/profile/password" active-class="active-link" class="inline-flex mr-8">
-      <p class="pb-2">Password</p>
     </router-link>
 
     <router-link to="/profile/settings" active-class="active-link" class="inline-flex mr-8">
