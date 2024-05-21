@@ -47,7 +47,7 @@
 
               </div>
               <div class="flex-[0_0_auto] ">
-                <a class="size-[46px] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">
+                <a class="size-[46px] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">
                   <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                 </a>
               </div>
@@ -110,7 +110,7 @@
                 <p class="mt-3 text-gray-600">
                   {{ item.description }}
                 </p>
-                <p class="mt-4 inline-flex items-center gap-x-1 text-blue-600 decoration-2 hover:underline font-medium">
+                <p class="mt-4 inline-flex items-center gap-x-1 text-primary-100 decoration-2 hover:underline font-medium">
                   <a :href="`/recipe/${item.id}`">Read more</a>
                   <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                 </p>
@@ -157,7 +157,7 @@
             <img width="30" class="inline" src ="https://svgshare.com/i/15tx.svg" title="Dairy Free">
           
         </span>
-        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
              Time: {{ recipe.prep_time }} Min | Serving: {{ recipe.servings }} | Difficulty: {{ recipe.difficulty }}
         </span>
 
@@ -187,7 +187,7 @@
           <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
         </div>
         <div class="p-4 md:p-6">
-        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
              Time: 30 Min | Serving: 2 | Difficulty: Easy
         </span>
           <h3 class="text-xl font-semibold text-gray-800">
@@ -214,7 +214,7 @@
           <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
         </div>
         <div class="p-4 md:p-6">
-        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
              Time: 30 Min | Serving: 2 | Difficulty: Easy
         </span>
           <h3 class="text-xl font-semibold text-gray-800">
@@ -258,7 +258,7 @@
           <div class="flex items-center">
             <img class="size-[38px] rounded-full" src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image Description">
             <div class="ms-3">
-              <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+              <h3 class="group-hover:text-primary-100 font-semibold text-gray-800">
                 {{ category.name }}
               </h3>
             </div>
@@ -279,7 +279,7 @@
           <div class="flex items-center">
             <img class="size-[38px] rounded-full" src="https://images.unsplash.com/photo-1596797038530-2c107229654b?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image Description">
             <div class="ms-3">
-              <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+              <h3 class="group-hover:text-primary-100 font-semibold text-gray-800">
                 Indian
               </h3>
             </div>
@@ -299,7 +299,7 @@
           <div class="flex items-center">
             <img class="size-[38px] rounded-full" src="https://images.unsplash.com/photo-1485963631004-f2f00b1d6606?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image Description">
             <div class="ms-3">
-              <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+              <h3 class="group-hover:text-primary-100 font-semibold text-gray-800">
                 Meditteranean
               </h3>
             </div>
@@ -319,7 +319,7 @@
           <div class="flex items-center">
             <img class="size-[38px] rounded-full" src="https://plus.unsplash.com/premium_photo-1664648184173-efaaeccd8548?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image Description">
             <div class="ms-3">
-              <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+              <h3 class="group-hover:text-primary-100 font-semibold text-gray-800">
                 Japanese
               </h3>
             </div>
@@ -339,7 +339,7 @@
           <div class="flex items-center">
             <img class="size-[38px] rounded-full" src="https://junifoods.com/wp-content/uploads/2023/12/Chicken-momo-restaurant-style-1024x693.jpg" alt="Image Description">
             <div class="ms-3">
-              <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+              <h3 class="group-hover:text-primary-100 font-semibold text-gray-800">
                 Nepalese
               </h3>
             </div>
@@ -359,7 +359,7 @@
           <div class="flex items-center">
             <img class="size-[38px] rounded-full" src="https://images.unsplash.com/photo-1566328386401-b2980125f6c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80" alt="Image Description">
             <div class="ms-3">
-              <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+              <h3 class="group-hover:text-primary-100 font-semibold text-gray-800">
                 Tibetan
               </h3>
             </div>
@@ -379,7 +379,7 @@
           <div class="flex items-center">
             <img class="size-[38px] rounded-full" src="https://images.unsplash.com/photo-1465014925804-7b9ede58d0d7?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image Description">
             <div class="ms-3">
-              <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+              <h3 class="group-hover:text-primary-100 font-semibold text-gray-800">
                 Continental
               </h3>
             </div>
@@ -412,7 +412,7 @@
           <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
         </div>
         <div class="p-4 md:p-6">
-        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
              Time: 30 Min | Serving: 2 | Difficulty: Easy
         </span>
           <h3 class="text-xl font-semibold text-gray-800">
@@ -439,7 +439,7 @@
           <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
         </div>
         <div class="p-4 md:p-6">
-        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
              Time: 30 Min | Serving: 2 | Difficulty: Easy
         </span>
           <h3 class="text-xl font-semibold text-gray-800">
@@ -466,7 +466,7 @@
           <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
         </div>
         <div class="p-4 md:p-6">
-        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
              Time: 30 Min | Serving: 2 | Difficulty: Easy
         </span>
           <h3 class="text-xl font-semibold text-gray-800">
@@ -493,7 +493,7 @@
           <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
         </div>
         <div class="p-4 md:p-6">
-        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
              Time: 30 Min | Serving: 2 | Difficulty: Easy
         </span>
           <h3 class="text-xl font-semibold text-gray-800">
@@ -520,7 +520,7 @@
           <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
         </div>
         <div class="p-4 md:p-6">
-        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
              Time: 30 Min | Serving: 2 | Difficulty: Easy
         </span>
           <h3 class="text-xl font-semibold text-gray-800">
@@ -547,7 +547,7 @@
           <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
         </div>
         <div class="p-4 md:p-6">
-        <span class="block mb-1 text-xs font-semibold uppercase text-blue-600">
+        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
              Time: 30 Min | Serving: 2 | Difficulty: Easy
         </span>
           <h3 class="text-xl font-semibold text-gray-800">
