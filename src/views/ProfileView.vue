@@ -253,12 +253,13 @@ export default defineComponent({
 
         </div>
         <div class="p-4">
-          <div class="grid grid-cols-2">
-            <h1 class="font-medium">Notification</h1>
+          <div class="">
+            <h1 class="font-medium my-3">Notification</h1>
             <!-- Toggle -->
-            <div>
-              <p>Promotional updates</p>
-              <div>
+            <hr>
+            <div class="grid grid-cols-2 mt-5">
+              <p>Recipe Recommendations</p>
+              <div class="flex justify-end">
 
                 <label for="toggle-count-switch" class="inline-block p-2">
                 </label>
@@ -268,15 +269,104 @@ export default defineComponent({
               </div>
             </div>
             <div class="flex justify-center mb-4">
-
             </div>
+            <hr>
+            <div class="grid grid-cols-2 mt-5">
+              <p>Friends Activities</p>
+              <div class="flex justify-end">
+
+                <label for="toggle-count-switch" class="inline-block p-2">
+                </label>
+                <input id="toggle-count-switch" name="toggle-count-switch" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
+                <label for="toggle-count-switch" class="inline-block p-2">
+                </label>
+              </div>
+            </div>
+            <div class="flex justify-center mb-4">
+            </div>
+            <hr>
+            <div class="grid grid-cols-2 mt-5">
+              <p>Promotional updates</p>
+              <div class="flex justify-end">
+
+                <label for="toggle-count-switch" class="inline-block p-2">
+                </label>
+                <input id="toggle-count-switch" name="toggle-count-switch" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
+                <label for="toggle-count-switch" class="inline-block p-2">
+                </label>
+              </div>
+            </div>
+            <div class="flex justify-center mb-4">
+            </div>
+            <hr>
+            <div class="grid grid-cols-2 mt-5">
+              <p>System Notifications</p>
+              <div class="flex justify-end">
+
+                <label for="toggle-count-switch" class="inline-block p-2">
+                </label>
+                <input id="toggle-count-switch" name="toggle-count-switch" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
+                <label for="toggle-count-switch" class="inline-block p-2">
+                </label>
+              </div>
+            </div>
+            <div class="flex justify-center mb-4">
+            </div>
+            <hr>
           </div>
-
-
         </div>
 
+        <div class="p-4">
+          <div class="">
+            <h1 class="font-medium my-3">Preferences</h1>
+        <h3 class="my-3">Type of cook</h3>
+        <ul class="grid w-full gap-6 md:grid-cols-3">
+          <li>
+            <input type="radio" id="hosting-rookie" name="hosting" value="hosting-small" class="hidden peer" required />
+            <label for="hosting-rookie" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer ">
+              <div class="block">
+                <div class="w-full text-lg font-semibold">
+                  <img src="https://svgshare.com/i/16HV.svg"/>
+                </div>
+                <div class="w-full text-center pt-2">Rookie</div>
+              </div>
+            </label>
+          </li>
+          <li>
+            <input type="radio" id="hosting-midbie" name="hosting" value="hosting-small" class="hidden peer" required />
+            <label for="hosting-midbie" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer ">
+              <div class="block">
+                <div class="w-full text-lg font-semibold"></div>
+                <img src="https://svgshare.com/i/16H8.svg"/>
+                <div class="w-full text-center pt-2">Midbie</div>
+              </div>
+            </label>
+          </li>
+          <li>
+            <input type="radio" id="hosting-master" name="hosting" value="hosting-big" class="hidden peer">
+            <label for="hosting-master" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer">
+              <div class="block">
+                <div class="w-full text-lg font-semibold"></div>
+                <img src="https://svgshare.com/i/16JR.svg"/>
+                <div class="w-full text-center pt-2">Master</div>
+              </div>
 
+            </label>
+          </li>
+        </ul>
+            </div>
+          </div>
+        <div class="p-4">
+          <div class="">
+            <h1 class="font-medium my-3">Security</h1>
+            <h3 class="my-3">Account Deactivation</h3>
+            <button class="w-full px-4 py-2 text-sm rounded-lg transition duration-75 bg-red-500 text-white" type="button">
+              <span>Deactivate</span>
+            </button>
+          </div>
+        </div>
       </div>
+
       <nav class="mt-7 ml-5">
 
     <router-link to="/profile/saved" active-class="active-link" class="inline-flex mr-8">
