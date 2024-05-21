@@ -9,7 +9,7 @@
             Explore, Create, and Share Delicious Recipes
           </p>
           <h1 class="text-3xl text-gray-800 font-bold sm:text-5xl lg:text-6xl lg:leading-tight">
-            Start Your Gastronomic <span class="text-blue-500">Adventure</span>
+            Start Your Gastronomic <span class="text-primary">Adventure</span>
           </h1>
         </div>
         <!-- End Title -->
@@ -580,12 +580,12 @@
         
         <div class="grid-cols-6"> 
   <RouterLink v-if="!isLoggedIn" to="/register"> 
-    <button class="py-3 px-4 inline-flex justify-center float-end gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"> 
+    <button class="py-3 px-4 inline-flex justify-center float-end gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary text-secondary-100 hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
       Register Now
     </button>
   </RouterLink>
   <RouterLink v-else to="/add-recipe"> 
-    <button class="py-3 px-4 inline-flex justify-center float-end gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"> 
+    <button class="py-3 px-4 inline-flex justify-center float-end gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200 disabled:opacity-50 disabled:pointer-events-none">
       Add Recipe
     </button>
   </RouterLink>
