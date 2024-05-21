@@ -253,9 +253,23 @@ export default defineComponent({
 
         </div>
         <div class="p-4">
-          <div class="">
+          <div class="grid grid-cols-2">
             <h1 class="font-medium">Notification</h1>
-            
+            <!-- Toggle -->
+            <div>
+              <p>Promotional updates</p>
+              <div>
+
+                <label for="toggle-count-switch" class="inline-block p-2">
+                </label>
+                <input id="toggle-count-switch" name="toggle-count-switch" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
+                <label for="toggle-count-switch" class="inline-block p-2">
+                </label>
+              </div>
+            </div>
+            <div class="flex justify-center mb-4">
+
+            </div>
           </div>
 
 
