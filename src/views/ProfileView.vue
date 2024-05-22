@@ -18,7 +18,8 @@ export default defineComponent({
     const user = ref(null);
     const isModalOpen = ref(false);
     const toaster = ref(null);
-    const twoFactorEnabled = ref(false); // New reactive property for 2FA switch
+    const twoFactorEnabled = ref(false);
+    const privateAccountEnabled = ref(false);
 
     watchEffect(() => {
       if (userStore.user === null) {
@@ -45,6 +46,7 @@ export default defineComponent({
       closeModal,
       toaster,
       twoFactorEnabled,
+      privateAccountEnabled,
     };
   },
   data() {
@@ -58,7 +60,8 @@ export default defineComponent({
       isModalOpen: false,
       buttonState: 'default',
       settingEnabled: false,
-      twoFactorEnabled: false, // Initialize the twoFactorEnabled property
+      twoFactorEnabled: false,
+      privateAccountEnabled: false,
     };
   },
   methods: {
@@ -77,13 +80,37 @@ export default defineComponent({
           alert('Failed to fetch user data');
         }
 
-        this.user = response.data.data[0]; // Store the user data
+        this.user = response.data.data[0];
         localStorage.setItem('user', JSON.stringify(this.user));
-        this.twoFactorEnabled = this.user['2fa'] === 1; // Update the 2FA switch
+        this.twoFactorEnabled = this.user['2fa'] === 1;
+        this.privateAccountEnabled = this.user['private_account'] === 1;
       } catch (error) {
         this.error = error.message;
       } finally {
         this.isLoading = false;
+      }
+    },
+    async toggleSetting(settingKey, event) {
+      const enabled = event.target.checked ? 1 : 0;
+      const settingsUpdate = {};
+      settingsUpdate[settingKey] = enabled;
+
+      try {
+        const response = await axios.post('/user/setting', settingsUpdate, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          },
+        });
+
+        if (response.status !== 200) {
+          alert('Failed to update user settings');
+        }
+
+        this.user[settingKey] = enabled;
+        console.log(this.user);
+        localStorage.setItem('user', JSON.stringify(this.user));
+      } catch (error) {
+        alert('An error occurred while updating user settings');
       }
     },
     validateForm() {
@@ -97,11 +124,10 @@ export default defineComponent({
         return false;
       }
 
-      // If all checks pass, return true
       return true;
     },
     submitForm() {
-      this.buttonState = 'loading'; // Set button state to loading
+      this.buttonState = 'loading';
 
       if (this.validateForm()) {
         const token = localStorage.getItem('access_token');
@@ -120,12 +146,11 @@ export default defineComponent({
             .then(response => {
               this.toaster.showToast(response.data.message, 'success');
 
-              // Clear the fields
               this.currentPassword = '';
               this.newPassword = '';
               this.confirmPassword = '';
 
-              this.buttonState = 'success'; // Set button state to success
+              this.buttonState = 'success';
               setTimeout(() => {
                 this.buttonState = 'default';
               }, 2000);
@@ -137,11 +162,10 @@ export default defineComponent({
               } else {
                 alert('An error occurred');
               }
-              this.buttonState = 'default'; // Set button state back to default
-
+              this.buttonState = 'default';
             });
       } else {
-        this.buttonState = 'default'; // Set button state back to default
+        this.buttonState = 'default';
       }
     },
     openModal() {
@@ -152,8 +176,9 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.fetchUser(); // Fetch user data on component mount
-  }
+    this.fetchUser();
+  },
+
 });
 </script>
 <style scoped>
@@ -354,9 +379,7 @@ export default defineComponent({
             <div class="grid grid-cols-2 mt-5">
               <p>2 Factor Authentication</p>
               <div class="flex justify-end">
-                <label for="toggle-count-switch" class="inline-block p-2">
-                </label>
-                <input id="toggle-count-switch" name="toggle-count-switch" type="checkbox" v-model="twoFactorEnabled" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
+                <input type="checkbox"  v-model="twoFactorEnabled" @change="toggleSetting('2fa', $event)" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
                 <label for="toggle-count-switch" class="inline-block p-2">
                 </label>
               </div>
@@ -364,10 +387,7 @@ export default defineComponent({
             <div class="grid grid-cols-2 mt-5 mb-5">
               <p>Private Account</p>
               <div class="flex justify-end">
-
-                <label for="toggle-count-switch" class="inline-block p-2">
-                </label>
-                <input id="toggle-count-switch" name="toggle-count-switch" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
+                <input type="checkbox" v-model="privateAccountEnabled" @change="toggleSetting('private_account', $event)" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
                 <label for="toggle-count-switch" class="inline-block p-2">
                 </label>
               </div>
