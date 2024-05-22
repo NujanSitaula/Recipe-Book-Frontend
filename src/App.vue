@@ -11,7 +11,6 @@ watchEffect(() => {
   } else {
     // Store the user data in local storage for future use
     localStorage.setItem('user', JSON.stringify(userStore.user));
-    console.log(userStore.user.data.firstName);
   }
 });
 
@@ -20,6 +19,13 @@ const logout = () => {
 };
 </script>
 
+<style>
+@media (max-width: 700px){
+  .footer {
+    display: none;
+  }
+}
+</style>
 <template>
   <!-- ========== HEADER ========== -->
   <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white-900 border-b border-gray-700 text-sm py-2.5 sm:py-4">
@@ -133,7 +139,7 @@ const logout = () => {
 
   <!-- ========== FOOTER ========== -->
 
-  <footer class="mt-auto w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
+  <footer class="mt-auto w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto footer">
     <hr class="py-5">
     <!-- Grid -->
     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 mb-10">
