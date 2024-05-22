@@ -434,11 +434,11 @@ export default defineComponent({
       <p class="pb-2">Saved Recipes</p>
     </router-link>
 
-    <router-link to="/profile/addRecipes" active-class="active-link" class="inline-flex mr-8">
-      <p class="pb-2">Add Recipes</p>
+    <router-link to="/profile/setup-tfa" active-class="active-link" class="inline-flex mr-8">
+      <p class="pb-2">Setup 2FA</p>
     </router-link>
 
-    <router-link to="/profile/settings" active-class="active-link" class="inline-flex mr-8">
+    <router-link to="/" active-class="active-link" class="inline-flex mr-8">
       <p class="pb-2">Preferences</p>
     </router-link>
   </nav>
@@ -447,8 +447,3 @@ export default defineComponent({
 </div>
   </div>
 </template>
-
-<style>
-
-</style>
-
