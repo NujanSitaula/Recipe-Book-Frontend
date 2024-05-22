@@ -56,9 +56,30 @@ export default defineComponent({
       user: null,
       isModalOpen: false,
       buttonState: 'default',
+      notificationRecommendation: false,
     };
   },
   methods: {
+    async updateNotificationRecommendation() {
+      try {
+        const token = localStorage.getItem('access_token');
+        const response = await axios({
+          method: 'post',
+          url: '/user/setting/notification',
+          headers: { Authorization: `Bearer ${token}` },
+          data: { notificationRecommendation: this.notificationRecommendation },
+        });
+
+        if (response.status === 200) {
+          this.notificationRecommendation = response.data.notificationRecommendation;
+        } else {
+          console.log('Failed to update notification preference');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     validateForm() {
 
       if (!this.currentPassword) {
@@ -177,7 +198,7 @@ export default defineComponent({
     <div class="overflow-hidden">
     <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
   <div class="mb-20 main">
-    <div class="w-full h-52 bg-gray-300 shadow-lg shadow-gray-100" style="background-image: url('https://marketplace.canva.com/EAFIddmg8b0/1/0/1600w/canva-white-minimalist-corporate-personal-profile-linkedin-banner-t5iKXmGyEtU.jpg'); background-position: center; background-size: cover;"></div>
+    <div class="w-full h-52 bg-gray-300 shadow-lg shadow-gray-100" style="background-image: url('https://i.ibb.co/kGfJBj2/White-Minimalist-Corporate-Personal-Profile-Linked-In-Banner.png'); background-position: center; background-size: cover;"></div>
     <div class="flex flex-col absolute ml-5 pro_main" style="margin-top: -40px;">
       <div class=" rounded-full flex items-center justify-center pro_image">
         <img class="w-28 h-28 rounded-full border-2 border-white image " :src="userStore.user && userStore.user.data ? userStore.user.data.image : 'Dwfault.png'" alt="Profile Picture">
@@ -212,7 +233,7 @@ export default defineComponent({
           <h3 class="text-xl font-bold text-gray-800">
             Settings
           </h3>
-          <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none  " data-hs-overlay="#hs-overlay-right">
+          <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" data-hs-overlay="#hs-overlay-right">
             <span class="sr-only">Close modal</span>
             <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M18 6 6 18"></path>
@@ -305,7 +326,7 @@ export default defineComponent({
 
                 <label for="toggle-count-switch" class="inline-block p-2">
                 </label>
-                <input id="toggle-count-switch" name="toggle-count-switch" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
+                <input @change="updateNotificationRecommendation" v-model="notificationRecommendation" id="toggle-count-switch" name="toggle-count-switch" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
                 <label for="toggle-count-switch" class="inline-block p-2">
                 </label>
               </div>
