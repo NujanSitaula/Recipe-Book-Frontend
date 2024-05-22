@@ -62,6 +62,10 @@ export default defineComponent({
       settingEnabled: false,
       twoFactorEnabled: false,
       privateAccountEnabled: false,
+      recipeRecommendations: false,
+      friendsActivities: false,
+      promotionalUpdates: false,
+      systemNotifications: false,
     };
   },
   methods: {
@@ -84,6 +88,10 @@ export default defineComponent({
         localStorage.setItem('user', JSON.stringify(this.user));
         this.twoFactorEnabled = this.user['2fa'] === 1;
         this.privateAccountEnabled = this.user['private_account'] === 1;
+        this.recipeRecommendations = this.user['recipe_recommendation'] === 1;
+        this.friendsActivities = this.user['friends_activities'] === 1;
+        this.promotionalUpdates = this.user['promotional_updates'] === 1;
+        this.systemNotifications = this.user['system_notification'] === 1;
       } catch (error) {
         this.error = error.message;
       } finally {
@@ -321,7 +329,7 @@ export default defineComponent({
               <p>Recipe Recommendations</p>
               <div class="flex justify-end">
 
-                <input id="toggle-count-switch" name="toggle-count-switch" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
+                <input v-model="recipeRecommendations" @change="toggleSetting('recipe_recommendation', $event)" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
                 <label for="toggle-count-switch" class="inline-block p-2">
                 </label>
               </div>
@@ -332,10 +340,7 @@ export default defineComponent({
             <div class="grid grid-cols-2 mt-5">
               <p>Friends Activities</p>
               <div class="flex justify-end">
-
-                <label for="toggle-count-switch" class="inline-block p-2">
-                </label>
-                <input id="toggle-count-switch" name="toggle-count-switch" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
+                <input v-model="friendsActivities" @change="toggleSetting('friends_activities', $event)" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
                 <label for="toggle-count-switch" class="inline-block p-2">
                 </label>
               </div>
@@ -347,9 +352,7 @@ export default defineComponent({
               <p>Promotional updates</p>
               <div class="flex justify-end">
 
-                <label for="toggle-count-switch" class="inline-block p-2">
-                </label>
-                <input id="toggle-count-switch" name="toggle-count-switch" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
+                <input v-model="promotionalUpdates" @change="toggleSetting('promotional_updates', $event)" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
                 <label for="toggle-count-switch" class="inline-block p-2">
                 </label>
               </div>
@@ -360,10 +363,7 @@ export default defineComponent({
             <div class="grid grid-cols-2 mt-5">
               <p>System Notifications</p>
               <div class="flex justify-end">
-
-                <label for="toggle-count-switch" class="inline-block p-2">
-                </label>
-                <input id="toggle-count-switch" name="toggle-count-switch" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
+                <input v-model="systemNotifications" @change="toggleSetting('system_notification', $event)" type="checkbox" class="relative w-[3.25rem] h-7 bg-gray-300 checked:bg-none checked:bg-primary-100 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 ring-1 ring-transparent  ring-offset-white focus:outline-none appearance-none before:inline-block before:size-6 before:bg-white checked:before:bg-red-50 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
                 <label for="toggle-count-switch" class="inline-block p-2">
                 </label>
               </div>
