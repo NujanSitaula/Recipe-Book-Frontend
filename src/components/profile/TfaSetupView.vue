@@ -24,19 +24,20 @@
         <img :src="qrCodeUrl" alt="2FA QR Code" />
         <div class="p-4 overflow-y-auto">
           <div class="flex justify-center space-x-3" data-hs-pin-input="">
-            <input type="text" class="block size-[46px] text-center border-gray-200 border rounded-md text-sm [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="⚬" data-hs-pin-input-item="">
-            <input type="text" class="block size-[46px] text-center border-gray-200 border rounded-md text-sm [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="⚬" data-hs-pin-input-item="">
-            <input type="text" class="block size-[46px] text-center border-gray-200 border rounded-md text-sm [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="⚬" data-hs-pin-input-item="">
-            <input type="text" class="block size-[46px] text-center border-gray-200 border rounded-md text-sm [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="⚬" data-hs-pin-input-item="">
-            <input type="text" class="block size-[46px] text-center border-gray-200 border rounded-md text-sm [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="⚬" data-hs-pin-input-item="">
-            <input type="text" class="block size-[46px] text-center border-gray-200 border rounded-md text-sm [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="⚬" data-hs-pin-input-item="">
+            <input type="text" v-model="otp1" class="block size-[46px] text-center border-gray-200 border rounded-md text-sm [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="⚬" data-hs-pin-input-item="">
+            <input type="text" v-model="otp2" class="block size-[46px] text-center border-gray-200 border rounded-md text-sm [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="⚬" data-hs-pin-input-item="">
+            <input type="text" v-model="otp3" class="block size-[46px] text-center border-gray-200 border rounded-md text-sm [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="⚬" data-hs-pin-input-item="">
+            <input type="text" v-model="otp4" class="block size-[46px] text-center border-gray-200 border rounded-md text-sm [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="⚬" data-hs-pin-input-item="">
+            <input type="text" v-model="otp5" class="block size-[46px] text-center border-gray-200 border rounded-md text-sm [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="⚬" data-hs-pin-input-item="">
+            <input type="text" v-model="otp6" class="block size-[46px] text-center border-gray-200 border rounded-md text-sm [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="⚬" data-hs-pin-input-item="">
           </div>
+          <p class="text-red-500">{{ errorMessage }}</p>
         </div>
         <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
           <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" data-hs-overlay="#hs-toggle-password-modal-example">
             Close
           </button>
-          <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">
+          <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" @click="verifyTfa">
             Save changes
           </a>
         </div>
@@ -49,43 +50,80 @@
 <script>
 import axios from "axios";
 import {config} from "../../../config.js";
+import {getCurrentInstance, onMounted, ref} from "vue";
 
 axios.defaults.baseURL = config.BASE_URL;
 
 export default {
-  data() {
-    return {
-      qrCodeUrl: '',
-      tfaCode: '',
-    };
-  },
-  methods: {
-    async openModal() {
+  setup(){
+    let emit;
+
+    onMounted(() => {
+      const { emit: emitInstance } = getCurrentInstance();
+      emit = emitInstance;
+    });
+
+    const qrCodeUrl = ref('');
+    const otp1 = ref('');
+    const otp2 = ref('');
+    const otp3 = ref('');
+    const otp4 = ref('');
+    const otp5 = ref('');
+    const otp6 = ref('');
+    const errorMessage = ref('');
+
+    const openModal = async () => {
       try {
         const response = await axios.post('user/tfa/generate', "", {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           },
         });
-        this.qrCodeUrl = response.data.data.qr_code_url;
+        qrCodeUrl.value = response.data.data.qr_code_url;
       } catch (error) {
         console.error(error);
       }
-    },
-    async verifyTfa() {
+    };
+
+    const verifyTfa = async () => {
       try {
+        const otp = otp1.value + otp2.value + otp3.value + otp4.value + otp5.value + otp6.value;
         const response = await axios.post('user/tfa/verify', {
-          code: this.tfaCode,
-        });
+              otp: otp,
+            },
+            {
+              headers: {
+                'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+              },
+            });
         if (response.data.status === 'success') {
-          // Handle successful verification
+          // Close the modal
+          console.log('OTP Verified');
+          emit('close');
         } else {
-          // Handle failed verification
+          alert('OTP Invalid');
+          // Set the error message
+          alert(response.data.message);
+          errorMessage.value = response.data.message;
         }
       } catch (error) {
+        errorMessage.value = error.response.data.message;
         console.error(error);
       }
-    },
+    };
+
+    return {
+      qrCodeUrl,
+      otp1,
+      otp2,
+      otp3,
+      otp4,
+      otp5,
+      otp6,
+      errorMessage,
+      openModal,
+      verifyTfa
+    };
   },
 };
 </script>
