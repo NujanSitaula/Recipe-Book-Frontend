@@ -115,6 +115,7 @@ export default defineComponent({
         if (response.status !== 200) {
           alert('Failed to update user settings');
         }
+        console.log(localStorage.getItem('access_token'));
 
         this.user[settingKey] = enabled;
         console.log(this.user);
