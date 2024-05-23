@@ -66,6 +66,7 @@ export default defineComponent({
       friendsActivities: false,
       promotionalUpdates: false,
       systemNotifications: false,
+      cookType: '',
     };
   },
   methods: {
@@ -92,6 +93,7 @@ export default defineComponent({
         this.friendsActivities = this.user['friends_activities'] === 1;
         this.promotionalUpdates = this.user['promotional_updates'] === 1;
         this.systemNotifications = this.user['system_notification'] === 1;
+        this.cookType = this.user['cook_type'];
       } catch (error) {
         this.error = error.message;
       } finally {
@@ -120,6 +122,24 @@ export default defineComponent({
         localStorage.setItem('user', JSON.stringify(this.user));
       } catch (error) {
         alert('An error occurred while updating user settings');
+      }
+    },
+    async updateCookType(event) {
+      const cookType = event.target.value;
+      try {
+        const response = await axios.post('/user/setting', { 'cook_type' :cookType }, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          },
+        });
+        if (response.status !== 200) {
+          alert('Failed to update user cook type');
+        }
+
+        this.user['cook_type'] = cookType;
+        localStorage.setItem('user', JSON.stringify(this.user));
+      } catch (error) {
+        alert('An error occurred while updating user cook type');
       }
     },
     validateForm() {
@@ -287,7 +307,7 @@ export default defineComponent({
             <h3 class="my-3">Type of cook</h3>
             <ul class="grid w-full gap-6 md:grid-cols-3">
               <li>
-                <input type="radio" id="rookie" name="hosting" value="hosting-small" class="hidden peer" required />
+                <input type="radio" id="rookie" name="type_of_cook" value="rookie" class="hidden peer" required @change="updateCookType" v-model="cookType" />
                 <label for="rookie" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer ">
                   <div class="block">
                     <div class="w-full text-lg font-semibold">
@@ -298,7 +318,7 @@ export default defineComponent({
                 </label>
               </li>
               <li>
-                <input type="radio" id="midbie" name="hosting" value="hosting-small" class="hidden peer" required />
+                <input type="radio" id="midbie" name="type_of_cook" value="midbie" class="hidden peer" required @change="updateCookType" v-model="cookType" />
                 <label for="midbie" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer ">
                   <div class="block">
                     <div class="w-full text-lg font-semibold"></div>
@@ -308,7 +328,7 @@ export default defineComponent({
                 </label>
               </li>
               <li>
-                <input type="radio" id="master" name="hosting" value="hosting-big" class="hidden peer">
+                <input type="radio" id="master" name="type_of_cook" value="master" class="hidden peer" required @change="updateCookType" v-model="cookType" />
                 <label for="master" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer">
                   <div class="block">
                     <div class="w-full text-lg font-semibold"></div>
