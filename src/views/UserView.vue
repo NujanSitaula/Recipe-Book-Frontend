@@ -16,11 +16,11 @@
             </div>
           </div>
         </div>
-        <div class="flex justify-end mt-1 ml-2 settings ">
-          <button type="button" class="flex p-2  hover:rounded-3xl rounded-3xl text-gray-800 hover:bg-gray-100 transition duration-300" data-hs-overlay="#hs-overlay-right">
-            <svg class="h-6 w-6 text-black-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v22H0z"/>  <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />  <circle cx="12" cy="12" r="3" /></svg>
-            <span class="sr-only">Icon description</span>
-            <p class="ml-1 ">Settings</p>
+        <div class="flex justify-end mt-1 ml-">
+          <button type="button" class=" p-2  hover:rounded-3xl rounded-3xl w-24 transition duration-300" :class="{'bg-primary-100 hover:bg-primary-200 text-white': buttonState === 'default', 'bg-gray-500 text-white': buttonState === 'loading', 'bg-gray-300 text-gray-900': buttonState === 'success'}" @click = "followUser">
+            <span v-if="buttonState === 'default'">Follow</span>
+            <span v-else-if="buttonState === 'loading'">Updating...</span>
+            <span v-else-if="buttonState === 'success'">Following</span>
           </button>
 
         </div>
@@ -43,27 +43,72 @@ export default {
     const route = useRoute();
     const user = ref(null);
     const isLoading = ref(false);
+    const buttonState = ref('default'); // Add this line
 
     axios.defaults.baseURL = config.BASE_URL;
 
     onMounted(async () => {
       isLoading.value = true; // Set isLoading to true when data fetching starts
       try {
-        const response = await axios.get(`/user/${route.params.username}`);
-        if (response.data.status === 'success') {
-          user.value = response.data.data;
-      console.log(user);
+        // Fetch user data
+        const userResponse = await axios.get(`/user/${route.params.username}`);
+        if (userResponse.data.status === 'success') {
+          user.value = userResponse.data.data;
 
+          // Fetch follow status
+          const followResponse = await axios.get(`/follow/${user.value.id}/status`, {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            },
+          });
+          if (followResponse.data.status === 'success' && followResponse.data.isFollowing) {
+            buttonState.value = 'success';
+          }
         }
       } catch (error) {
         console.error('Error:', error);
       } finally {
-        isLoading.value = false; // Set isLoading to false when data fetching is completed
+        isLoading.value = false;
       }
     });
 
+
+    const followUser = async () => {
+      try {
+        if (buttonState.value === 'default') {
+          buttonState.value = 'loading'; // Set buttonState to 'loading' when the follow request starts
+          const response = await axios.post(`/follow/${user.value.id}`, '', {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            },
+          });
+          if (response.data.status === 'success') {
+            console.log('User followed successfully');
+            buttonState.value = 'success'; // Set buttonState to 'success' when the follow request is successful
+          }
+        } else if (buttonState.value === 'success') {
+          buttonState.value = 'loading'; // Set buttonState to 'loading' when the unfollow request starts
+          const response = await axios.post(`/unfollow/${user.value.id}`, '', {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            },
+          });
+          if (response.data.status === 'success') {
+            console.log('User unfollowed successfully');
+            buttonState.value = 'default'; // Set buttonState back to 'default' when the unfollow request is successful
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        buttonState.value = 'default'; // Set buttonState back to 'default' if there's an error
+      }
+    };
+
     return {
-      user
+      user,
+      isLoading,
+      followUser,
+      buttonState,
     };
   }
 }
