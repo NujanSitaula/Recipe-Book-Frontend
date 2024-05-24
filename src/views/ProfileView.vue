@@ -264,7 +264,7 @@ export default defineComponent({
         <img class="w-28 h-28 rounded-full border-2 border-white image " :src="userStore.user && userStore.user.data ? userStore.user.data.image : 'Dwfault.png'" alt="Profile Picture">
         <div class="mt-7 ml-2 profile-name">
         <p class="text-2xl font-semibold text-gray-800">{{userStore.user && userStore.user.data ? userStore.user.data.firstName : 'Loading Name...'}} {{userStore.user && userStore.user.data ? userStore.user.data.lastName : 'Loading Name...'}}</p>
-      <p class="text-l font-semibold text-gray-500">@its_kripa</p>
+      <p class="text-l font-semibold text-gray-500">@{{userStore.user && userStore.user.data ? userStore.user.data.username : 'Loading Username...'}}</p>
       </div>
         <div class="ml-2 mt-3 profile-icon">
         <button class="flex p-2.5 rounded-xl hover:rounded-3xl hover:bg-gray-100 transition-all duration-300 text-black" @click="openModal">
