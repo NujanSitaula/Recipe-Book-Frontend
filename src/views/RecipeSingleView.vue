@@ -34,7 +34,7 @@
               <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 md:gap-12  border rounded-2xl p-5">
                 <!-- Prep Time -->
                 <div class="text-center accordion-item">
-                  <button class="accordion-btn">
+                  <button class="accordion-btn">;
                     <!-- Icon -->
                     <span class="inline-flex justify-center items-center size-[62px] rounded-full bg-blue-100 text-blue-800">
           <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
