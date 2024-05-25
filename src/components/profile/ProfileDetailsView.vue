@@ -78,7 +78,6 @@
               </div>
               <hr>
               <div class="flex justify-end mt-5">
-                <button class="px-4 py-2 mr-2 text-black border-2 rounded-lg" type="reset">Cancel</button>
                 <button class="px-4 py-2 text-sm text-white bg-blue-500 rounded-lg" type="submit">Save</button>
               </div>
             </form>
@@ -195,11 +194,11 @@ export default {
             localStorage.setItem('userImage', tempImageUrl.value);
             tempImageUrl.value = null;
           }
-
           // Show success message
           if (toaster.value) {
             toaster.value.showToast(response.data.message, 'success');
           }
+          localStorage.removeItem('tempImageUrl');
           setTimeout(closeModal, 1000);
         } else {
           // Show failure message
