@@ -256,7 +256,7 @@ export default defineComponent({
   <Toaster ref="toaster" />
   <!-- <div class="mt-7 w-full max-w-[85rem] sm:px-6 lg:px-8 mx-auto relative bg-white shadow-sm rounded-lg border"> -->
     <div class="overflow-hidden">
-    <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-[60rem] mx-auto px-4 sm:px-6 lg:px-8">
   <div class="mb-20 main">
     <div class="w-full h-52 bg-gray-300 shadow-lg shadow-gray-100" style="background-image: url('https://marketplace.canva.com/EAFIddmg8b0/1/0/1600w/canva-white-minimalist-corporate-personal-profile-linkedin-banner-t5iKXmGyEtU.jpg'); background-position: center; background-size: cover;"></div>
     <div class="flex flex-col absolute ml-5 pro_main" style="margin-top: -40px;">
@@ -275,8 +275,6 @@ export default defineComponent({
         <Modal v-if="isModalOpen" :isOpen="isModalOpen" @close="closeModal" />
       </div>
       </div>
-
-
     </div>
     <div class="flex justify-end mt-1 ml-2 settings ">
       <button type="button" class="flex p-2  hover:rounded-3xl rounded-3xl text-gray-800 hover:bg-gray-100 transition duration-300" data-hs-overlay="#hs-overlay-right">
@@ -439,14 +437,13 @@ export default defineComponent({
                 </button>
               </div>
             </form>
+        </div>
             <hr>
-
             <h3 class="my-3">Account Deactivation</h3>
             <button class="w-full px-4 py-2 text-sm rounded-lg transition duration-75 bg-primary-100 text-white" type="button">
               <span>Deactivate</span>
             </button>
           </div>
-        </div>
       </div>
 
       <nav class="mt-7 ml-5">

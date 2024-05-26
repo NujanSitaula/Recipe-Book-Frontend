@@ -69,7 +69,7 @@ const router = createRouter({
       component: () => import('../views/CheckView.vue')
     },
     {
-      path: '/user/:username',
+      path: '/:username',
       name: 'user',
       component: () => import('../views/UserView.vue')
 

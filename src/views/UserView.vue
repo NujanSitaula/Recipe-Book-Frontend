@@ -2,7 +2,7 @@
   <Toaster ref="toaster" />
   <!-- <div class="mt-7 w-full max-w-[85rem] sm:px-6 lg:px-8 mx-auto relative bg-white shadow-sm rounded-lg border"> -->
   <div class="overflow-hidden">
-    <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-[60rem] mx-auto px-4 sm:px-6 lg:px-8">
       <div class="mb-20 main">
         <div class="w-full h-52 bg-gray-300 shadow-lg shadow-gray-100" style="background-image: url('https://marketplace.canva.com/EAFIddmg8b0/1/0/1600w/canva-white-minimalist-corporate-personal-profile-linkedin-banner-t5iKXmGyEtU.jpg'); background-position: center; background-size: cover;">
         </div>
@@ -15,12 +15,17 @@
               <p class="text-l font-semibold text-gray-500">@{{ user.username }}</p>
             </div>
           </div>
+          <div class="inline-flex pt-2">
+            <p>Followers</p>{{ followers.length }}
+            <p class="ml-5">Following</p>
+          </div>
         </div>
         <div class="flex justify-end mt-1 ml-">
           <button type="button" class=" p-2  hover:rounded-3xl rounded-3xl w-24 transition duration-300" :class="{'bg-primary-100 hover:bg-primary-200 text-white': buttonState === 'default', 'bg-gray-500 text-white': buttonState === 'loading', 'bg-gray-300 text-gray-900': buttonState === 'success'}" @click = "followUser">
             <span v-if="buttonState === 'default'">Follow</span>
-            <span v-else-if="buttonState === 'loading'">Updating...</span>
-            <span v-else-if="buttonState === 'success'">Following</span>
+            <span v-else-if="buttonState === 'loading'">
+              <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="1.5em" viewBox="0 0 22 22"><circle cx="4" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsScale0" attributeName="r" begin="0;svgSpinners3DotsScale1.end-0.25s" dur="0.75s" values="3;.2;3"/></circle><circle cx="12" cy="12" r="3" fill="currentColor"><animate attributeName="r" begin="svgSpinners3DotsScale0.end-0.6s" dur="0.75s" values="3;.2;3"/></circle><circle cx="20" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsScale1" attributeName="r" begin="svgSpinners3DotsScale0.end-0.45s" dur="0.75s" values="3;.2;3"/></circle></svg></span>
+            <span v-else-if="buttonState === 'success'">Unfollow</span>
           </button>
 
         </div>
@@ -43,7 +48,8 @@ export default {
     const route = useRoute();
     const user = ref(null);
     const isLoading = ref(false);
-    const buttonState = ref('default'); // Add this line
+    const buttonState = ref('default');
+    const followers = ref([]);
 
     axios.defaults.baseURL = config.BASE_URL;
 
@@ -61,6 +67,14 @@ export default {
               'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             },
           });
+          const followersResponse = await axios.get(`/followers/${user.value.id}`, {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            },
+          });
+          if (followersResponse.data.status === 'success') {
+            followers.value = followersResponse.data.followers;
+          }
           if (followResponse.data.status === 'success' && followResponse.data.isFollowing) {
             buttonState.value = 'success';
           }
@@ -109,6 +123,7 @@ export default {
       isLoading,
       followUser,
       buttonState,
+      followers,
     };
   }
 }
