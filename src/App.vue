@@ -31,7 +31,7 @@ const logout = () => {
   <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white-900 border-b border-gray-700 text-sm py-2.5 sm:py-4">
     <nav class="max-w-7xl flex basis-full items-center w-full mx-auto px-4 sm:px-6 lg:px-8" aria-label="Global">
       <div class="me-5 md:me-8">
-       <RouterLink to="/"> <a class="flex-none text-xl font-semibold text-dark" href="#" aria-label="Recipe Book">Recipe</a></RouterLink>
+       <RouterLink to="/"> <a class="flex-none text-xl font-semibold text-dark" href="#" aria-label="Recipe Book"><img width="190" src="http://recipe-book-backend.test/sharecipe.svg"></a></RouterLink>
       </div>
 
       <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3 sm:order-3">
