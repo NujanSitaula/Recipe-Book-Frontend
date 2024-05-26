@@ -7,7 +7,7 @@
         </div>
         <div class="flex flex-col absolute ml-5 pro_main" style="margin-top: -40px;">
           <div class=" rounded-full flex items-center justify-center pro_image" v-if="user">
-            <img class="w-28 h-28 rounded-full border-2 border-white image "  :src="userImage" alt="Profile Picture">
+            <img class="w-28 h-28 rounded-full border-2 border-white image "  :src="user.image" alt="Profile Picture">
             <div class="mt-7 ml-2 profile-name" >
               <p class="text-2xl font-semibold text-gray-800">{{ user.firstName }} {{ user.lastName }}</p>
               <p class="text-l font-semibold text-gray-500">@{{ user.username }}</p>
@@ -33,10 +33,26 @@
                       </svg>
                     </button>
                   </div>
-                  <div class="p-4 overflow-y-auto" >
-                    <p class="mt-1 text-gray-800" v-for="(followers,index) in followers" :key="index">
-                      {{ followers.firstName }} {{ followers.lastName }} @{{ followers.username }}
-                    </p>
+                  <div class="p-4 overflow-y-auto grid grid-cols-3">
+                    <div class="col-span-1">
+                      <p class="mt-1 text-gray-800" v-for="(followers,index) in followers" :key="index">
+                        <img class="w-14 h-14 rounded-full border-2 border-white image " :src="followers.image" alt="User Image" />
+                      </p>
+                    </div>
+                    <div class="col-span-1">
+                      <p class="mt-1 text-gray-800" v-for="(followers,index) in followers" :key="index">
+                        {{ followers.firstName }} {{ followers.lastName }} <br> @{{ followers.username }}
+                      </p>
+                    </div>
+                    <div class="col-span-1">
+                      <button type="button" class=" p-2  hover:rounded-3xl rounded-3xl w-24 transition duration-300" :class="{'bg-primary-100 hover:bg-primary-200 text-white': buttonState === 'default', 'bg-gray-500 text-white': buttonState === 'loading', 'bg-gray-300 text-gray-900': buttonState === 'success'}" @click = "followUser">
+                        <span v-if="buttonState === 'default'">Follow</span>
+                        <span v-else-if="buttonState === 'loading'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="1.5em" viewBox="0 0 22 22"><circle cx="4" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsScale0" attributeName="r" begin="0;svgSpinners3DotsScale1.end-0.25s" dur="0.75s" values="3;.2;3"/></circle><circle cx="12" cy="12" r="3" fill="currentColor"><animate attributeName="r" begin="svgSpinners3DotsScale0.end-0.6s" dur="0.75s" values="3;.2;3"/></circle><circle cx="20" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsScale1" attributeName="r" begin="svgSpinners3DotsScale0.end-0.45s" dur="0.75s" values="3;.2;3"/></circle></svg></span>
+                        <span v-else-if="buttonState === 'success'">Unfollow</span>
+                      </button>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -64,7 +80,7 @@
                   <div class="p-4 overflow-y-auto grid grid-cols-3">
                     <div class="col-span-1">
                       <p class="mt-1 text-gray-800" v-for="(followee,index) in followee" :key="index">
-                        <img class="w-14 h-14 rounded-full border-2 border-white image " :src="userImage" alt="User Image" />
+                        <img class="w-14 h-14 rounded-full border-2 border-white image " :src="followee.image" alt="User Image" />
                       </p>
                     </div>
                     <div class="col-span-1">
@@ -113,11 +129,6 @@ import { useRoute } from 'vue-router';
 import {config} from "../../config.js";
 
 export default {
-  computed: {
-    userImage() {
-      return localStorage.getItem('userImage');
-    }
-  },
 
   setup() {
     const route = useRoute();
@@ -126,7 +137,6 @@ export default {
     const buttonState = ref('default');
     const followers = ref([]);
     const followee = ref([]);
-    let userImage = localStorage.getItem('userImage');
 
     axios.defaults.baseURL = config.BASE_URL;
 
@@ -156,6 +166,7 @@ export default {
 
           if (followersResponse.data.status === 'success') {
             followers.value = followersResponse.data.data;
+            console.log(followers);
           }
 
           const followeeResponse = await axios.get(`/followees/${user.value.id}`, {
@@ -166,7 +177,7 @@ export default {
 
           if (followeeResponse.data.status === 'success'){
             followee.value = followeeResponse.data.data;
-          }
+            }
         }
       } catch (error) {
         console.error('Error:', error);
