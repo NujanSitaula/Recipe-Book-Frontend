@@ -31,23 +31,21 @@
                           </svg>
                         </button>
                       </div>
-                      <div class="p-4 overflow-y-auto grid grid-cols-3">
+                      <div class="p-4 overflow-y-auto grid grid-cols-3" v-for="(followers,index) in followers" :key="index">
                         <div class="col-span-1">
-                          <p class="mt-1 text-gray-800" v-for="(followers,index) in followers" :key="index">
+                          <p class="mt-1 text-gray-800">
                             <img class="w-14 h-14 rounded-full border-2 border-white image " :src="followers.image" alt="User Image" />
                           </p>
                         </div>
                         <div class="col-span-1">
-                          <p class="mt-1 text-gray-800" v-for="(followers,index) in followers" :key="index">
+                          <p class="mt-1 text-gray-800" >
                             {{ followers.firstName }} {{ followers.lastName }} <br> @{{ followers.username }}
                           </p>
                         </div>
                         <div class="col-span-1">
-                          <button type="button" class=" p-2  hover:rounded-3xl rounded-3xl w-24 transition duration-300" :class="{'bg-primary-100 hover:bg-primary-200 text-white': buttonState === 'default', 'bg-gray-500 text-white': buttonState === 'loading', 'bg-gray-300 text-gray-900': buttonState === 'success'}" @click = "followUser">
-                            <span v-if="buttonState === 'default'">Follow</span>
-                            <span v-else-if="buttonState === 'loading'">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="1.5em" viewBox="0 0 22 22"><circle cx="4" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsScale0" attributeName="r" begin="0;svgSpinners3DotsScale1.end-0.25s" dur="0.75s" values="3;.2;3"/></circle><circle cx="12" cy="12" r="3" fill="currentColor"><animate attributeName="r" begin="svgSpinners3DotsScale0.end-0.6s" dur="0.75s" values="3;.2;3"/></circle><circle cx="20" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsScale1" attributeName="r" begin="svgSpinners3DotsScale0.end-0.45s" dur="0.75s" values="3;.2;3"/></circle></svg></span>
-                            <span v-else-if="buttonState === 'success'">Unfollow</span>
+                          <button type="button" class=" p-2  hover:rounded-3xl rounded-3xl w-24 transition duration-300" :class="{'bg-primary-100 hover:bg-primary-200 text-white': !followers.isFollowing, 'bg-gray-300 text-gray-900': followers.isFollowing}" @click = "followUser(followers)">
+                            <span v-if="!followers.isFollowing">Follow</span>
+                            <span v-else>Unfollow</span>
                           </button>
                         </div>
 
@@ -57,7 +55,7 @@
                 </div>
 
                 <button type="button" class="py-1 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-gray-200 text-black hover:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none" data-hs-overlay="#hs-followee-modal">
-                  {{ followee.length }} Following
+                  {{ followees.length }} Following
                 </button>
 
                 <div id="hs-followee-modal" class="hs-overlay hs-overlay-open:opacity-100 hs-overlay-open:duration-500 hidden size-full fixed top-0 start-0 z-[80] opacity-0 overflow-x-hidden transition-all overflow-y-auto pointer-events-none">
@@ -75,23 +73,21 @@
                           </svg>
                         </button>
                       </div>
-                      <div class="p-4 overflow-y-auto grid grid-cols-3">
+                      <div class="p-4 overflow-y-auto grid grid-cols-3" v-for="(followees,index) in followees" :key="index">
                         <div class="col-span-1">
-                          <p class="mt-1 text-gray-800" v-for="(followee,index) in followee" :key="index">
-                            <img class="w-14 h-14 rounded-full border-2 border-white image " :src="followee.image" alt="User Image" />
+                          <p class="mt-1 text-gray-800" >
+                            <img class="w-14 h-14 rounded-full border-2 border-white image " :src="followees.image" alt="User Image" />
                           </p>
                         </div>
                         <div class="col-span-1">
-                          <p class="mt-1 text-gray-800" v-for="(followee,index) in followee" :key="index">
-                            {{ followee.firstName }} {{ followee.lastName }} <br> @{{ followee.username }}
+                          <p class="mt-1 text-gray-800" >
+                            {{ followees.firstName }} {{ followees.lastName }} <br> @{{ followees.username }}
                           </p>
                         </div>
                         <div class="col-span-1">
-                          <button type="button" class=" p-2  hover:rounded-3xl rounded-3xl w-24 transition duration-300" :class="{'bg-primary-100 hover:bg-primary-200 text-white': buttonState === 'default', 'bg-gray-500 text-white': buttonState === 'loading', 'bg-gray-300 text-gray-900': buttonState === 'success'}" @click = "followUser">
-                            <span v-if="buttonState === 'default'">Follow</span>
-                            <span v-else-if="buttonState === 'loading'">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="1.5em" viewBox="0 0 22 22"><circle cx="4" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsScale0" attributeName="r" begin="0;svgSpinners3DotsScale1.end-0.25s" dur="0.75s" values="3;.2;3"/></circle><circle cx="12" cy="12" r="3" fill="currentColor"><animate attributeName="r" begin="svgSpinners3DotsScale0.end-0.6s" dur="0.75s" values="3;.2;3"/></circle><circle cx="20" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsScale1" attributeName="r" begin="svgSpinners3DotsScale0.end-0.45s" dur="0.75s" values="3;.2;3"/></circle></svg></span>
-                            <span v-else-if="buttonState === 'success'">Unfollow</span>
+                          <button type="button" class=" p-2  hover:rounded-3xl rounded-3xl w-24 transition duration-300" :class="{'bg-primary-100 hover:bg-primary-200 text-white': !followees.isFollowing, 'bg-gray-300 text-gray-900': followees.isFollowing}" @click = "followUser(followees)">
+                            <span v-if="!followees.isFollowing">Follow</span>
+                            <span v-else>Unfollow</span>
                           </button>
                         </div>
 
@@ -108,11 +104,9 @@
 
         </div>
         <div class="flex justify-end mt-1 ml-">
-          <button type="button" class=" p-2  hover:rounded-3xl rounded-3xl w-24 transition duration-300" :class="{'bg-primary-100 hover:bg-primary-200 text-white': buttonState === 'default', 'bg-gray-500 text-white': buttonState === 'loading', 'bg-gray-300 text-gray-900': buttonState === 'success'}" @click = "followUser">
-            <span v-if="buttonState === 'default'">Follow</span>
-            <span v-else-if="buttonState === 'loading'">
-              <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="1.5em" viewBox="0 0 22 22"><circle cx="4" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsScale0" attributeName="r" begin="0;svgSpinners3DotsScale1.end-0.25s" dur="0.75s" values="3;.2;3"/></circle><circle cx="12" cy="12" r="3" fill="currentColor"><animate attributeName="r" begin="svgSpinners3DotsScale0.end-0.6s" dur="0.75s" values="3;.2;3"/></circle><circle cx="20" cy="12" r="3" fill="currentColor"><animate id="svgSpinners3DotsScale1" attributeName="r" begin="svgSpinners3DotsScale0.end-0.45s" dur="0.75s" values="3;.2;3"/></circle></svg></span>
-            <span v-else-if="buttonState === 'success'">Unfollow</span>
+          <button type="button" class=" p-2  hover:rounded-3xl rounded-3xl w-24 transition duration-300" :class="{'bg-primary-100 hover:bg-primary-200 text-white': user && !user.isFollowing, 'bg-gray-500 text-white': user && user.isFollowing}" @click = "followUser(user)">
+            <span v-if="user && !user.isFollowing">Follow</span>
+            <span v-else>Unfollow</span>
           </button>
 
         </div>
@@ -131,14 +125,14 @@ import { useRoute } from 'vue-router';
 import {config} from "../../config.js";
 
 export default {
-
   setup() {
     const route = useRoute();
     const user = ref(null);
     const isLoading = ref(false);
-    const buttonState = ref('default');
     const followers = ref([]);
-    const followee = ref([]);
+    const followees = ref([]);
+    const isLoadingButton = ref(false);
+
 
     axios.defaults.baseURL = config.BASE_URL;
 
@@ -150,16 +144,15 @@ export default {
         if (userResponse.data.status === 'success') {
           user.value = userResponse.data.data;
 
-          console.log(user.value);
-          // Fetch follow status
-          const followResponse = await axios.get(`/follow/${user.value.id}/status`, {
+          const followStatusResponse = await axios.get(`/follow/${user.value.id}/status`, {
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             },
           });
-          if (followResponse.data.status === 'success' && followResponse.data.isFollowing) {
-            buttonState.value = 'success';
-          }
+          user.value.isFollowing = followStatusResponse.data.isFollowing;
+
+
+          // Fetch followers data
           const followersResponse = await axios.get(`/followers/${user.value.id}`, {
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
@@ -168,9 +161,18 @@ export default {
 
           if (followersResponse.data.status === 'success') {
             followers.value = followersResponse.data.data;
-            console.log(followers);
+            // Initialize isFollowing for each follower
+            for (let follower of followers.value) {
+              const followStatusResponse = await axios.get(`/follow/${follower.id}/status`, {
+                headers: {
+                  'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                },
+              });
+              follower.isFollowing = followStatusResponse.data.isFollowing;
+            }
           }
 
+          // Fetch followees data
           const followeeResponse = await axios.get(`/followees/${user.value.id}`, {
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
@@ -178,8 +180,17 @@ export default {
           });
 
           if (followeeResponse.data.status === 'success'){
-            followee.value = followeeResponse.data.data;
+            followees.value = followeeResponse.data.data;
+            // Initialize isFollowing for each followee
+            for (let followee of followees.value) {
+              const followStatusResponse = await axios.get(`/follow/${followee.id}/status`, {
+                headers: {
+                  'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                },
+              });
+              followee.isFollowing = followStatusResponse.data.isFollowing;
             }
+          }
         }
       } catch (error) {
         console.error('Error:', error);
@@ -187,32 +198,34 @@ export default {
         isLoading.value = false;
       }
     });
-    const followUser = async () => {
+
+    const followUser = async (user) => {
+      isLoadingButton.value = true; // Set to true when the function is called
       try {
-        if (buttonState.value === 'default') {
-          buttonState.value = 'loading'; // Set buttonState to 'loading' when the follow request starts
-          const response = await axios.post(`/follow/${user.value.id}`, '', {
+        if (!user.isFollowing) {
+          const response = await axios.post(`/follow/${user.id}`, '', {
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             },
           });
           if (response.data.status === 'success') {
-            buttonState.value = 'success'; // Set buttonState to 'success' when the follow request is successful
+            user.isFollowing = true;
           }
-        } else if (buttonState.value === 'success') {
-          buttonState.value = 'loading'; // Set buttonState to 'loading' when the unfollow request starts
-          const response = await axios.post(`/unfollow/${user.value.id}`, '', {
+        } else {
+          const response = await axios.post(`/unfollow/${user.id}`, '', {
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             },
           });
           if (response.data.status === 'success') {
-            buttonState.value = 'default'; // Set buttonState back to 'default' when the unfollow request is successful
+            user.isFollowing = false;
           }
         }
       } catch (error) {
         console.error('Error:', error);
-        buttonState.value = 'default'; // Set buttonState back to 'default' if there's an error
+      } finally {
+        isLoadingButton.value = false;
+
       }
     };
 
@@ -220,10 +233,10 @@ export default {
       user,
       isLoading,
       followUser,
-      buttonState,
       followers,
-      followee,
+      followees,
+      isLoadingButton,
     };
   }
-}
+};
 </script>
