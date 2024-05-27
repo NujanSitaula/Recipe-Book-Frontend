@@ -1,6 +1,6 @@
 <template>
   <Toaster ref="toaster" />
-  <div class="grid grid-cols-1 md:grid-cols-12 gap-0">
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-0 main-content">
     <div class="md:col-span-6 md:order-2">
       <!-- Masonry Cards -->
       <div class="p-4 sm:p-14">
