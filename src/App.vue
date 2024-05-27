@@ -29,113 +29,45 @@ const logout = () => {
 <template>
   <!-- ========== HEADER ========== -->
   <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white-900 border-b border-gray-700 text-sm py-2.5 sm:py-4">
-    <nav class="max-w-7xl flex basis-full items-center w-full mx-auto px-4 sm:px-6 lg:px-8" aria-label="Global">
-      <div class="me-5 md:me-8">
-       <RouterLink to="/"> <a class="flex-none text-xl font-semibold text-dark" href="#" aria-label="Recipe Book"><img width="190" src="http://recipe-book-backend.test/sharecipe.svg"></a></RouterLink>
-      </div>
 
-      <div class="w-full flex items-center justify-end ms-auto sm:justify-between sm:gap-x-3 sm:order-3">
-        <div class="sm:hidden">
-          <button type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-white hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
-            <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+
+    <nav class="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200">
+      <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+          <img src="http://recipe-book-backend.test/sharecipe.svg" class="h-8" alt="Sharecipe Logo">
+<!--          <span class="self-center text-2xl font-semibold whitespace-nowrap">shaREcipe</span>-->
+        </a>
+        <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+          <button type="button" class="text-white bg-primary-100 hover:bg-primary-200 focus:ring-4 focus:outline-none focus:ring-primary-200 font-medium rounded-lg text-sm px-4 py-2 text-center">Get started</button>
+          <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-sticky" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+            </svg>
           </button>
         </div>
-
-        <div class="hidden mx-auto sm:block">
-          <label for="icon" class="sr-only">Search</label>
-          <div class="relative">
-            <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-4">
-              <svg class="flex-shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            </div>
-            <input type="text" id="icon" name="icon" class="py-2 px-4 ps-11 pe-20 block w-92 md:w-96 bg-transparent border-gray-700 shadow-sm rounded-lg text-sm text-gray-300 focus:z-10 focus:border-gray-900 focus:ring-gray-600 placeholder:text-gray-500" placeholder="Search">
-            <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
-              <span class="text-gray-500">Ctrl + /</span>
-            </div>
-          </div>
-        </div>
-
-        <div v-if="userStore.isLoggedIn" class="flex flex-row items-center justify-end gap-2">
-          <button type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-dark hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
-            <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-          </button>
-          <button type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-dark hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600" data-hs-offcanvas="#hs-offcanvas-right">
-            <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-          </button>
-          <div class="hs-dropdown relative inline-flex" data-hs-dropdown-placement="bottom-right">
-            <button id="hs-dropdown-with-header" type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-white hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
-              <img class="inline-block size-[38px] rounded-full" :src="userStore.user && userStore.user.data ? userStore.user.data.image : 'Loading Name...'" alt="Image Description">
-            </button>
-
-            <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 z-10 bg-white shadow-md rounded-lg p-2" aria-labelledby="hs-dropdown-with-header">
-              <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg">
-                <p class="text-sm text-gray-500">Signed in as</p>
-                <p class="text-sm font-medium text-gray-800">{{userStore.user && userStore.user.data ? userStore.user.data.email : 'Loading Name...'}}</p>
-              </div>
-              <div class="mt-2 py-2 first:pt-0 last:pb-0">
-                <RouterLink to="/profile" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
-                  <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-                  <p class="inline-flex items-center gap-x-2 hover:text-gray-500" href="#">Profile</p>
-                </RouterLink>
-
-                <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
-                  <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                  Purchases
-                </a>
-                <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
-                  <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m8 17 4 4 4-4"/></svg>
-                  Downloads
-                </a>
-                <a @click="logout" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
-                  <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                  Log Out
-                </a>
-              </div> 
-            </div>
-          </div>
-        </div>
-        <div v-show="!userStore.isLoggedIn">
-          <router-link to="/register">
-            <button>Sign up </button></router-link> /
-          <router-link to="/login">
-            <button>Sign in </button></router-link>
+        <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+          <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
+            <li>
+              <a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-primary-100 md:p-0" aria-current="page">Home</a>
+            </li>
+            <li>
+              <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary-100 md:p-0">About</a>
+            </li>
+            <li>
+              <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary-100 md:p-0">Services</a>
+            </li>
+            <li>
+              <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary-100 md:p-0">Contact</a>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
+
   </header>
   <!-- ========== END HEADER ========== -->
 
-  <!-- ========== MAIN CONTENT ========== -->
-  <main id="content">
-    <!-- Nav -->
-    <nav class="sticky -top-px bg-white text-sm font-medium text-black ring-1 ring-gray-900 ring-opacity-5 border-t shadow-sm shadow-gray-100 pt-6 md:pb-6 -mt-px" aria-label="Jump links">
-      <div class="max-w-7xl snap-x w-full flex items-center overflow-x-auto px-4 sm:px-6 lg:px-8 pb-4 md:pb-0 mx-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
-        <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last-pe-0">
-          <RouterLink to="/profile" class="inline-flex items-center gap-x-2 hover:text-gray-500" href="#">Profile</RouterLink>
-        </div>
-        <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-          <a class="inline-flex items-center gap-x-2 hover:text-gray-500" href="#">My Recipe</a>
-        </div>
-        <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-          <a class="inline-flex items-center gap-x-2 hover:text-gray-500" href="#">Discover</a>
-        </div>
-        <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-          <a class="inline-flex items-center gap-x-2 hover:text-gray-500" href="#">Whats New</a>
-        </div>
-        <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">
-          <a class="inline-flex items-center gap-x-2 hover:text-gray-500" href="#">Foodie</a>
-        </div>
-<!--        <div class="snap-center shrink-0 pe-5 sm:pe-8 sm:last:pe-0">-->
-<!--          <a class="inline-flex items-center gap-x-2 hover:text-gray-500" href="#">-->
-<!--           <RouterLink to="/login"> Login </RouterLink>-->
-<!--            <span class="inline bg-gray-100 text-xs text-gray-500 font-semibold rounded-full py-1 px-2">v12.7</span>-->
-<!--          </a>-->
-<!--        </div>-->
-      </div>
-    </nav>
-    <!-- End Nav -->
-
-  </main>
-  <!-- ========== END MAIN CONTENT ========== -->
   <RouterView />
 
   <!-- ========== FOOTER ========== -->
