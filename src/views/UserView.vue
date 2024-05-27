@@ -12,12 +12,12 @@
               <p class="text-2xl font-semibold text-gray-800 inline-flex">{{ user.firstName }} {{ user.lastName }}</p> <p class="text-l font-semibold text-gray-500 inline-flex">@{{ user.username }}</p>
 
 
-              <div class=" pt-2">
+              <div class="pt-2">
                 <button type="button" class="py-1 px-2 mr-1 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-gray-200 text-black hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" data-hs-overlay="#hs-followers-modal">
                   {{ followers.length }} Followers
                 </button>
-                <div id="hs-followers-modal" class="hs-overlay hs-overlay-open:opacity-100 hs-overlay-open:duration-500 hidden size-full fixed top-0 start-0 z-[80] opacity-0 overflow-x-hidden transition-all overflow-y-auto pointer-events-none">
-                  <div class="sm:max-w-lg sm:w-full m-3 sm:mx-auto">
+                <div id="hs-followers-modal" class="hs-overlay hs-overlay-open:opacity-100 hs-overlay-open:duration-500 hidden size-full fixed top-0 start-0 z-[80] opacity-0 overflow-x-hidden transition-all overflow-y-auto pointer-events-none ">
+                  <div class="sm:max-w-md sm:w-full m-3 sm:mx-auto">
                     <div class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto">
                       <div class="flex justify-between items-center py-3 px-4 border-b">
                         <h3 class="font-bold text-gray-800">
@@ -31,17 +31,17 @@
                           </svg>
                         </button>
                       </div>
-                      <div class="p-4 overflow-y-auto grid grid-cols-2" v-for="(followers,index) in followers" :key="index">
+                      <div class="p-4 overflow-y-auto grid grid-cols-2" v-for="(followers,index) in sortedFollowers" :key="index">
                         <div class="col-span-1 inline-flex">
                           <p class="mt-1 text-gray-800">
                             <img class="w-14 h-14 rounded-full border-2 border-white image " :src="followers.image" alt="User Image" />
                           </p>
 
-                          <p class="mt-1 text-gray-800" >
-                            {{ followers.firstName }} {{ followers.lastName }} <br> @{{ followers.username }}
+                          <p class="my-auto ml-2.5" >
+                             {{ followers.firstName }} {{ followers.lastName }}
                           </p>
                         </div>
-                        <div class="col-span-1">
+                        <div class="col-span-1 text-right my-auto">
                           <button v-if="followers.username !== username" type="button" class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent transition duration-300 disabled:opacity-50 disabled:pointer-events-none" :class="{'bg-primary-100 hover:bg-primary-200 text-white': !followers.isFollowing, 'bg-gray-300 text-gray-900': followers.isFollowing}" @click="followUser(followers)">
                             <template v-if="!followers.isFollowing">
                               <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -75,7 +75,7 @@
                 </button>
 
                 <div id="hs-followee-modal" class="hs-overlay hs-overlay-open:opacity-100 hs-overlay-open:duration-500 hidden size-full fixed top-0 start-0 z-[80] opacity-0 overflow-x-hidden transition-all overflow-y-auto pointer-events-none">
-                  <div class="sm:max-w-lg sm:w-full m-3 sm:mx-auto">
+                  <div class="sm:max-w-md sm:w-full m-3 sm:mx-auto">
                     <div class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto">
                       <div class="flex justify-between items-center py-3 px-4 border-b">
                         <h3 class="font-bold text-gray-800">
@@ -89,16 +89,16 @@
                           </svg>
                         </button>
                       </div>
-                      <div class="p-4 overflow-y-auto grid grid-cols-2" v-for="(followees,index) in followees" :key="index">
+                      <div class="p-4 overflow-y-auto grid grid-cols-2" v-for="(followees,index) in sortedFollowers" :key="index">
                         <div class="col-span-1 inline-flex">
                             <img class="w-14 h-14 rounded-full border-2 border-white image " :src="followees.image" alt="User Image" />
 
-                          <p class="mt-1 text-gray-800" >
-                            {{ followees.firstName }} {{ followees.lastName }} <br> @{{ followees.username }}
+                          <p class="my-auto ml-2.5" >
+                            {{ followees.firstName }} {{ followees.lastName }}
                           </p>
 
                         </div>
-                        <div class="col-span-1">
+                        <div class="col-span-1 text-right my-auto ">
                           <button v-if="followees.username !== username" type="button" class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent transition duration-300 disabled:opacity-50 disabled:pointer-events-none" :class="{'bg-primary-100 hover:bg-primary-200 text-white': !followees.isFollowing, 'bg-gray-300 text-gray-900': followees.isFollowing}" @click="followUser(followees)">
                             <template v-if="!followees.isFollowing">
                               <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -151,7 +151,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 import {config} from "../../config.js";
@@ -231,6 +231,36 @@ export default {
         isLoading.value = false;
       }
     });
+    const sortedFollowers = computed(() => {
+      // Copy the followers array
+      let sorted = [...followers.value];
+
+      // Find the index of the logged-in user in the followers array
+      let loggedInUserIndex = sorted.findIndex(follower => follower.username === username);
+
+      // If the logged-in user is in the followers array, move them to the start of the array
+      if (loggedInUserIndex !== -1) {
+        let loggedInUser = sorted.splice(loggedInUserIndex, 1)[0];
+        sorted.unshift(loggedInUser);
+      }
+
+      return sorted;
+    });
+    const  sortedFollowees = computed(() => {
+      // Copy the followers array
+      let sorted = [...followees.value];
+
+      // Find the index of the logged-in user in the followers array
+      let loggedInUserIndex = sorted.findIndex(followee => followee.username === username);
+
+      // If the logged-in user is in the followers array, move them to the start of the array
+      if (loggedInUserIndex !== -1) {
+        let loggedInUser = sorted.splice(loggedInUserIndex, 1)[0];
+        sorted.unshift(loggedInUser);
+      }
+
+      return sorted;
+    });
 
     const followUser = async (user) => {
       isLoadingButton.value = true; // Set to true when the function is called
@@ -270,6 +300,8 @@ export default {
       followees,
       isLoadingButton,
       username,
+      sortedFollowers,
+      sortedFollowees
     };
   }
 };
