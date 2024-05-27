@@ -8,3 +8,6 @@
 .slide-enter, .slide-leave-to {
     transform: translateX(100%);
 }
+.main-content {
+    padding-top: 25px; /* Adjust this value to match the height of your header */
+}
