@@ -559,7 +559,10 @@ const postComment = async () => {
     const response = await axios.post(`/comment`, { comment: commentContent.value, recipe_id: recipe.value.id });
     if (response.data.status === 'success') {
       // Add the new comment to the comments in the local state
-      comments.value.push(response.data.data[0]);
+      const newComment = response.data.data[0];
+      comments.value.push(newComment);
+      // Update the user's image URL
+      newComment.user.image = response.data.data[0].user.image;
       // Clear the comment field
       commentContent.value = '';
     }
@@ -577,7 +580,10 @@ const postReply = async (commentId) => {
       // Create a new copy of the comment
       const newComment = { ...comments.value[commentIndex] };
       // Add the new reply to the comment's replies
-      newComment.replies = [...(newComment.replies || []), response.data.data[0]];
+      const newReply = response.data.data[0];
+      newComment.replies = [...(newComment.replies || []), newReply];
+      // Update the user's image URL in the new reply
+      newReply.user.image = response.data.data[0].user.image;
       // Replace the old comment with the new comment in the comments array
       comments.value.splice(commentIndex, 1, newComment);
       // Clear the reply field and close it
