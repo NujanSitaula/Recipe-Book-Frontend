@@ -131,6 +131,8 @@ export default {
     const isLoading = ref(false);
     const followers = ref([]);
     const followees = ref([]);
+    const isLoadingButton = ref(false);
+
 
     axios.defaults.baseURL = config.BASE_URL;
 
@@ -141,6 +143,14 @@ export default {
         const userResponse = await axios.get(`/user/${route.params.username}`);
         if (userResponse.data.status === 'success') {
           user.value = userResponse.data.data;
+
+          const followStatusResponse = await axios.get(`/follow/${user.value.id}/status`, {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            },
+          });
+          user.value.isFollowing = followStatusResponse.data.isFollowing;
+
 
           // Fetch followers data
           const followersResponse = await axios.get(`/followers/${user.value.id}`, {
@@ -190,6 +200,7 @@ export default {
     });
 
     const followUser = async (user) => {
+      isLoadingButton.value = true; // Set to true when the function is called
       try {
         if (!user.isFollowing) {
           const response = await axios.post(`/follow/${user.id}`, '', {
@@ -212,6 +223,9 @@ export default {
         }
       } catch (error) {
         console.error('Error:', error);
+      } finally {
+        isLoadingButton.value = false;
+
       }
     };
 
@@ -221,6 +235,7 @@ export default {
       followUser,
       followers,
       followees,
+      isLoadingButton,
     };
   }
 };
