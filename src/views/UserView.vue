@@ -31,22 +31,38 @@
                           </svg>
                         </button>
                       </div>
-                      <div class="p-4 overflow-y-auto grid grid-cols-3" v-for="(followers,index) in followers" :key="index">
-                        <div class="col-span-1">
+                      <div class="p-4 overflow-y-auto grid grid-cols-2" v-for="(followers,index) in followers" :key="index">
+                        <div class="col-span-1 inline-flex">
                           <p class="mt-1 text-gray-800">
                             <img class="w-14 h-14 rounded-full border-2 border-white image " :src="followers.image" alt="User Image" />
                           </p>
-                        </div>
-                        <div class="col-span-1">
+
                           <p class="mt-1 text-gray-800" >
                             {{ followers.firstName }} {{ followers.lastName }} <br> @{{ followers.username }}
                           </p>
                         </div>
                         <div class="col-span-1">
-                          <button type="button" class=" p-2  hover:rounded-3xl rounded-3xl w-24 transition duration-300" :class="{'bg-primary-100 hover:bg-primary-200 text-white': !followers.isFollowing, 'bg-gray-300 text-gray-900': followers.isFollowing}" @click = "followUser(followers)">
-                            <span v-if="!followers.isFollowing">Follow</span>
-                            <span v-else>Unfollow</span>
+                          <button v-if="followers.username !== username" type="button" class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent transition duration-300 disabled:opacity-50 disabled:pointer-events-none" :class="{'bg-primary-100 hover:bg-primary-200 text-white': !followers.isFollowing, 'bg-gray-300 text-gray-900': followers.isFollowing}" @click="followUser(followers)">
+                            <template v-if="!followers.isFollowing">
+                              <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <line x1="19" x2="19" y1="8" y2="14" />
+                                <line x1="22" x2="16" y1="11" y2="11" />
+                              </svg>
+                              <span>Follow</span>
+                            </template>
+                            <template v-else>
+                              <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <line x1="16" y1="8" x2="22" y2="14" />
+                                <line x1="16" y1="14" x2="22" y2="8" />
+                              </svg>
+                              <span>Unfollow</span>
+                            </template>
                           </button>
+
                         </div>
 
                       </div>
@@ -73,22 +89,38 @@
                           </svg>
                         </button>
                       </div>
-                      <div class="p-4 overflow-y-auto grid grid-cols-3" v-for="(followees,index) in followees" :key="index">
-                        <div class="col-span-1">
-                          <p class="mt-1 text-gray-800" >
+                      <div class="p-4 overflow-y-auto grid grid-cols-2" v-for="(followees,index) in followees" :key="index">
+                        <div class="col-span-1 inline-flex">
                             <img class="w-14 h-14 rounded-full border-2 border-white image " :src="followees.image" alt="User Image" />
-                          </p>
-                        </div>
-                        <div class="col-span-1">
+
                           <p class="mt-1 text-gray-800" >
                             {{ followees.firstName }} {{ followees.lastName }} <br> @{{ followees.username }}
                           </p>
+
                         </div>
                         <div class="col-span-1">
-                          <button type="button" class=" p-2  hover:rounded-3xl rounded-3xl w-24 transition duration-300" :class="{'bg-primary-100 hover:bg-primary-200 text-white': !followees.isFollowing, 'bg-gray-300 text-gray-900': followees.isFollowing}" @click = "followUser(followees)">
-                            <span v-if="!followees.isFollowing">Follow</span>
-                            <span v-else>Unfollow</span>
+                          <button v-if="followees.username !== username" type="button" class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent transition duration-300 disabled:opacity-50 disabled:pointer-events-none" :class="{'bg-primary-100 hover:bg-primary-200 text-white': !followers.isFollowing, 'bg-gray-300 text-gray-900': followers.isFollowing}" @click="followUser(followers)">
+                            <template v-if="!followees.isFollowing">
+                              <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <line x1="19" x2="19" y1="8" y2="14" />
+                                <line x1="22" x2="16" y1="11" y2="11" />
+                              </svg>
+                              <span>Follow</span>
+                            </template>
+                            <template v-else>
+                              <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <line x1="16" y1="8" x2="22" y2="14" />
+                                <line x1="16" y1="14" x2="22" y2="8" />
+                              </svg>
+                              <span>Unfollow</span>
+                            </template>
                           </button>
+
+
                         </div>
 
                       </div>
@@ -132,7 +164,8 @@ export default {
     const followers = ref([]);
     const followees = ref([]);
     const isLoadingButton = ref(false);
-
+    let userData = JSON.parse(localStorage.getItem('user'));
+    let username = userData.data.username;
 
     axios.defaults.baseURL = config.BASE_URL;
 
@@ -236,6 +269,7 @@ export default {
       followers,
       followees,
       isLoadingButton,
+      username,
     };
   }
 };
