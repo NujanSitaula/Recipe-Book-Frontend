@@ -543,11 +543,13 @@ import {config} from "../../config.js";
 
 const route = useRoute();
 const recipe = ref(null);
-const isLoading = ref(false); // Add this line
+const isLoading = ref(false);
 const comments = ref([]);
 const replyingTo = ref(null);
 const replyContent = ref('');
 const commentContent = ref('');
+const lastCommentId = ref(null); // Add this line
+const loadingMoreComments = ref(false); // Add this line
 axios.defaults.baseURL = config.BASE_URL;
 
 const showReplyField = (commentId) => {
