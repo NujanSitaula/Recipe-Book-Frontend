@@ -99,7 +99,7 @@
 
                         </div>
                         <div class="col-span-1">
-                          <button v-if="followees.username !== username" type="button" class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent transition duration-300 disabled:opacity-50 disabled:pointer-events-none" :class="{'bg-primary-100 hover:bg-primary-200 text-white': !followers.isFollowing, 'bg-gray-300 text-gray-900': followers.isFollowing}" @click="followUser(followers)">
+                          <button v-if="followees.username !== username" type="button" class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent transition duration-300 disabled:opacity-50 disabled:pointer-events-none" :class="{'bg-primary-100 hover:bg-primary-200 text-white': !followees.isFollowing, 'bg-gray-300 text-gray-900': followees.isFollowing}" @click="followUser(followees)">
                             <template v-if="!followees.isFollowing">
                               <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
