@@ -560,7 +560,7 @@ const postComment = async () => {
     if (response.data.status === 'success') {
       // Add the new comment to the comments in the local state
       const newComment = response.data.data[0];
-      comments.value.push(newComment);
+      comments.value.unshift(newComment);
       // Update the user's image URL
       newComment.user.image = response.data.data[0].user.image;
       // Clear the comment field
