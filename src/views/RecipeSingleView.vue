@@ -1,6 +1,6 @@
 <template>
   <!-- Blog Article -->
-  <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto" v-if="recipe">
+  <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto main-content" v-if="recipe">
     <div class="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
       <!-- Content -->
       <div class="lg:col-span-2">
@@ -451,7 +451,7 @@
 
       <!-- Sidebar -->
       <div class="lg:col-span-1 lg:w-full lg:h-full lg:bg-gradient-to-r lg:from-gray-50 lg:via-transparent lg:to-transparent">
-        <div class="sticky top-0 start-0 py-8 lg:ps-8">
+        <div class="sticky top-14 start-0 py-8 lg:ps-8">
           <!-- Avatar Media -->
           <div class="group flex items-center gap-x-3 border-b border-gray-200 pb-8 mb-8">
             <a class="block flex-shrink-0" href="#">

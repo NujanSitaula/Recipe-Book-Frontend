@@ -256,7 +256,7 @@ export default defineComponent({
   <Toaster ref="toaster" />
   <!-- <div class="mt-7 w-full max-w-[85rem] sm:px-6 lg:px-8 mx-auto relative bg-white shadow-sm rounded-lg border"> -->
     <div class="overflow-hidden">
-    <div class="max-w-[60rem] mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-[60rem] mx-auto px-4 sm:px-6 lg:px-8 main-content">
   <div class="mb-20 main">
     <div class="w-full h-52 bg-gray-300 shadow-lg shadow-gray-100" style="background-image: url('https://marketplace.canva.com/EAFIddmg8b0/1/0/1600w/canva-white-minimalist-corporate-personal-profile-linkedin-banner-t5iKXmGyEtU.jpg'); background-position: center; background-size: cover;"></div>
     <div class="flex flex-col absolute ml-5 pro_main" style="margin-top: -40px;">
