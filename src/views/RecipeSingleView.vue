@@ -460,7 +460,7 @@
 
             <a class="group grow block" href="">
               <h5 class="group-hover:text-gray-600 text-sm font-semibold text-gray-800">
-                {{ recipe.user.firstName }} {{ recipe.user.lastName }}
+                <RouterLink :to="'/' +recipe.user.username">{{ recipe.user.firstName }} {{ recipe.user.lastName }}</RouterLink>
               </h5>
               <p class="text-sm text-gray-500">
                 UI/UX enthusiast
@@ -468,16 +468,33 @@
             </a>
 
             <div class="grow">
-              <div class="flex justify-end">
-                <button type="button" class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-                  <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <line x1="19" x2="19" y1="8" y2="14" />
-                    <line x1="22" x2="16" y1="11" y2="11" />
-                  </svg>
-                  Follow
-                </button>
+              <div class="flex">
+                <div v-if="!isLoadingUser">
+                  <button type="button"
+                  class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent transition duration-300 disabled:opacity-50 disabled:pointer-events-none"
+                          :class="{'bg-primary-100 hover:bg-primary-200 text-white': user && !user.isFollowing, 'bg-gray-500 text-white': user && user.isFollowing}"
+                          @click="handleFollowUnfollow(user)">
+                    <template v-if="user && !user.isFollowing">
+                    <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <line x1="19" x2="19" y1="8" y2="14" />
+                      <line x1="22" x2="16" y1="11" y2="11" />
+                    </svg>
+                    <span>Follow</span>
+                  </template>
+                    <template v-else>
+                      <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <line x1="16" y1="8" x2="22" y2="14" />
+                        <line x1="16" y1="14" x2="22" y2="8" />
+                      </svg>
+                      <span>Unfollow</span>
+                    </template>
+                  </button>
+
+                </div>
               </div>
             </div>
           </div>
@@ -536,10 +553,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
-import {config} from "../../config.js";
+import { config } from "../../config.js";
 
 const route = useRoute();
 const recipe = ref(null);
@@ -548,9 +565,65 @@ const comments = ref([]);
 const replyingTo = ref(null);
 const replyContent = ref('');
 const commentContent = ref('');
+const user = ref(null);
+const isLoadingButton = ref(false);
+const followers = ref([]);
+const followees = ref([]);
+
+let userData = JSON.parse(localStorage.getItem('user'));
+let username = userData.data.username;
+
 const lastCommentId = ref(null); // Add this line
-const loadingMoreComments = ref(false); // Add this line
+const loadingMoreComments = ref(false); 
 axios.defaults.baseURL = config.BASE_URL;
+
+const handleFollowUnfollow = async (user) => {
+  isLoadingButton.value = true;
+  try {
+    const response = await axios.post(`/follow/${user.id}`, '', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+      },
+    });
+    if (response.data.status === 'success') {
+      user.isFollowing = !user.isFollowing;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  } finally {
+    isLoadingButton.value = false;
+  }
+};
+
+onMounted(async () => {
+  isLoading.value = true;
+  try {
+    // Fetch recipe data
+    const recipeResponse = await axios.get(`/recipe/${route.params.id}`);
+    if (recipeResponse.data.status === 'success') {
+      recipe.value = recipeResponse.data.data;
+      user.value = recipe.value.user;
+
+      // Fetch follow status
+      const followStatusResponse = await axios.get(`/follow/${user.value.id}/status`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      });
+      user.value.isFollowing = followStatusResponse.data.isFollowing;
+    }
+
+    // Fetch comments data
+    const commentsResponse = await axios.get(`/comment/${route.params.id}`);
+    if (commentsResponse.data.status === 'success') {
+      comments.value = commentsResponse.data.data;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  } finally {
+    isLoading.value = false;
+  }
+});
 
 const showReplyField = (commentId) => {
   replyingTo.value = commentId;
@@ -560,12 +633,9 @@ const postComment = async () => {
   try {
     const response = await axios.post(`/comment`, { comment: commentContent.value, recipe_id: recipe.value.id });
     if (response.data.status === 'success') {
-      // Add the new comment to the comments in the local state
       const newComment = response.data.data[0];
       comments.value.unshift(newComment);
-      // Update the user's image URL
       newComment.user.image = response.data.data[0].user.image;
-      // Clear the comment field
       commentContent.value = '';
     }
   } catch (error) {
@@ -575,20 +645,14 @@ const postComment = async () => {
 
 const postReply = async (commentId) => {
   try {
-    const response = await axios.post(`/comment/${commentId}/reply`, {reply: replyContent.value});
+    const response = await axios.post(`/comment/${commentId}/reply`, { reply: replyContent.value });
     if (response.data.status === 'success') {
-      // Find the index of the comment in the comments array
       const commentIndex = comments.value.findIndex(comment => comment.id === commentId);
-      // Create a new copy of the comment
       const newComment = { ...comments.value[commentIndex] };
-      // Add the new reply to the comment's replies
       const newReply = response.data.data[0];
       newComment.replies = [...(newComment.replies || []), newReply];
-      // Update the user's image URL in the new reply
       newReply.user.image = response.data.data[0].user.image;
-      // Replace the old comment with the new comment in the comments array
       comments.value.splice(commentIndex, 1, newComment);
-      // Clear the reply field and close it
       replyContent.value = '';
       replyingTo.value = null;
     }
@@ -597,46 +661,27 @@ const postReply = async (commentId) => {
   }
 };
 
-onMounted(async () => {
-  isLoading.value = true; // Set isLoading to true when data fetching starts
-  try {
-    const response = await axios.get(`/comment/${route.params.id}`); // Replace '/comments' with your actual API endpoint
-    if (response.data.status === 'success') {
-      comments.value = response.data.data;
-    }
-  } catch (error) {
-    console.error('Error:', error);
+const sortedFollowers = computed(() => {
+  let sorted = [...followers.value];
+  let loggedInUserIndex = sorted.findIndex(follower => follower.username === username);
+  if (loggedInUserIndex !== -1) {
+    let loggedInUser = sorted.splice(loggedInUserIndex, 1)[0];
+    sorted.unshift(loggedInUser);
   }
-  try {
-    const response = await axios.get(`/recipe/${route.params.id}`);
-    if (response.data.status === 'success') {
-      recipe.value = response.data.data;
-      console.log(recipe.value);
-    }
-  } catch (error) {
-    console.error('Error:', error);
-  } finally {
-    isLoading.value = false; // Set isLoading to false when data fetching is completed
-  }
+  return sorted;
 });
 
-const accordionItems = document.querySelectorAll('.accordion-item');
-
-accordionItems.forEach(item => {
-  const btn = item.querySelector('.accordion-btn');
-  const content = item.querySelector('.accordion-content');
-
-  btn.addEventListener('click', () => {
-    // Toggle active class on button
-    btn.classList.toggle('active');
-
-    // Toggle accordion content visibility
-    if (content.style.maxHeight) {
-      content.style.maxHeight = null;
-    } else {
-      content.style.maxHeight = content.scrollHeight + 'px';
-    }
-  });
+const sortedFollowees = computed(() => {
+  let sorted = [...followees.value];
+  let loggedInUserIndex = sorted.findIndex(followee => followee.username === username);
+  if (loggedInUserIndex !== -1) {
+    let loggedInUser = sorted.splice(loggedInUserIndex, 1)[0];
+    sorted.unshift(loggedInUser);
+  }
+  return sorted;
 });
+
 
 </script>
+
+
