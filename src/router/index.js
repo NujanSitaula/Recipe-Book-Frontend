@@ -10,6 +10,7 @@ import ProfileView from '@/views/ProfileView.vue';
 import ProfileDetailsView from '@/components/profile/ProfileDetailsView.vue';
 import ProfileSavedView from '@/components/profile/ProfileSavedView.vue';
 import TfaSetupView from "@/components/profile/TfaSetupView.vue";
+import AddRecipe from "@/views/AddRecipe.vue";
 
 
 const router = createRouter({
@@ -73,6 +74,11 @@ const router = createRouter({
       name: 'user',
       component: () => import('../views/UserView.vue')
 
+    },
+    {
+        path: '/add-recipe',
+        name: 'add recipe',
+        component: () => import('../views/AddRecipe.vue')
     }
   ]
 })
