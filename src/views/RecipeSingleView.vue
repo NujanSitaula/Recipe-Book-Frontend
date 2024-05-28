@@ -560,11 +560,12 @@ import { config } from "../../config.js";
 
 const route = useRoute();
 const recipe = ref(null);
-const isLoading = ref(false);
+const isLoading = ref(false); // Add this line
 const comments = ref([]);
 const replyingTo = ref(null);
 const replyContent = ref('');
 const commentContent = ref('');
+
 const user = ref(null);
 const isLoadingButton = ref(false);
 const followers = ref([]);
@@ -575,6 +576,7 @@ let username = userData.data.username;
 
 const lastCommentId = ref(null); // Add this line
 const loadingMoreComments = ref(false); 
+
 axios.defaults.baseURL = config.BASE_URL;
 
 const handleFollowUnfollow = async (user) => {
