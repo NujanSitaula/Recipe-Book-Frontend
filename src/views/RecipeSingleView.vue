@@ -573,6 +573,8 @@ const followees = ref([]);
 let userData = JSON.parse(localStorage.getItem('user'));
 let username = userData.data.username;
 
+const lastCommentId = ref(null); // Add this line
+const loadingMoreComments = ref(false); 
 axios.defaults.baseURL = config.BASE_URL;
 
 const handleFollowUnfollow = async (user) => {
