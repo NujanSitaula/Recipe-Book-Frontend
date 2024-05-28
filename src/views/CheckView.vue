@@ -43,7 +43,7 @@ export default {
       const channel = pusher.subscribe('my-channel');
       channel.bind('my-event', function(data) {
         console.log('Event triggered with data:', data); // Log the event data
-        const message = JSON.stringify(data);
+        const message = JSON.stringify(data.message);
         messages.value.push(message);
         showPopup.value = message; // Show the message in the popup
         setTimeout(() => {
