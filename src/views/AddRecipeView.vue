@@ -87,7 +87,134 @@
         "index": 1
       }'>
                 <div class="h-auto bg-gray-50 flex justify-center items-center border border-dashed border-gray-200 rounded-xl">
-                  <component :is="currentStepComponent" :initialData="currentStepData" @updateData="updateStepData" />
+                    <!-- Card -->
+                    <div class="rounded-xl shadow p-4 sm:p-7">
+                      <form @input="updateFormData">
+                        <div class="sm:col-span-12">
+                          <h1 class="text-xl font-semibold text-gray-800">
+                            Lets start with the basics
+                          </h1>
+                        </div>
+                        <!-- Section -->
+                        <div class="grid sm:grid-cols-12 gap-2 sm:gap-4 py-8 px-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200">
+                          <!-- End Col -->
+
+                          <div class="sm:col-span-12">
+                            <label class=" m-1 text-sm font-medium text-gray-500 mt-2.5">
+                              Recipe Title
+                              <input v-model="formData.title" type="text" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your recipe title here">
+                            </label>
+                          </div>
+
+
+                          <div class="sm:col-span-12">
+                            <label class="m-1 text-sm font-medium text-gray-500 mt-2.5">
+                              Description
+                              <textarea v-model="formData.description" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Give a short description to your recipe"></textarea>
+                            </label>
+                          </div>
+
+
+
+                          <div class="sm:col-span-12">
+                            <label class="m-1 text-sm font-medium text-gray-500 mt-2.5">
+                              Add image of your recipe
+                            </label>
+                            <div class="flex items-center justify-start w-64">
+                              <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                  <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                  </svg>
+                                  <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                  <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                                </div>
+                                <input  id="dropzone-file" type="file" class="hidden" />
+                              </label>
+                            </div>
+                          </div>
+
+
+                          <div class="sm:col-span-12">
+                            <label class="inline-block m-1 text-sm font-medium text-gray-500 mt-2.5">
+                              Preparation Time
+                            </label>
+                            <div class="sm:grid-cols-2 inline-flex">
+                              <div class="sm:col-span-1 inline-flex w-full">
+                                <input v-model="formData.preparationTime" type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+                                <label for="hour" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
+                                  Hours
+                                </label>
+                              </div>
+                              <div class="sm:col-span-1 mx-10 inline-flex w-full">
+                                <input type="text" class="mr-2 block w-full  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+                                <label for="minute" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
+                                  Minutes
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-span-12">
+                            <label class="block m-1 text-sm font-medium text-gray-500 mt-2.5">
+                              Cooking Time
+                            </label>
+                            <div class="sm:grid-cols-2 inline-flex">
+                              <div class="sm:col-span-1 inline-flex w-full">
+                                <input v-model="formData.cookingTime" type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+                                <label for="hour" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
+                                  Hours
+                                </label>
+                              </div>
+                              <div class="sm:col-span-1 mx-10 inline-flex w-full">
+                                <input type="text" class="mr-2 block w-full  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+                                <label for="minute" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
+                                  Minutes
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="sm:col-span-12">
+                            <label class=" m-1 text-sm font-medium text-gray-500 mt-2.5">
+                              Servings
+                              <input v-model="formData.servings" type="text" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" placeholder="#">
+                            </label>
+                          </div>
+
+                          <div class="sm:col-span-12">
+                            <label class="m-1 text-sm font-medium text-gray-500 mt-2.5">
+                              Difficulty
+                            </label>
+                            <ul class="grid w-full h-full gap-6 md:grid-cols-3">
+                              <li>
+                                <input type="radio" id="easy" name="type_of_recipe" value="easy" class="hidden peer" required @change="" v-model="easy" />
+                                <label for="easy" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full  text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer ">
+                                  <div class="w-full text-center p-2">
+                                    Easy
+                                  </div>
+                                </label>
+                              </li>
+                              <li>
+                                <input type="radio" id="medium" name="type_of_recipe" value="midbie" class="hidden peer" required @change="" v-model="medium" />
+                                <label for="medium" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full  text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer ">
+                                  <div class="w-full text-center p-2">Medium</div>
+                                </label>
+                              </li>
+                              <li>
+                                <input type="radio" id="hard" name="type_of_recipe" value="master" class="hidden peer" required @change="" v-model="hard" />
+                                <label for="hard" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer">
+                                  <div class="w-full text-center p-2">Hard</div>
+                                </label>
+                              </li>
+                            </ul>
+
+                          </div>
+
+
+                        </div>
+                      </form>
+                    </div>
+                    <!-- End Card -->
 
                 </div>
               </div>
@@ -115,7 +242,6 @@
               </div>
               <!-- End First Content -->
 
-              <!-- First Content -->
               <div data-hs-stepper-content-item='{
         "index": 4
       }' style="display: none;">
@@ -125,7 +251,7 @@
                   </h3>
                 </div>
               </div>
-              <!-- End First Contnet -->
+
 
               <!-- Final Contnet -->
               <div data-hs-stepper-content-item='{
@@ -135,6 +261,7 @@
                   <h3 class="text-gray-500">
                     Final content
                   </h3>
+
                 </div>
               </div>
               <!-- End Final Contnet -->
@@ -153,7 +280,7 @@
                     <path d="m9 18 6-6-6-6"></path>
                   </svg>
                 </button>
-                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200 disabled:opacity-50 disabled:pointer-events-none" data-hs-stepper-finish-btn="" style="display: none;">
+                <button @click="postRecipeData" type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200 disabled:opacity-50 disabled:pointer-events-none" data-hs-stepper-finish-btn="" style="display: none;">
                   Finish
                 </button>
                 <button type="reset" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200 disabled:opacity-50 disabled:pointer-events-none" data-hs-stepper-reset-btn="" style="display: none;">
@@ -171,43 +298,62 @@
   </div>
 
 </template>
-<script lang="ts">
-import { ref, computed } from 'vue';
-import { useRecipeStore } from '../stores/recipeStore';
-import BasicRecipeView from '@/components/recipe/BasicRecipeView.vue';
 
+<script>
+import axios from 'axios';
+import {config} from "../../config.js";
+
+axios.defaults.baseURL = config.BASE_URL
 export default {
-  setup() {
-    const recipeStore = useRecipeStore();
-    const step = ref(1);
-    const steps = [BasicRecipeView]; // Add more steps if needed
-    const currentStepData = ref({});
 
-    const currentStepComponent = computed(() => {
-      return steps[step.value - 1];
-    });
-
-    const updateStepData = (data) => {
-      currentStepData.value = data;
-    };
-
-    const handleNext = async () => {
-      await recipeStore.saveStepData(step.value, currentStepData.value);
-      if (step.value < steps.length) {
-        step.value++;
-        currentStepData.value = recipeStore.recipe[`step${step.value}Data`];
-      } else {
-        console.log('All steps completed');
-      }
-    };
-
-
+  data() {
     return {
-      currentStepComponent,
-      currentStepData,
-      handleNext,
-      updateStepData
-    };
+      formData: {
+        title: '',
+        description: '',
+        preparationTime: '',
+        cookingTime: '',
+        servings: '',
+        // difficulty: '',
+        // image: '',
+      },
+      // easy: '',
+      // medium: '',
+      // hard: '',
+    }
+  },
+  methods: {
+    async postRecipeData() {
+      try {
+        const response = await axios.post('/recipe', {
+
+            name: this.formData.title,
+            description: this.formData.description,
+            prep_time: this.formData.preparationTime,
+            cook_time: this.formData.cookingTime,
+            servings: this.formData.servings,
+        }, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+          }
+        });
+
+        if (response.status === 200) {
+          console.log('Recipe data posted successfully');
+        } else {
+          console.log('Failed to post recipe data');
+        }
+      } catch (error) {
+        console.error('An error occurred while posting recipe data:', error);
+      }
+    },
+    updateFormData() {
+      console.log(this.formData);
+    },
+    handleNext() {
+      console.log('next');
+    }
   }
-};
+}
+
 </script>
