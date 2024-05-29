@@ -1,6 +1,6 @@
 <template>
   <!-- Hero -->
-  <div class="overflow-hidden">
+  <div class="overflow-hidden bg-gray-50">
     <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-32">
       <div class="relative mx-auto max-w-4xl grid space-y-5 sm:space-y-10">
         <!-- Title -->
@@ -8,8 +8,8 @@
           <p class="text-xs font-semibold text-gray-500 tracking-wide uppercase mb-3">
             Explore, Create, and Share Delicious Recipes
           </p>
-          <h1 class="text-3xl text-gray-800 font-bold sm:text-5xl lg:text-6xl lg:leading-tight">
-            Start Your Gastronomic <span class="text-primary">Adventure</span>
+          <h1 class="text-3xl text-gray-800 font-bold sm:text-5xl lg:text-7xl lg:leading-tight">
+            Start Your Gastronomic <span class="text-primary-100">Adventure</span>
           </h1>
         </div>
         <!-- End Title -->
@@ -134,15 +134,14 @@
 
 
 
-
+  <div class="max-w-[85rem] py-10 sm:px-6 lg:py-14 mx-auto">
   <!-- Title -->
-  <div class="max-w-2xl text-center mx-auto">
+  <div class="max-w-2xl py-10">
     <h2 class="text-2xl font-bold md:text-4xl md:leading-tight">Trending Recipes</h2>
     <p class="mt-1 text-gray-600">These mouthwatering recipes are breaking the internet! </p>
   </div>
   <!-- End Title -->
   <!-- Card Blog -->
-  <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
     <!-- Grid -->
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <!-- Card -->
@@ -181,18 +180,17 @@
       </div>
     </div>
     <!-- End Grid -->
-  </div>
+
   <!-- End Card Blog -->
 
    <!-- Title -->
-   <div class="max-w-2xl text-center mx-auto">
+   <div class="max-w-2xl py-10">
     <h2 class="text-2xl font-bold md:text-4xl md:leading-tight">Recipe Categories</h2>
     <p class="mt-1 text-gray-600">These mouthwatering recipes are breaking the internet! </p>
   </div>
   <!-- End Title -->
 
   <!-- Card Section -->
-<div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
   <!-- Grid -->
   <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
     <!-- Card -->
@@ -217,182 +215,14 @@
   </div>
     </div>
   <!-- End Grid -->
-</div>
 <!-- End Card Section -->
 
   <!-- Title -->
-  <div class="max-w-2xl text-center mx-auto">
+  <div class="max-w-2xl py-10">
     <h2 class="text-2xl font-bold md:text-4xl md:leading-tight">People's Favorites</h2>
     <p class="mt-1 text-gray-600">These mouthwatering recipes are breaking the internet! </p>
   </div>
-  <!-- End Title -->
-  <!-- Card Blog -->
-  <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-    <!-- Grid -->
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Card -->
-      <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
-        <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
-          <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
-        </div>
-        <div class="p-4 md:p-6">
-        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
-             Time: 30 Min | Serving: 2 | Difficulty: Easy
-        </span>
-          <h3 class="text-xl font-semibold text-gray-800">
-            Super Cheese Pasta
-          </h3>
-          <p class="mt-3 text-gray-500">
-           It is a super cheese Pasta.
-          </p>
-        </div>
-        <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
-          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-            Start Cooking
-          </a>
-          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-            Save Recipe
-          </a>
-        </div>
-      </div>
-      <!-- End Card -->
 
-      <!-- Card -->
-      <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
-        <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
-          <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
-        </div>
-        <div class="p-4 md:p-6">
-        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
-             Time: 30 Min | Serving: 2 | Difficulty: Easy
-        </span>
-          <h3 class="text-xl font-semibold text-gray-800">
-            Super Cheese Pasta
-          </h3>
-          <p class="mt-3 text-gray-500">
-            It is a super cheese Pasta.
-          </p>
-        </div>
-        <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
-          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-            Start Cooking
-          </a>
-          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-            Save Recipe
-          </a>
-        </div>
-      </div>
-      <!-- End Card -->
-
-      <!-- Card -->
-      <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
-        <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
-          <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
-        </div>
-        <div class="p-4 md:p-6">
-        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
-             Time: 30 Min | Serving: 2 | Difficulty: Easy
-        </span>
-          <h3 class="text-xl font-semibold text-gray-800">
-            Super Cheese Pasta
-          </h3>
-          <p class="mt-3 text-gray-500">
-            It is a super cheese Pasta.
-          </p>
-        </div>
-        <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
-          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-          Start Cooking
-          </a>
-          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-            Save Recipe
-          </a>
-        </div>
-      </div>
-      <!-- End Card -->
-
-       <!-- Card -->
-       <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
-        <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
-          <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
-        </div>
-        <div class="p-4 md:p-6">
-        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
-             Time: 30 Min | Serving: 2 | Difficulty: Easy
-        </span>
-          <h3 class="text-xl font-semibold text-gray-800">
-            Super Cheese Pasta
-          </h3>
-          <p class="mt-3 text-gray-500">
-            It is a super cheese Pasta.
-          </p>
-        </div>
-        <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
-          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-            Start Cooking
-          </a>
-          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-            Save Recipe
-          </a>
-        </div>
-      </div>
-      <!-- End Card -->
-
-       <!-- Card -->
-       <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
-        <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
-          <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
-        </div>
-        <div class="p-4 md:p-6">
-        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
-             Time: 30 Min | Serving: 2 | Difficulty: Easy
-        </span>
-          <h3 class="text-xl font-semibold text-gray-800">
-            Super Cheese Pasta
-          </h3>
-          <p class="mt-3 text-gray-500">
-            It is a super cheese Pasta.
-          </p>
-        </div>
-        <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
-          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-            Start Cooking
-          </a>
-          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-            Save Recipe
-          </a>
-        </div>
-      </div>
-      <!-- End Card -->
-
-       <!-- Card -->
-       <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
-        <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
-          <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
-        </div>
-        <div class="p-4 md:p-6">
-        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
-             Time: 30 Min | Serving: 2 | Difficulty: Easy
-        </span>
-          <h3 class="text-xl font-semibold text-gray-800">
-            Super Cheese Pasta
-          </h3>
-          <p class="mt-3 text-gray-500">
-            It is a super cheese Pasta.
-          </p>
-        </div>
-        <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
-          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-            Start Cooking
-          </a>
-          <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-            Save Recipe
-          </a>
-        </div>
-      </div>
-      <!-- End Card -->
-    </div>
-    <!-- End Grid -->
   </div>
   <!-- End Card Blog -->
   <div class="max-w-[85rem] sm:px-6 lg:px-8 lg:py-14 mx-auto">
@@ -568,3 +398,9 @@ export default {
   },
 };
 </script>
+<style>
+h1, h2, h3{
+  font-family: "Arapey", serif;
+  font-weight: 400;
+}
+</style>
