@@ -116,37 +116,37 @@
 
                   <div class="p-4">
 
-                      <ul class="grid w-full gap-6 md:grid-cols-3">
-                        <li>
-                          <input type="radio" id="rookie" name="type_of_cook" value="rookie" class="hidden peer" required @change="updateCookType" v-model="cookType" />
-                          <label for="rookie" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center text-center justify-between w-full text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer ">
-                            <div class="block">
-                              <div class="w-full align- pt-2">Easy</div>
-                            </div>
-                          </label>
-                        </li>
-                        <li>
-                          <input type="radio" id="midbie" name="type_of_cook" value="midbie" class="hidden peer" required @change="updateCookType" v-model="cookType" />
-                          <label for="midbie" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer ">
-                            <div class="block">
-                              <div class="w-full text-lg font-semibold"></div>
+                    <ul class="grid w-full gap-6 md:grid-cols-3">
+                      <li>
+                        <input type="radio" id="easy" name="type_of_recipe" value="easy" class="hidden peer" required @change="" v-model="easy" />
+                        <label for="rookie" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center text-center justify-between w-full text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer ">
+                          <div class="block">
+                            <div class="w-full align- pt-2">Easy</div>
+                          </div>
+                        </label>
+                      </li>
+                      <li>
+                        <input type="radio" id="medium" name="type_of_recipe" value="midbie" class="hidden peer" required @change="" v-model="medium" />
+                        <label for="midbie" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer ">
+                          <div class="block">
+                            <div class="w-full text-lg font-semibold"></div>
 
-                              <div class="w-full text-center pt-2">Medium</div>
-                            </div>
-                          </label>
-                        </li>
-                        <li>
-                          <input type="radio" id="master" name="type_of_cook" value="master" class="hidden peer" required @change="updateCookType" v-model="cookType" />
-                          <label for="master" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer">
-                            <div class="block">
-                              <div class="w-full text-lg font-semibold"></div>
+                            <div class="w-full text-center pt-2">Medium</div>
+                          </div>
+                        </label>
+                      </li>
+                      <li>
+                        <input type="radio" id="hard" name="type_of_recipe" value="master" class="hidden peer" required @change="" v-model="hard" />
+                        <label for="master" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer">
+                          <div class="block">
+                            <div class="w-full text-lg font-semibold"></div>
 
-                              <div class="w-full text-center pt-2">Hard</div>
-                            </div>
+                            <div class="w-full text-center pt-2">Hard</div>
+                          </div>
 
-                          </label>
-                        </li>
-                      </ul>
+                        </label>
+                      </li>
+                    </ul>
                   </div>
                 </div>
 

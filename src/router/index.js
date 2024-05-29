@@ -10,7 +10,10 @@ import ProfileView from '@/views/ProfileView.vue';
 import ProfileDetailsView from '@/components/profile/ProfileDetailsView.vue';
 import ProfileSavedView from '@/components/profile/ProfileSavedView.vue';
 import TfaSetupView from "@/components/profile/TfaSetupView.vue";
-import AddRecipe from "@/views/AddRecipe.vue";
+import AddRecipeView from "@/views/AddRecipeView.vue";
+import BasicRecipeView from "@/components/recipe/BasicRecipeView.vue";
+
+
 
 
 const router = createRouter({
@@ -76,9 +79,17 @@ const router = createRouter({
 
     },
     {
-        path: '/add-recipe',
-        name: 'add recipe',
-        component: () => import('../views/AddRecipe.vue')
+        path: '/addRecipe',
+        name: 'addRecipe',
+        component: AddRecipeView,
+        meta: { requiresAuth: true },
+        children:[{
+          path: 'basics',
+          name: 'basics',
+          component: BasicRecipeView
+        }
+
+        ]
     }
   ]
 })
