@@ -131,9 +131,6 @@
     </ais-instant-search>
   </div>
 
-
-
-
   <div class="max-w-[85rem] py-10 sm:px-6 lg:py-14 mx-auto">
   <!-- Title -->
   <div class="max-w-2xl py-10">
@@ -143,41 +140,37 @@
   <!-- End Title -->
   <!-- Card Blog -->
     <!-- Grid -->
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <!-- Card -->
       <div v-for="recipe in recipes.data" :key="recipe.id">
-        <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl">
-          <div class="h-52 flex justify-center items-center rounded-t-xl overflow-hidden">
-            <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Recipe Image" class="w-full h-full object-cover">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden hover-zoom relative">
+          <div class="relative">
+            <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Pizza" class="w-full h-64 object-cover transition-transform duration-300">
+            <div class="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M3.172 5.172a4.002 4.002 0 015.656 0L10 6.343l1.172-1.171a4.002 4.002 0 115.656 5.656L10 17.657l-6.828-6.829a4.002 4.002 0 010-5.656z"/>
+              </svg>
+            </div>
           </div>
-          <div class="p-4 md:p-6">
-            <span class="float-end">
-            <img width="30" class="inline mr-1"  src ="https://svgshare.com/i/15vL.svg " title="Vegetarian">
-            <img width="30" class="inline" src ="https://svgshare.com/i/15tx.svg" title="Dairy Free">
-          
-        </span>
-        <span class="block mb-1 text-xs font-semibold uppercase text-primary-100">
-             Time: {{ recipe.prep_time }} Min | Serving: {{ recipe.servings }} | Difficulty: {{ recipe.difficulty }}
-        </span>
-
-    
-            <h3 class="text-xl font-semibold text-gray-800">
-              {{ recipe.name }}
-            </h3>
-            <p class="mt-3 text-gray-500">
-              {{ recipe.description }}
-            </p>
-          </div>
-        
-          <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200">
-              <RouterLink :to="`/recipe/${recipe.id}`" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"> Start Cooking </RouterLink>
-            <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">
-              Save Recipe
-            </a>
+          <div class="p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Vegan</span>
+            </div>
+            <h3 class="font-bold text-lg"> {{ recipe.name }}</h3>
+            <p class="text-gray-600">{{ recipe.description }}</p>
+            <div class="flex items-center mt-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.066 3.28a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.066 3.28c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.066-3.28a1 1 0 00-.364-1.118L2.935 8.707c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.066-3.28z"/>
+              </svg>
+              <span class="text-gray-600 ml-1">4.9 (409)</span>
+              <span class="text-gray-600 ml-4">124.99₺</span>
+            </div>
           </div>
         </div>
         <!-- End Card -->
+
       </div>
+
     </div>
     <!-- End Grid -->
 
@@ -189,7 +182,21 @@
     <p class="mt-1 text-gray-600">These mouthwatering recipes are breaking the internet! </p>
   </div>
   <!-- End Title -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Card 1 -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden hover-zoom relative">
+        <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Chicken Fried Rice" class="w-full h-40 object-cover transition-transform duration-300">
 
+        <div class="p-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-xl">Chicken Fried Rice With Tomato Sauce</h3>
+            <span class="bg-red-500 text-white text-sm px-2 py-1 rounded">Non-Veg</span>
+          </div>
+          <p class="text-gray-600">By Makenna Lipshutz</p>
+          <p class="text-gray-500 mt-2">Total Time: 20 mins</p>
+        </div>
+      </div>
+      </div>
   <!-- Card Section -->
   <!-- Grid -->
   <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
@@ -222,6 +229,49 @@
     <h2 class="text-2xl font-bold md:text-4xl md:leading-tight">People's Favorites</h2>
     <p class="mt-1 text-gray-600">These mouthwatering recipes are breaking the internet! </p>
   </div>
+    <div class="flex flex-wrap justify-between w-full gap-12">
+      <!-- Category 1 -->
+      <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
+        <img src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/coconut-squash-dhansak-7b25508.jpg?quality=90&resize=500,454" alt="Quick and Easy" class="w-32 h-32 rounded-full object-cover mb-2">
+        <p class="text-md transition-colors duration-500 hover:text-blue-500">QUICK AND EASY</p>
+      </div>
+
+      <!-- Category 2 -->
+      <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
+        <img src="https://assets.epicurious.com/photos/59a48f237e283157d14a5a6a/4:3/w_7548,h_5661,c_limit/How-to-Throw-a-Grocery-Store-Dinner-Party-hero-with-hands-15082017.jpg" alt="Dinner" class="w-32 h-32 rounded-full object-cover mb-2">
+        <span class="text-md transition-colors duration-500 hover:text-blue-500">DINNER</span>
+      </div>
+
+      <!-- Category 3 -->
+      <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
+        <img src="https://assets-global.website-files.com/63ed08484c069d0492f5b0bc/642c5de2f6aa2bd4c9abbe86_6406876a4676d1734a14a9a3_Bowl-of-vegetables-and-fruits-for-a-vegetarian-diet-vegetarian-weight-loss-plan.jpeg" alt="Vegetarian" class="w-32 h-32 rounded-full object-cover mb-2">
+        <span class="text-md">VEGETARIAN</span>
+      </div>
+
+      <!-- Category 4 -->
+      <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
+        <img src="https://cdn.aarp.net/content/dam/aarp/health/caregiving/2018/03/1140-nutrients-food-loved-ones-caregiving.jpg" alt="Healthy" class="w-32 h-32 rounded-full object-cover mb-2">
+        <span class="text-md transition-colors duration-500 hover:text-blue-500">HEALTHY</span>
+      </div>
+
+      <!-- Category 5 -->
+      <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
+        <img src="https://www.modernhoney.com/wp-content/uploads/2019/12/Detox-Vegetable-Soup-1.jpg" alt="Soups" class="w-32 h-32 rounded-full object-cover mb-2">
+        <span class="text-md transition-colors duration-500 hover:text-blue-500">SOUPS</span>
+      </div>
+
+      <!-- Category 6 -->
+      <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Soups" class="w-32 h-32 rounded-full object-cover mb-2">
+        <span class="text-md transition-colors duration-500 hover:text-blue-500">SOUPS</span>
+      </div>
+
+      <!-- Category 7 -->
+      <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Soups" class="w-32 h-32 rounded-full object-cover mb-2">
+        <span class="text-md transition-colors duration-500 ">SOUPS</span>
+      </div>
+    </div>
 
   </div>
   <!-- End Card Blog -->
