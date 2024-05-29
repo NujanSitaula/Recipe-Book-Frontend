@@ -5,6 +5,7 @@
       <div class="main">
         <div class="p-4 bg-white rounded-lg">
           <!-- Stepper -->
+
           <div data-hs-stepper="">
             <!-- Stepper Nav -->
             <ul class=" flex flex-row gap-x-2 relative">
@@ -86,8 +87,8 @@
         "index": 1
       }'>
                 <div class="h-auto bg-gray-50 flex justify-center items-center border border-dashed border-gray-200 rounded-xl">
-                  <router-view to="addRecipe/basics">
-                  </router-view>
+                  <component :is="currentStepComponent" :initialData="currentStepData" @updateData="updateStepData" />
+
                 </div>
               </div>
               <!-- end of add recipes basics -->
@@ -146,7 +147,7 @@
                   </svg>
                   Back
                 </button>
-                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200 disabled:opacity-50 disabled:pointer-events-none" data-hs-stepper-next-btn="">
+                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200 disabled:opacity-50 disabled:pointer-events-none" data-hs-stepper-next-btn="" @click="handleNext">
                   Next
                   <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="m9 18 6-6-6-6"></path>
@@ -170,5 +171,43 @@
   </div>
 
 </template>
-<script setup lang="ts">
+<script lang="ts">
+import { ref, computed } from 'vue';
+import { useRecipeStore } from '../stores/recipeStore';
+import BasicRecipeView from '@/components/recipe/BasicRecipeView.vue';
+
+export default {
+  setup() {
+    const recipeStore = useRecipeStore();
+    const step = ref(1);
+    const steps = [BasicRecipeView]; // Add more steps if needed
+    const currentStepData = ref({});
+
+    const currentStepComponent = computed(() => {
+      return steps[step.value - 1];
+    });
+
+    const updateStepData = (data) => {
+      currentStepData.value = data;
+    };
+
+    const handleNext = async () => {
+      await recipeStore.saveStepData(step.value, currentStepData.value);
+      if (step.value < steps.length) {
+        step.value++;
+        currentStepData.value = recipeStore.recipe[`step${step.value}Data`];
+      } else {
+        console.log('All steps completed');
+      }
+    };
+
+
+    return {
+      currentStepComponent,
+      currentStepData,
+      handleNext,
+      updateStepData
+    };
+  }
+};
 </script>

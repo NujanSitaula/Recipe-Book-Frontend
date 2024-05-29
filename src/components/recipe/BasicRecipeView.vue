@@ -1,7 +1,7 @@
 <template>
           <!-- Card -->
           <div class="bg-white rounded-xl shadow p-4 sm:p-7">
-            <form>
+            <form @input="updateFormData">
                 <div class="sm:col-span-12">
                   <h1 class="text-xl font-semibold text-gray-800">
                     Lets start with the basics
@@ -14,7 +14,7 @@
                 <div class="sm:col-span-12">
                   <label class=" m-1 text-sm font-medium text-gray-500 mt-2.5">
                     Recipe Title
-                    <input type="text" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your recipe title here">
+                    <input v-model="formData.title" type="text" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your recipe title here">
                   </label>
                 </div>
 
@@ -22,7 +22,7 @@
                 <div class="sm:col-span-12">
                   <label class="m-1 text-sm font-medium text-gray-500 mt-2.5">
                     Description
-                  <textarea class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Give a short description to your recipe"></textarea>
+                  <textarea v-model="formData.description" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Give a short description to your recipe"></textarea>
                   </label>
                 </div>
 
@@ -41,7 +41,7 @@
                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                       </div>
-                      <input id="dropzone-file" type="file" class="hidden" />
+                      <input  id="dropzone-file" type="file" class="hidden" />
                     </label>
                   </div>
                 </div>
@@ -53,7 +53,7 @@
                   </label>
                   <div class="sm:grid-cols-2 inline-flex">
                     <div class="sm:col-span-1 inline-flex w-full">
-                      <input type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+                      <input v-model="formData.preparationTime" type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
                       <label for="hour" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
                         Hours
                       </label>
@@ -72,7 +72,7 @@
                   </label>
                   <div class="sm:grid-cols-2 inline-flex">
                     <div class="sm:col-span-1 inline-flex w-full">
-                      <input type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+                      <input v-model="formData.cookingTime" type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
                       <label for="hour" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
                         Hours
                       </label>
@@ -89,7 +89,7 @@
                 <div class="sm:col-span-12">
                   <label class=" m-1 text-sm font-medium text-gray-500 mt-2.5">
                     Servings
-                    <input type="text" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" placeholder="#">
+                    <input v-model="formData.servings" type="text" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" placeholder="#">
                   </label>
                 </div>
 
@@ -131,5 +131,33 @@
 </template>
 
 <script>
+import { ref, watch } from 'vue';
 
+export default {
+  props: ['initialData'],
+  setup(props, { emit }) {
+    const formData = ref({
+      title: '',
+      description: '',
+      preparationTime: '',
+      cookingTime: '',
+      servings: '',
+    });
+
+    if (props.initialData) {
+      formData.value = props.initialData;
+    }
+
+    const updateFormData = () => {
+      emit('updateData', formData.value);
+    };
+
+    watch(formData, updateFormData, { deep: true });
+
+    return {
+      formData,
+      updateFormData
+    };
+  }
+};
 </script>
