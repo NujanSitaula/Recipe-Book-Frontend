@@ -102,7 +102,7 @@
                           <div class="sm:col-span-12">
                             <label class=" m-1 text-sm font-medium text-gray-500 mt-2.5">
                               Recipe Title
-                              <input v-model="formData.title" type="text" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your recipe title here">
+                              <input v-model="formData.title" type="text" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your recipe title here">
                             </label>
                           </div>
 
@@ -110,7 +110,7 @@
                           <div class="sm:col-span-12">
                             <label class="m-1 text-sm font-medium text-gray-500 mt-2.5">
                               Description
-                              <textarea v-model="formData.description" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Give a short description to your recipe"></textarea>
+                              <textarea v-model="formData.description" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Give a short description to your recipe"></textarea>
                             </label>
                           </div>
 
@@ -141,7 +141,7 @@
                             </label>
                             <div class="sm:grid-cols-2 inline-flex">
                               <div class="sm:col-span-1 inline-flex w-full">
-                                <input v-model="formData.preparationTime" type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+                                <input v-model="formData.preparationTime" type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500">
                                 <label for="hour" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
                                   Hours
                                 </label>
@@ -259,7 +259,7 @@
       }' style="display: none;">
                 <div class="p-4 h-48 bg-gray-50 flex justify-center items-center border border-dashed border-gray-200 rounded-xl">
                   <h3 class="text-gray-500">
-                    Final content
+                  Your recipe is posted successfully
                   </h3>
 
                 </div>
@@ -348,7 +348,7 @@ export default {
       }
     },
     updateFormData() {
-      console.log(this.formData);
+      // console.log(this.formData);
     },
     handleNext() {
       console.log('next');

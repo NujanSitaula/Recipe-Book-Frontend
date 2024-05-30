@@ -9,7 +9,7 @@
             Explore, Create, and Share Delicious Recipes
           </p>
           <h1 class="text-3xl text-gray-800 font-bold sm:text-5xl lg:text-7xl lg:leading-tight">
-            Start Your Gastronomic <span class="text-primary-100">Adventure</span>
+            Explore Your Flavorful <span class="text-primary-100">Adventure</span>
           </h1>
         </div>
         <!-- End Title -->
