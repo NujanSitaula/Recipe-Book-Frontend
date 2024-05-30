@@ -220,13 +220,52 @@
               </div>
               <!-- end of add recipes basics -->
 
-              <!-- First Contnet -->
+              <!-- add ingredients -->
               <div data-hs-stepper-content-item='{
         "index": 2
       }' style="display: none;">
-                <div class="p-4 h-48 bg-gray-50 flex justify-center items-center border border-dashed border-gray-200 rounded-xl">
+                <div class="p-4 h-auto bg-gray-50 flex justify-center items-center border border-dashed border-gray-200 rounded-xl">
                   <h3 class="text-gray-500">
-                    Second content
+                    <div id="hs-wrapper-select-for-copy" class="space-y-3">
+                      <!-- Select -->
+                      <div id="hs-content-select-for-copy" class="relative">
+                        <select v-model="selectedIngredientId" data-hs-select='{
+        "placeholder": "Select ingredients...",
+        "toggleTag": "<button type=\"button\"></button>",
+        "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 px-4 pe-9 flex text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-[1]",
+        "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto",
+        "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100",
+        "optionTemplate": "<div class=\"flex justify-between w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"flex-shrink-0 size-4 text-blue-600\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\"><path d=\"M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z\"/></svg></span></div>"
+      }'>
+                          <option v-for="ingredient in ingredients" :value="ingredient.id">
+                            {{ ingredient.name }}
+                          </option>
+                        </select>
+
+                        <div class="absolute top-1/2 end-3 -translate-y-1/2">
+                          <svg class="flex-shrink-0 size-3.5 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m7 15 5 5 5-5"></path>
+                            <path d="m7 9 5-5 5 5"></path>
+                          </svg>
+                        </div>
+                        <input v-model="formData.quantity" type="text" name="quantity" >
+                      </div>
+                      <!-- End Select -->
+                    </div>
+
+                    <p class="mt-3 text-end">
+                      <button type="button" data-hs-copy-markup='{
+      "targetSelector": "#hs-content-select-for-copy",
+      "wrapperSelector": "#hs-wrapper-select-for-copy",
+      "limit": 0
+    }' id="hs-copy-select-content" class="py-1.5 px-2 inline-flex items-center gap-x-1 text-xs font-medium rounded-full border border-dashed border-gray-200 bg-white text-gray-800 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+                        <svg class="flex-shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M5 12h14"></path>
+                          <path d="M12 5v14"></path>
+                        </svg>
+                        Add Option
+                      </button>
+                    </p>
                   </h3>
                 </div>
               </div>
@@ -305,9 +344,17 @@ import {config} from "../../config.js";
 
 axios.defaults.baseURL = config.BASE_URL
 export default {
+  created() {
+    this.getIngredients();
+  },
 
   data() {
     return {
+      selectedIngredientId: '',
+      ingredients: [],
+      recipeIngredients: [],
+      selectedIngredientId: '',
+      selectedQuantity: '',
       formData: {
         title: '',
         description: '',
@@ -316,6 +363,7 @@ export default {
         servings: '',
         // difficulty: '',
         // image: '',
+
       },
       // easy: '',
       // medium: '',
@@ -323,6 +371,9 @@ export default {
     }
   },
   methods: {
+    addIngredientToRecipe(id, quantity) {
+      this.recipeIngredients.push({ id, quantity });
+    },
     async postRecipeData() {
       try {
         const response = await axios.post('/recipe', {
@@ -332,6 +383,8 @@ export default {
             prep_time: this.formData.preparationTime,
             cook_time: this.formData.cookingTime,
             servings: this.formData.servings,
+            ingredients: this.recipeIngredients,
+
         }, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -352,7 +405,23 @@ export default {
     },
     handleNext() {
       console.log('next');
-    }
+    },
+    async getIngredients() {
+      try {
+        const response = await axios.get('/ingredient');
+        if (response.status === 200) {
+          this.ingredients = response.data.data;
+          if (this.ingredients.length > 0) {
+            this.selectedIngredientId = this.ingredients.data;
+          }
+        } else {
+          console.log('Failed to get ingredients');
+        }
+      } catch (error) {
+        console.error('An error occurred while getting ingredients:', error);
+      }
+    },
+
   }
 }
 
