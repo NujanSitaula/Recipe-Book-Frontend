@@ -22,12 +22,22 @@
 </template>
 
 <script>
-import { ref, onMounted, watch } from 'vue';
+import {ref, onMounted, watch, watchEffect} from 'vue';
+import {useUserStore} from "@/stores/userStore.js";
+
+
 
 export default {
   setup() {
+    const userStore = useUserStore();
     const messages = ref([]);
     const showPopup = ref('');
+
+
+    let userData = JSON.parse(localStorage.getItem('user'));
+
+    console.log(userData.data.id);
+    let userID = userData.data.id;
 
     watch(showPopup, (newValue, oldValue) => {
       console.log('showPopup changed from', oldValue, 'to', newValue);
@@ -40,8 +50,8 @@ export default {
       const pusher = new Pusher('b5b8a1e03c5d9801ca27', {
         cluster: 'ap2'
       });
-      const channel = pusher.subscribe('my-channel');
-      channel.bind('my-event', function(data) {
+      const channel = pusher.subscribe('my-channel'+ userID);
+      channel.bind('my-event'+ userID, function(data) {
         console.log('Event triggered with data:', data); // Log the event data
         const message = JSON.stringify(data.message);
         messages.value.push(message);
