@@ -19,16 +19,17 @@
                 <span class="sr-only">Loading...</span>
               </div>
             </div>
-
+            <div v-else>
             <h2 class="text-3xl font-bold lg:text-5xl">{{ recipe.name }}</h2>
 
-            <div class="flex items-center gap-x-5">
+            <div class="flex items-center gap-x-5 mt-5">
               <a class="inline-flex items-center gap-1.5 py-1 px-3 sm:py-2 sm:px-4 rounded-full text-xs sm:text-sm bg-gray-100 text-gray-800 hover:bg-gray-200" href="#">
                 Company News
               </a>
               <p class="text-xs sm:text-sm text-gray-800">January 18, 2023</p>
             </div>
             <!-- Team -->
+            </div>
             <div class="max-w-5xl mx-auto">
               <!-- Grid -->
               <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 md:gap-12  border rounded-2xl p-5">
