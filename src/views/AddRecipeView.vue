@@ -341,9 +341,15 @@
 <script>
 import axios from 'axios';
 import {config} from "../../config.js";
+import {onMounted, watchEffect} from 'vue';
 
 axios.defaults.baseURL = config.BASE_URL
+
+
 export default {
+  setup(){
+    scrollTo(0, 0);
+  },
   created() {
     this.getIngredients();
   },
