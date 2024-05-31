@@ -1,9 +1,11 @@
 <script setup>
-import { watchEffect } from 'vue';
-import { RouterView } from 'vue-router'
-import { useUserStore } from './stores/userStore.js';
+import {ref, watchEffect} from 'vue';
+import {RouterView} from 'vue-router'
+import {useUserStore} from './stores/userStore.js';
+import notificationSound from './assets/notification.wav';
 
 const userStore = useUserStore();
+const showPopup = ref(''); // Add this line
 
 watchEffect(() => {
   if (userStore.user === null) {
@@ -17,6 +19,29 @@ watchEffect(() => {
 const logout = () => {
   userStore.logout();
 };
+
+// Add this function
+watchEffect(() => {
+  if (userStore.user) {
+    Pusher.logToConsole = true;
+
+    const pusher = new Pusher('b5b8a1e03c5d9801ca27', {
+      cluster: 'ap2'
+    });
+    const channel = pusher.subscribe('my-channel'+ userStore.user.data.id);
+    channel.bind('my-event'+ userStore.user.data.id, function(data) {
+      showPopup.value = JSON.stringify(data.message);
+
+      // Play the notification sound
+      const audio = new Audio(notificationSound);
+      audio.play();
+
+      setTimeout(() => {
+        showPopup.value = '';
+      }, 3000);
+    });
+  }
+});
 </script>
 
 <style>
@@ -24,6 +49,13 @@ const logout = () => {
   .footer {
     display: none;
   }
+}
+
+.popup {
+  position: fixed;
+  bottom: 20px; /* Position the popup from the bottom */
+  left: 20px; /* Position the popup from the left */
+  z-index: 1000; /* Ensure the popup is above other elements */
 }
 </style>
 <template>
@@ -42,12 +74,12 @@ const logout = () => {
             <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
           </button>
         <router-link to="/login"> <button v-if="!userStore.isLoggedIn" type="button" class="text-white bg-primary-100 hover:bg-primary-200 focus:ring-4 focus:outline-none focus:ring-primary-200 font-medium rounded-lg text-sm px-4 py-2 text-center">Login / Signup</button></router-link>
-          <div class="hs-dropdown relative inline-flex" data-hs-dropdown-placement="bottom-right">
+          <div v-if="userStore.isLoggedIn" class="hs-dropdown relative inline-flex" data-hs-dropdown-placement="bottom-right">
             <button id="hs-dropdown-with-header" type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-white hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
               <img class="inline-block size-[38px] rounded-full" :src="userStore.user && userStore.user.data ? userStore.user.data.image : 'Loading Name...'" alt="Image Description">
             </button>
 
-            <div v-if="userStore.isLoggedIn" class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 z-10 bg-white shadow-md rounded-lg p-2" aria-labelledby="hs-dropdown-with-header">
+            <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 z-10 bg-white shadow-md rounded-lg p-2" aria-labelledby="hs-dropdown-with-header">
               <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg">
                 <p class="text-sm text-gray-500">Signed in as</p>
                 <p class="text-sm font-medium text-gray-800">{{userStore.user && userStore.user.data ? userStore.user.data.email : 'Loading Name...'}}</p>
@@ -288,5 +320,38 @@ const logout = () => {
       </div>
     </div>
   </footer>
+
+
+
+  <div v-if="showPopup" id="toast-notification" class=" popup w-full max-w-xs p-4 text-gray-900 bg-gray-50 rounded-lg shadow" role="alert">
+    <div class="flex items-center mb-3">
+      <span class="mb-1 text-sm font-semibold text-gray-900">New notification</span>
+      <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white justify-center items-center flex-shrink-0 text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8" data-dismiss-target="#toast-notification" aria-label="Close">
+        <span class="sr-only">Close</span>
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+        </svg>
+      </button>
+    </div>
+    <div class="flex items-center">
+      <div class="relative inline-block shrink-0">
+        <img class="w-12 h-12 rounded-full" src="https://recipe-book-backend.test/storage/profileImages/profile_1716603379.jpg" alt="Jese Leos image"/>
+        <span class="absolute bottom-0 right-0 inline-flex items-center justify-center w-6 h-6 bg-blue-600 rounded-full">
+                <svg class="w-3 h-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 18" fill="currentColor">
+                    <path d="M18 4H16V9C16 10.0609 15.5786 11.0783 14.8284 11.8284C14.0783 12.5786 13.0609 13 12 13H9L6.846 14.615C7.17993 14.8628 7.58418 14.9977 8 15H11.667L15.4 17.8C15.5731 17.9298 15.7836 18 16 18C16.2652 18 16.5196 17.8946 16.7071 17.7071C16.8946 17.5196 17 17.2652 17 17V15H18C18.5304 15 19.0391 14.7893 19.4142 14.4142C19.7893 14.0391 20 13.5304 20 13V6C20 5.46957 19.7893 4.96086 19.4142 4.58579C19.0391 4.21071 18.5304 4 18 4Z" fill="currentColor"/>
+                    <path d="M12 0H2C1.46957 0 0.960859 0.210714 0.585786 0.585786C0.210714 0.960859 0 1.46957 0 2V9C0 9.53043 0.210714 10.0391 0.585786 10.4142C0.960859 10.7893 1.46957 11 2 11H3V13C3 13.1857 3.05171 13.3678 3.14935 13.5257C3.24698 13.6837 3.38668 13.8114 3.55279 13.8944C3.71889 13.9775 3.90484 14.0126 4.08981 13.996C4.27477 13.9793 4.45143 13.9114 4.6 13.8L8.333 11H12C12.5304 11 13.0391 10.7893 13.4142 10.4142C13.7893 10.0391 14 9.53043 14 9V2C14 1.46957 13.7893 0.960859 13.4142 0.585786C13.0391 0.210714 12.5304 0 12 0Z" fill="currentColor"/>
+                    </svg>
+                <span class="sr-only">Message icon</span>
+            </span>
+      </div>
+      <div class="ms-3 text-sm font-normal">
+        <div class="text-sm font-semibold text-gray-900">Bonnie Green</div>
+        <div class="text-sm font-normal">commented on your photo</div>
+        <span class="text-xs font-medium text-blue-600">a few seconds ago</span>
+      </div>
+    </div>
+  </div>
+
+
   <!-- ========== END FOOTER ========== -->
 </template>
