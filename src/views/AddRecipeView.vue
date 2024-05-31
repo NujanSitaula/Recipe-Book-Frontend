@@ -226,10 +226,10 @@
       }' style="display: none;">
                 <div class="p-4 h-auto bg-gray-50 flex justify-center items-center border border-dashed border-gray-200 rounded-xl">
                   <h3 class="text-gray-500">
-                    <div id="hs-wrapper-select-for-copy" class="space-y-3">
+                    <div class="space-y-3">
                       <!-- Select -->
-                      <div id="hs-content-select-for-copy" class="relative">
-                        <select v-model="selectedIngredientId" data-hs-select='{
+                      <div v-for="(input, index) in ingredientInputs" id="hs-content-select-for-copy" class="relative">
+                        <select v-model="input.selectedIngredientId" data-hs-select='{
         "placeholder": "Select ingredients...",
         "toggleTag": "<button type=\"button\"></button>",
         "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 px-4 pe-9 flex text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-[1]",
@@ -248,13 +248,13 @@
                             <path d="m7 9 5-5 5 5"></path>
                           </svg>
                         </div>
-                        <input v-model="formData.quantity" type="text" name="quantity" >
+                        <input v-model="input.selectedQuantity" type="text" name="quantity" >
                       </div>
                       <!-- End Select -->
                     </div>
 
                     <p class="mt-3 text-end">
-                      <button type="button" data-hs-copy-markup='{
+                      <button @click="addIngredient" type="button" data-hs-copy-markup='{
       "targetSelector": "#hs-content-select-for-copy",
       "wrapperSelector": "#hs-wrapper-select-for-copy",
       "limit": 0
@@ -350,11 +350,16 @@ export default {
 
   data() {
     return {
-      selectedIngredientId: '',
+      ingredientInputs: [
+          {
+            selectedIngredientId: '',
+            selectedQuantity: ''
+          }
+      ],
+      // selectedIngredientId: '',
       ingredients: [],
       recipeIngredients: [],
-      selectedIngredientId: '',
-      selectedQuantity: '',
+      // selectedQuantity: '',
       formData: {
         title: '',
         description: '',
@@ -371,8 +376,22 @@ export default {
     }
   },
   methods: {
-    addIngredientToRecipe(id, quantity) {
-      this.recipeIngredients.push({ id, quantity });
+    addIngredient() {
+      const currentInput = this.ingredientInputs[0];
+      if (currentInput.selectedIngredientId && currentInput.selectedQuantity) {
+        const ingredient = {
+          id: currentInput.selectedIngredientId,
+          quantity: currentInput.selectedQuantity
+        };
+        this.recipeIngredients.push(ingredient);
+        // Add a new ingredient input
+        this.ingredientInputs.unshift({
+          selectedIngredientId: '',
+          selectedQuantity: ''
+        });
+      } else {
+        alert('Please select an ingredient and enter a quantity.');
+      }
     },
     async postRecipeData() {
       try {
@@ -390,6 +409,7 @@ export default {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
           }
         });
+        console.log(response);
 
         if (response.status === 200) {
           console.log('Recipe data posted successfully');
@@ -412,7 +432,7 @@ export default {
         if (response.status === 200) {
           this.ingredients = response.data.data;
           if (this.ingredients.length > 0) {
-            this.selectedIngredientId = this.ingredients.data;
+            this.ingredientInputs[0].selectedIngredientId = this.ingredients[0].id;
           }
         } else {
           console.log('Failed to get ingredients');
