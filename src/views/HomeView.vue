@@ -144,19 +144,19 @@
       <!-- Card -->
       <div v-for="recipe in recipes.data" :key="recipe.id">
         <div class="bg-white rounded-lg shadow-md overflow-hidden hover-zoom relative">
-          <div class="relative">
+          <router-link :to="`/recipe/${recipe.id}`"><div class="relative">
             <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Pizza" class="w-full h-64 object-cover transition-transform duration-300">
             <div class="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M3.172 5.172a4.002 4.002 0 015.656 0L10 6.343l1.172-1.171a4.002 4.002 0 115.656 5.656L10 17.657l-6.828-6.829a4.002 4.002 0 010-5.656z"/>
               </svg>
             </div>
-          </div>
+          </div></router-link>
           <div class="p-4">
             <div class="flex items-center justify-between mb-2">
               <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Vegan</span>
             </div>
-            <h3 class="font-bold text-lg"> {{ recipe.name }}</h3>
+            <router-link :to="`/recipe/${recipe.id}`"> <h3 class="font-bold text-lg"> {{ recipe.name }}</h3></router-link>
             <p class="text-gray-600">{{ recipe.description }}</p>
             <div class="flex items-center mt-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
