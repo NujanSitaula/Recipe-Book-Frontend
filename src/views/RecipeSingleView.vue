@@ -1,6 +1,6 @@
 <template>
   <!-- Blog Article -->
-  <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto main-content" v-if="recipe">
+  <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto main-content">
     <div class="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
       <!-- Content -->
       <div class="lg:col-span-2">
@@ -19,7 +19,7 @@
                 <span class="sr-only">Loading...</span>
               </div>
             </div>
-            <div v-else>
+            <div v-else-if="recipe">
             <h2 class="text-3xl font-bold lg:text-5xl">{{ recipe.name }}</h2>
 
             <div class="flex items-center gap-x-5 mt-5">
@@ -32,19 +32,9 @@
             </div>
             <div class="max-w-5xl mx-auto">
               <!-- Grid -->
-              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 md:gap-12  border rounded-2xl p-5">
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 md:gap-12  border rounded-2xl p-5 border-t-primary-100 border-t-4">
                 <!-- Prep Time -->
                 <div class="text-center accordion-item">
-                  <button class="accordion-btn">;
-                    <!-- Icon -->
-                    <span class="inline-flex justify-center items-center size-[62px] rounded-full bg-blue-100 text-blue-800">
-          <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="6" x2="12" y2="12"></line>
-            <line x1="12" y1="18" x2="12" y2="18"></line>
-          </svg>
-        </span>
-                    <!-- End Icon -->
                     <div class="mt-2 sm:mt-4">
                       <h3 class="font-medium text-gray-800">
                         10 Min
@@ -53,7 +43,6 @@
                         Prep Time
                       </p>
                     </div>
-                  </button>
                   <div class="accordion-content">
                     <!-- Content Here -->
                   </div>
@@ -61,16 +50,6 @@
                 <!-- End Prep Time -->
                 <!-- Cook Time -->
                 <div class="text-center accordion-item">
-                  <button class="accordion-btn">
-                    <!-- Icon -->
-                    <span class="inline-flex justify-center items-center size-[62px] rounded-full bg-blue-100 text-blue-800">
-          <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="6" x2="12" y2="12"></line>
-            <line x1="12" y1="18" x2="12" y2="18"></line>
-          </svg>
-        </span>
-                    <!-- End Icon -->
                     <div class="mt-2 sm:mt-4">
                       <h3 class="font-medium text-gray-800">
                         30 Min
@@ -79,7 +58,6 @@
                         Cook Time
                       </p>
                     </div>
-                  </button>
                   <div class="accordion-content">
                     <!-- Content Here -->
                   </div>
@@ -87,16 +65,6 @@
                 <!-- End Cook Time -->
                 <!-- Ingredients -->
                 <div class="text-center accordion-item">
-                  <button class="accordion-btn">
-                    <!-- Icon -->
-                    <span class="inline-flex justify-center items-center size-[62px] rounded-full bg-blue-100 text-blue-800">
-          <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="8" y1="12" x2="16" y2="12"></line>
-            <line x1="12" y1="8" x2="12" y2="16"></line>
-          </svg>
-        </span>
-                    <!-- End Icon -->
                     <div class="mt-2 sm:mt-4">
                       <h3 class="font-medium text-gray-800">
                         20 Approx
@@ -105,7 +73,6 @@
                         Ingredients
                       </p>
                     </div>
-                  </button>
                   <div class="accordion-content">
                     <!-- Content Here -->
                   </div>
@@ -113,15 +80,6 @@
                 <!-- End Ingredients -->
                 <!-- Servings -->
                 <div class="text-center accordion-item">
-                  <button class="accordion-btn">
-                    <!-- Icon -->
-                    <span class="inline-flex justify-center items-center size-[62px] rounded-full bg-blue-100 text-blue-800">
-          <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-          </svg>
-        </span>
-                    <!-- End Icon -->
                     <div class="mt-2 sm:mt-4">
                       <h3 class="font-medium text-gray-800">
                         2 Person
@@ -130,7 +88,6 @@
                         Servings
                       </p>
                     </div>
-                  </button>
                   <div class="accordion-content">
                     <!-- Content Here -->
                   </div>
@@ -138,15 +95,6 @@
                 <!-- End Servings -->
                 <!-- Difficulty -->
                 <div class="text-center accordion-item">
-                  <button class="accordion-btn">
-                    <!-- Icon -->
-                    <span class="inline-flex justify-center items-center size-[62px] rounded-full bg-blue-100 text-blue-800">
-          <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-          </svg>
-        </span>
-                    <!-- End Icon -->
                     <div class="mt-2 sm:mt-4">
                       <h3 class="font-medium text-gray-800">
                         Hard
@@ -155,7 +103,6 @@
                         Difficulty
                       </p>
                     </div>
-                  </button>
                   <div class="accordion-content">
                     <!-- Content Here -->
                   </div>
@@ -454,7 +401,7 @@
       <div class="lg:col-span-1 lg:w-full lg:h-full lg:bg-gradient-to-r lg:from-gray-50 lg:via-transparent lg:to-transparent">
         <div class="sticky top-14 start-0 py-8 lg:ps-8">
           <!-- Avatar Media -->
-          <div class="group flex items-center gap-x-3 border-b border-gray-200 pb-8 mb-8">
+          <div v-if="recipe" class="group flex items-center gap-x-3 border-b border-gray-200 pb-8 mb-8">
             <a class="block flex-shrink-0" href="#">
               <img class="size-10 rounded-full" :src="recipe.user.image" alt="Image Description">
             </a>
@@ -599,6 +546,7 @@ const handleFollowUnfollow = async (user) => {
 };
 
 onMounted(async () => {
+  scrollTo(0, 0); // Scroll to top of the page
   isLoading.value = true;
   try {
     // Fetch recipe data
@@ -634,7 +582,12 @@ const showReplyField = (commentId) => {
 
 const postComment = async () => {
   try {
-    const response = await axios.post(`/comment`, { comment: commentContent.value, recipe_id: recipe.value.id });
+    const response = await axios.post(`/comment`, { comment: commentContent.value, recipe_id: recipe.value.id },
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          }
+          });
     if (response.data.status === 'success') {
       const newComment = response.data.data[0];
       comments.value.unshift(newComment);
@@ -648,7 +601,12 @@ const postComment = async () => {
 
 const postReply = async (commentId) => {
   try {
-    const response = await axios.post(`/comment/${commentId}/reply`, { reply: replyContent.value });
+    const response = await axios.post(`/comment/${commentId}/reply`, { reply: replyContent.value },
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          }
+        });
     if (response.data.status === 'success') {
       const commentIndex = comments.value.findIndex(comment => comment.id === commentId);
       const newComment = { ...comments.value[commentIndex] };
