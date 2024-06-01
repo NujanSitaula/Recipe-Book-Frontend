@@ -5,7 +5,8 @@ import {useUserStore} from './stores/userStore.js';
 import notificationSound from './assets/notification.wav';
 
 const userStore = useUserStore();
-const showPopup = ref(''); // Add this line
+const showPopup = ref(null); // Add this line
+const notificationTime = ref(null); // This will hold the timestamp of the notification
 
 watchEffect(() => {
   if (userStore.user === null) {
@@ -30,15 +31,17 @@ watchEffect(() => {
     });
     const channel = pusher.subscribe('my-channel'+ userStore.user.data.id);
     channel.bind('my-event'+ userStore.user.data.id, function(data) {
-      showPopup.value = JSON.stringify(data.message);
+      showPopup.value = data;
+
+      notificationTime.value = Date.now();
 
       // Play the notification sound
       const audio = new Audio(notificationSound);
       audio.play();
 
-      setTimeout(() => {
-        showPopup.value = '';
-      }, 3000);
+      // setTimeout(() => {
+      //   showPopup.value = '';
+      // }, 3000);
     });
   }
 });
@@ -323,7 +326,7 @@ watchEffect(() => {
 
 
 
-  <div v-if="showPopup" id="toast-notification" class=" popup w-full max-w-xs p-4 text-gray-900 bg-gray-50 rounded-lg shadow" role="alert">
+  <div v-if="showPopup" id="toast-notification" class=" popup w-full max-w-xs p-4 text-gray-900 bg-gray-50 rounded-lg shadow shadow-gray-200 border" role="alert">
     <div class="flex items-center mb-3">
       <span class="mb-1 text-sm font-semibold text-gray-900">New notification</span>
       <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white justify-center items-center flex-shrink-0 text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8" data-dismiss-target="#toast-notification" aria-label="Close">
@@ -345,9 +348,9 @@ watchEffect(() => {
             </span>
       </div>
       <div class="ms-3 text-sm font-normal">
-        <div class="text-sm font-semibold text-gray-900">Bonnie Green</div>
-        <div class="text-sm font-normal">commented on your photo</div>
-        <span class="text-xs font-medium text-blue-600">a few seconds ago</span>
+        <div class="text-sm font-semibold text-gray-900">{{showPopup.fullname}}</div>
+        <div class="text-sm font-normal">{{showPopup.message}}</div>
+        <span class="text-xs font-medium text-blue-600">{{(Date.now() - notificationTime) / 1000}} seconds ago</span>
       </div>
     </div>
   </div>
