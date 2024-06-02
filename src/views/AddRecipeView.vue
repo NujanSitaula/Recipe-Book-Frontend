@@ -141,13 +141,13 @@
                             </label>
                             <div class="sm:grid-cols-2 inline-flex">
                               <div class="sm:col-span-1 inline-flex w-full">
-                                <input v-model="formData.preparationTime" type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500">
+                                <input v-model="formData.preparationTime.hours" type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500">
                                 <label for="hour" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
                                   Hours
                                 </label>
                               </div>
                               <div class="sm:col-span-1 mx-10 inline-flex w-full">
-                                <input type="text" class="mr-2 block w-full  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+                                <input v-model="formData.preparationTime.minutes" type="text" class="mr-2 block w-full  text-gray-900 border border-gray-300 rounded-lg text-base focus:ring-blue-500 focus:border-blue-500">
                                 <label for="minute" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
                                   Minutes
                                 </label>
@@ -160,13 +160,13 @@
                             </label>
                             <div class="sm:grid-cols-2 inline-flex">
                               <div class="sm:col-span-1 inline-flex w-full">
-                                <input v-model="formData.cookingTime" type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+                                <input v-model="formData.cookingTime.hours" type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
                                 <label for="hour" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
                                   Hours
                                 </label>
                               </div>
-                              <div class="sm:col-span-1 mx-10 inline-flex w-full">
-                                <input type="text" class="mr-2 block w-full  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
+                              <div  class="sm:col-span-1 mx-10 inline-flex w-full">
+                                <input v-model="formData.cookingTime.minutes" type="text" class="mr-2 block w-full  text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500">
                                 <label for="minute" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
                                   Minutes
                                 </label>
@@ -221,55 +221,53 @@
               <!-- end of add recipes basics -->
 
               <!-- add ingredients -->
-              <div data-hs-stepper-content-item='{
-        "index": 2
-      }' style="display: none;">
-                <div class="p-4 h-auto bg-gray-50 flex justify-center items-center border border-dashed border-gray-200 rounded-xl">
-                  <h3 class="text-gray-500">
-                    <div class="space-y-3">
-                      <!-- Select -->
-                      <div v-for="(input, index) in ingredientInputs" id="hs-content-select-for-copy" class="relative">
-                        <select v-model="input.selectedIngredientId" data-hs-select='{
-        "placeholder": "Select ingredients...",
-        "toggleTag": "<button type=\"button\"></button>",
-        "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 px-4 pe-9 flex text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-[1]",
-        "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto",
-        "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100",
-        "optionTemplate": "<div class=\"flex justify-between w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"flex-shrink-0 size-4 text-blue-600\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\"><path d=\"M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z\"/></svg></span></div>"
-      }'>
-                          <option v-for="ingredient in ingredients" :value="ingredient.id">
-                            {{ ingredient.name }}
-                          </option>
-                        </select>
+              <!-- HTML Structure -->
+              <div id="app">
+                <div data-hs-stepper-content-item='{"index": 2}' style="display: none;">
+                  <div class="p-4 h-auto bg-gray-50 flex justify-center items-center border border-dashed border-gray-200 rounded-xl">
+                    <h3 class="text-gray-500">
+                      <div id="hs-wrapper-select-for-copy" class="space-y-3">
+                        <!-- Select -->
+                        <div v-for="(input, index) in ingredientInputs" :key="index" class="relative">
+                          <select v-model="input.selectedIngredientId" :data-hs-select="{
+              placeholder: 'Select ingredients...',
+              toggleTag: '<button type=\'button\'></button>',
+              toggleClasses: 'hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 px-4 pe-9 flex text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-[1]',
+              dropdownClasses: 'mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto',
+              optionClasses: 'py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100',
+              optionTemplate: '<div class=\'flex justify-between w-full\'><span data-title></span><span class=\'hidden hs-selected:block\'><svg class=\'flex-shrink-0 size-4 text-blue-600\' xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' fill=\'currentColor\' viewBox=\'0 0 16 16\'><path d=\'M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z\'/></svg></span></div>'
+            }">
+                            <option v-for="ingredient in ingredients" :value="ingredient.id">
+                              {{ ingredient.name }}
+                            </option>
+                          </select>
 
-                        <div class="absolute top-1/2 end-3 -translate-y-1/2">
-                          <svg class="flex-shrink-0 size-3.5 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m7 15 5 5 5-5"></path>
-                            <path d="m7 9 5-5 5 5"></path>
-                          </svg>
+                          <div class="absolute top-1/2 end-3 -translate-y-1/2">
+                            <svg class="flex-shrink-0 size-3.5 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="m7 15 5 5 5-5"></path>
+                              <path d="m7 9 5-5 5 5"></path>
+                            </svg>
+                          </div>
+                          <input v-model="input.selectedQuantity" type="text" name="quantity" class="mt-2 w-full">
                         </div>
-                        <input v-model="input.selectedQuantity" type="text" name="quantity" >
+                        <!-- End Select -->
                       </div>
-                      <!-- End Select -->
-                    </div>
 
-                    <p class="mt-3 text-end">
-                      <button @click="addIngredient" type="button" data-hs-copy-markup='{
-      "targetSelector": "#hs-content-select-for-copy",
-      "wrapperSelector": "#hs-wrapper-select-for-copy",
-      "limit": 0
-    }' id="hs-copy-select-content" class="py-1.5 px-2 inline-flex items-center gap-x-1 text-xs font-medium rounded-full border border-dashed border-gray-200 bg-white text-gray-800 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-                        <svg class="flex-shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M5 12h14"></path>
-                          <path d="M12 5v14"></path>
-                        </svg>
-                        Add Option
-                      </button>
-                    </p>
-                  </h3>
+                      <p class="mt-3 text-end">
+                        <button @click="addIngredient" type="button" id="hs-copy-select-content" class="py-1.5 px-2 inline-flex items-center gap-x-1 text-xs font-medium rounded-full border border-dashed border-gray-200 bg-white text-gray-800 hover:bg-gray-50">
+                          <svg class="flex-shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14"></path>
+                            <path d="M12 5v14"></path>
+                          </svg>
+                          Add Option
+                        </button>
+                      </p>
+                    </h3>
+                  </div>
                 </div>
               </div>
-              <!-- End First Content -->
+
+              <!-- End of add ingredients -->
               <div data-hs-stepper-content-item='{
         "index": 3
       }' style="display: none;">
@@ -338,117 +336,106 @@
 
 </template>
 
-<script>
+<script setup>
 import axios from 'axios';
-import {config} from "../../config.js";
-import {onMounted, watchEffect} from 'vue';
+import { config } from "../../config.js";
+import { ref, onMounted } from 'vue';
 
-axios.defaults.baseURL = config.BASE_URL
+axios.defaults.baseURL = config.BASE_URL;
 
-
-export default {
-  setup(){
-    scrollTo(0, 0);
-  },
-  created() {
-    this.getIngredients();
-  },
-
-  data() {
-    return {
-      ingredientInputs: [
-          {
-            selectedIngredientId: '',
-            selectedQuantity: ''
-          }
-      ],
-      // selectedIngredientId: '',
-      ingredients: [],
-      recipeIngredients: [],
-      // selectedQuantity: '',
-      formData: {
-        title: '',
-        description: '',
-        preparationTime: '',
-        cookingTime: '',
-        servings: '',
-        // difficulty: '',
-        // image: '',
-
-      },
-      // easy: '',
-      // medium: '',
-      // hard: '',
-    }
-  },
-  methods: {
-    addIngredient() {
-      const currentInput = this.ingredientInputs[0];
-      if (currentInput.selectedIngredientId && currentInput.selectedQuantity) {
-        const ingredient = {
-          id: currentInput.selectedIngredientId,
-          quantity: currentInput.selectedQuantity
-        };
-        this.recipeIngredients.push(ingredient);
-        // Add a new ingredient input
-        this.ingredientInputs.unshift({
-          selectedIngredientId: '',
-          selectedQuantity: ''
-        });
-      } else {
-        alert('Please select an ingredient and enter a quantity.');
-      }
-    },
-    async postRecipeData() {
-      try {
-        const response = await axios.post('/recipe', {
-
-            name: this.formData.title,
-            description: this.formData.description,
-            prep_time: this.formData.preparationTime,
-            cook_time: this.formData.cookingTime,
-            servings: this.formData.servings,
-            ingredients: this.recipeIngredients,
-
-        }, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-          }
-        });
-        console.log(response);
-
-        if (response.status === 200) {
-          console.log('Recipe data posted successfully');
-        } else {
-          console.log('Failed to post recipe data');
-        }
-      } catch (error) {
-        console.error('An error occurred while posting recipe data:', error);
-      }
-    },
-    updateFormData() {
-      // console.log(this.formData);
-    },
-    handleNext() {
-      console.log('next');
-    },
-    async getIngredients() {
-      try {
-        const response = await axios.get('/ingredient');
-        if (response.status === 200) {
-          this.ingredients = response.data.data;
-          if (this.ingredients.length > 0) {
-            this.ingredientInputs[0].selectedIngredientId = this.ingredients[0].id;
-          }
-        } else {
-          console.log('Failed to get ingredients');
-        }
-      } catch (error) {
-        console.error('An error occurred while getting ingredients:', error);
-      }
-    },
-
+const ingredientInputs = ref([
+  {
+    selectedIngredientId: '',
+    selectedQuantity: ''
   }
-}
+]);
+const ingredients = ref([]);
+const recipeIngredients = ref([]);
+const formData = ref({
+  title: '',
+  description: '',
+  preparationTime: {
+    hours: '',
+    minutes: ''
+  },
+  cookingTime: {
+    hours: '',
+    minutes: ''
+  },
+  servings: ''
+});
 
+const scrollToTop = () => {
+  window.scrollTo(0, 0);
+};
+
+const getIngredients = async () => {
+  try {
+    const response = await axios.get('/ingredient');
+    if (response.status === 200) {
+      ingredients.value = response.data.data;
+      if (ingredients.value.length > 0) {
+        ingredientInputs.value[0].selectedIngredientId = ingredients.value[0].id;
+      }
+    } else {
+      console.log('Failed to get ingredients');
+    }
+  } catch (error) {
+    console.error('An error occurred while getting ingredients:', error);
+  }
+};
+
+const addIngredient = () => {
+  // Iterate over all ingredient inputs
+  for (let i = 0; i < ingredientInputs.value.length; i++) {
+    const currentInput = ingredientInputs.value[i];
+    if (currentInput.selectedIngredientId && currentInput.selectedQuantity) {
+      const ingredient = {
+        id: currentInput.selectedIngredientId,
+        quantity: currentInput.selectedQuantity
+      };
+      recipeIngredients.value.push(ingredient);
+    } else {
+      alert('Please select an ingredient and enter a quantity for all inputs.');
+      return;  // Exit the function if any input is incomplete
+    }
+  }
+
+  // Add a new ingredient input at the end
+  ingredientInputs.value.push({
+    selectedIngredientId: '',
+    selectedQuantity: ''
+  });
+};
+
+const postRecipeData = async () => {
+  try {
+    const response = await axios.post('/recipe', {
+      name: formData.value.title,
+      description: formData.value.description,
+      prep_time: formData.value.preparationTime,
+      cook_time: formData.value.cookingTime,
+      servings: formData.value.servings,
+      ingredients: recipeIngredients.value,
+    }, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+      }
+    });
+    console.log(response);
+    if (response.status === 200) {
+      console.log('Recipe data posted successfully');
+    } else {
+      console.log('Failed to post recipe data');
+    }
+  } catch (error) {
+    console.error('An error occurred while posting recipe data:', error);
+  }
+};
+
+onMounted(() => {
+  scrollToTop();
+  getIngredients();
+});
 </script>
+
