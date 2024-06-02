@@ -284,7 +284,7 @@
         
         <div class="grid-cols-6"> 
   <RouterLink v-if="!isLoggedIn" to="/register"> 
-    <button class="py-3 px-4 inline-flex justify-center float-end gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary text-secondary-100 hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+    <button class="py-3 px-4 inline-flex justify-center float-end gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200 disabled:opacity-50 disabled:pointer-events-none">
       Register Now
     </button>
   </RouterLink>
