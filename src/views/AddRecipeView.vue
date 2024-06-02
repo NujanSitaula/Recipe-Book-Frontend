@@ -89,7 +89,7 @@
                 <div class="h-auto bg-gray-50 flex justify-center items-center border border-dashed border-gray-200 rounded-xl">
                     <!-- Card -->
                     <div class="rounded-xl shadow p-4 sm:p-7">
-                      <form @input="updateFormData">
+                      <form>
                         <div class="sm:col-span-12">
                           <h1 class="text-xl font-semibold text-gray-800">
                             Lets start with the basics
@@ -117,6 +117,13 @@
 
 
                           <div class="sm:col-span-12">
+                            <div class="grid grid-cols-2">
+                            <div class="col-span-1">
+                            <label>Preview of your image</label>
+                            <img v-if="imagePreviewUrl" :src="imagePreviewUrl" alt="Image preview" class="h-48 w-48 object-cover" />
+
+                            </div>
+                            <div class="col-span-1">
                             <label class="m-1 text-sm font-medium text-gray-500 mt-2.5">
                               Add image of your recipe
                             </label>
@@ -129,9 +136,11 @@
                                   <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                                   <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                                 </div>
-                                <input  id="dropzone-file" type="file" class="hidden" />
+                                <input  id="dropzone-file" type="file" class="hidden" @change="handleImageChange"  />
                               </label>
                             </div>
+                            </div>
+                          </div>
                           </div>
 
 
@@ -187,7 +196,7 @@
                             </label>
                             <ul class="grid w-full h-full gap-6 md:grid-cols-3">
                               <li>
-                                <input type="radio" id="easy" name="type_of_recipe" value="easy" class="hidden peer" required @change="" v-model="easy" />
+                                <input type="radio" id="easy" name="type_of_recipe" value="easy" class="hidden peer" required @change="" v-model="formData.difficulty" />
                                 <label for="easy" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full  text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer ">
                                   <div class="w-full text-center p-2">
                                     Easy
@@ -195,13 +204,13 @@
                                 </label>
                               </li>
                               <li>
-                                <input type="radio" id="medium" name="type_of_recipe" value="midbie" class="hidden peer" required @change="" v-model="medium" />
+                                <input type="radio" id="medium" name="type_of_recipe" value="medium" class="hidden peer" required @change="" v-model="formData.difficulty" />
                                 <label for="medium" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full  text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer ">
                                   <div class="w-full text-center p-2">Medium</div>
                                 </label>
                               </li>
                               <li>
-                                <input type="radio" id="hard" name="type_of_recipe" value="master" class="hidden peer" required @change="" v-model="hard" />
+                                <input type="radio" id="hard" name="type_of_recipe" value="hard" class="hidden peer" required @change="" v-model="formData.difficulty" />
                                 <label for="hard" class="peer-checked:border-primary-100 peer-checked:border-2 peer-checked:text-primary-100 inline-flex items-center justify-between w-full text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer">
                                   <div class="w-full text-center p-2">Hard</div>
                                 </label>
@@ -320,9 +329,10 @@
                 <button @click="postRecipeData" type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200 disabled:opacity-50 disabled:pointer-events-none" data-hs-stepper-finish-btn="" style="display: none;">
                   Finish
                 </button>
-                <button type="reset" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200 disabled:opacity-50 disabled:pointer-events-none" data-hs-stepper-reset-btn="" style="display: none;">
-                  Reset
-                </button>
+                <RouterLink  to="/" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200 disabled:opacity-50 disabled:pointer-events-none" data-hs-stepper-reset-btn="" style="display: none;">
+                  Go back to Recipes
+
+                </RouterLink>
               </div>
               <!-- End Button Group -->
             </div>
@@ -349,6 +359,8 @@ const ingredientInputs = ref([
     selectedQuantity: ''
   }
 ]);
+const selectedImage = ref(null);
+const imagePreviewUrl = ref('');
 const ingredients = ref([]);
 const recipeIngredients = ref([]);
 const formData = ref({
@@ -362,11 +374,21 @@ const formData = ref({
     hours: '',
     minutes: ''
   },
-  servings: ''
+  servings: '',
+  difficulty: '',
+  image: ''
 });
 
 const scrollToTop = () => {
   window.scrollTo(0, 0);
+};
+const handleImageChange = (event) => {
+  selectedImage.value = event.target.files[0];
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    imagePreviewUrl.value = reader.result;
+  };
+  reader.readAsDataURL(selectedImage.value);
 };
 
 const getIngredients = async () => {
@@ -417,10 +439,13 @@ const postRecipeData = async () => {
       cook_time: formData.value.cookingTime,
       servings: formData.value.servings,
       ingredients: recipeIngredients.value,
+      difficulty: formData.value.difficulty,
+      image: selectedImage.value
     }, {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-      }
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+        'Content-Type': 'multipart/form-data',
+      },
     });
     console.log(response);
     if (response.status === 200) {
