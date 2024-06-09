@@ -281,6 +281,7 @@
             <div class="flex justify-between items-center mb-6">
               <h2 class="text-lg lg:text-2xl font-bold text-gray-900">Discussion ({{ comments ? comments.length : 0 }})</h2>
             </div>
+            <div v-if="username">
             <form class="mb-6" @submit.prevent="postComment">
               <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200">
                 <label for="comment" class="sr-only">Your comment</label>
@@ -290,6 +291,11 @@
                 Post comment
               </button>
             </form>
+            </div>
+            <div v-else> <!-- If user is not logged in -->
+              <p>You need to be logged in to post a comment.</p>
+              <router-link to="/login">Login</router-link>
+            </div>
             <div v-if="comments && comments.length > 0">
               <div v-for="comment in comments" :key="comment.id">
                 <article class="p-6 text-base bg-white rounded-lg">
@@ -323,7 +329,7 @@
                   </footer>
                   <p class="text-gray-500">{{ comment.comment }}</p>
                   <div class="flex items-center mt-4 space-x-4">
-                    <button  @click="showReplyField(comment.id)" type="button" class="flex items-center text-sm text-gray-500 hover:underline font-medium">
+                    <button v-if="username"  @click="showReplyField(comment.id)" type="button" class="flex items-center text-sm text-gray-500 hover:underline font-medium">
                       <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
                       </svg>
@@ -368,14 +374,14 @@
                       </div>
                     </footer>
                     <p class="text-gray-500">{{ reply.reply }}</p>
-                    <div class="flex items-center mt-4 space-x-4">
-                      <button type="button" class="flex items-center text-sm text-gray-500 hover:underline font-medium">
-                        <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
-                        </svg>
-                        Reply
-                      </button>
-                    </div>
+<!--                    <div class="flex items-center mt-4 space-x-4">-->
+<!--                      <button type="button" class="flex items-center text-sm text-gray-500 hover:underline font-medium">-->
+<!--                        <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">-->
+<!--                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />-->
+<!--                        </svg>-->
+<!--                        Reply-->
+<!--                      </button>-->
+<!--                    </div>-->
                   </article>
                 </div>
                 <hr>
@@ -418,7 +424,7 @@
             <div class="grow">
               <div class="flex">
                 <div v-if="!isLoadingUser">
-                  <button type="button"
+                  <button v-if="username" type="button"
                   class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent transition duration-300 disabled:opacity-50 disabled:pointer-events-none"
                           :class="{'bg-primary-100 hover:bg-primary-200 text-white': user && !user.isFollowing, 'bg-gray-500 text-white': user && user.isFollowing}"
                           @click="handleFollowUnfollow(user)">
@@ -520,7 +526,7 @@ const followers = ref([]);
 const followees = ref([]);
 
 let userData = JSON.parse(localStorage.getItem('user'));
-let username = userData.data.username;
+let username = userData ? userData.data.username : null;
 
 const lastCommentId = ref(null); // Add this line
 const loadingMoreComments = ref(false); 
@@ -553,17 +559,12 @@ onMounted(async () => {
     const recipeResponse = await axios.get(`/recipe/${route.params.id}`);
     if (recipeResponse.data.status === 'success') {
       recipe.value = recipeResponse.data.data;
-      user.value = recipe.value.user;
-
-      // Fetch follow status
-      const followStatusResponse = await axios.get(`/follow/${user.value.id}/status`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      });
-      user.value.isFollowing = followStatusResponse.data.isFollowing;
     }
+  } catch (error) {
+    console.error('Error:', error);
+  }
 
+  try {
     // Fetch comments data
     const commentsResponse = await axios.get(`/comment/${route.params.id}`);
     if (commentsResponse.data.status === 'success') {
