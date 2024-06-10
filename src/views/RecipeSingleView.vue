@@ -424,7 +424,7 @@
             <div class="grow">
               <div class="flex">
                 <div v-if="!isLoadingUser">
-                  <button v-if="username" type="button"
+                  <button type="button"
                   class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent transition duration-300 disabled:opacity-50 disabled:pointer-events-none"
                           :class="{'bg-primary-100 hover:bg-primary-200 text-white': user && !user.isFollowing, 'bg-gray-500 text-white': user && user.isFollowing}"
                           @click="handleFollowUnfollow(user)">
@@ -522,18 +522,20 @@ const commentContent = ref('');
 
 const user = ref(null);
 const isLoadingButton = ref(false);
-const followers = ref([]);
-const followees = ref([]);
+
 
 let userData = JSON.parse(localStorage.getItem('user'));
 let username = userData ? userData.data.username : null;
 
-const lastCommentId = ref(null); // Add this line
-const loadingMoreComments = ref(false); 
-
 axios.defaults.baseURL = config.BASE_URL;
 
 const handleFollowUnfollow = async (user) => {
+  console.log('User:', user);
+  if (!user) {
+    console.error('Error: User is null');
+    return;
+  }
+
   isLoadingButton.value = true;
   try {
     const response = await axios.post(`/follow/${user.id}`, '', {
@@ -622,28 +624,6 @@ const postReply = async (commentId) => {
     console.error('Error:', error);
   }
 };
-
-const sortedFollowers = computed(() => {
-  let sorted = [...followers.value];
-  let loggedInUserIndex = sorted.findIndex(follower => follower.username === username);
-  if (loggedInUserIndex !== -1) {
-    let loggedInUser = sorted.splice(loggedInUserIndex, 1)[0];
-    sorted.unshift(loggedInUser);
-  }
-  return sorted;
-});
-
-const sortedFollowees = computed(() => {
-  let sorted = [...followees.value];
-  let loggedInUserIndex = sorted.findIndex(followee => followee.username === username);
-  if (loggedInUserIndex !== -1) {
-    let loggedInUser = sorted.splice(loggedInUserIndex, 1)[0];
-    sorted.unshift(loggedInUser);
-  }
-  return sorted;
-});
-
-
 </script>
 
 
