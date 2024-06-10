@@ -1,5 +1,5 @@
 <template>
-
+<Toaster ref="toaster" />
   <div class="overflow-hidden">
     <div class="mt-5 max-w-[50rem] mx-auto px-4 sm:px-6 lg:px-8 main-content">
       <div class="main">
@@ -160,7 +160,7 @@
                               </label>
                             </div>
                             <div class="sm:col-span-1 mx-10 inline-flex w-full">
-                              <input v-model="formData.preparationTime.minutes" type="text" class="mr-2 block w-full  text-gray-900 border border-gray-300 rounded-lg text-base focus:ring-blue-500 focus:border-blue-500">
+                              <input v-model="formData.preparationTime.minutes" type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg text-base focus:ring-blue-500 focus:border-blue-500">
                               <label for="minute" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
                                 Minutes
                               </label>
@@ -179,7 +179,7 @@
                               </label>
                             </div>
                             <div  class="sm:col-span-1 mx-10 inline-flex w-full">
-                              <input v-model="formData.cookingTime.minutes" type="text" class="mr-2 block w-full  text-gray-900 border border-gray-300 rounded-lg text-base focus:ring-blue-500 focus:border-blue-500">
+                              <input v-model="formData.cookingTime.minutes" type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg text-base focus:ring-blue-500 focus:border-blue-500">
                               <label for="minute" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
                                 Minutes
                               </label>
@@ -191,6 +191,8 @@
                           <label class=" m-1 text-sm font-medium text-gray-500 mt-2.5">
                             Servings
                             <input v-model="formData.servings" type="text" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg text-base focus:ring-blue-500 focus:border-blue-500" placeholder="#">
+                            <span v-if="errors.servings" class="text-red-500 text-xs">{{ errors.servings }}</span>
+
                           </label>
                         </div>
 
@@ -242,7 +244,7 @@
                     <h3 class="text-gray-500">
                       <div id="hs-wrapper-select-for-copy" class="space-y-3">
                         <!-- Select -->
-                        <div v-for="(input, index) in ingredientInputs" :key="index" class="relative grid grid-cols-2">
+                        <div v-for="(input, index) in ingredientInputs" :key="index" class="relative grid grid-cols-3">
                           <div class="relative col-span-1 mx-3">
                             <input
                                 v-model="input.search"
@@ -265,6 +267,27 @@
                             </div>
                           </div>
                           <input v-model="input.selectedQuantity" type="text" name="quantity" class="py-3 px-4 pe-9 w-full border border-gray-200 rounded-lg" placeholder="Quantity">
+                          <div class="relative col-span-1 mx-3">
+                            <input
+                                v-model="input.unitSearch"
+                                @input="filterUnits(index)"
+                                @focus="showUnitDropdown = index"
+                                @blur="hideUnitDropdown(index)"
+                                type="text"
+                                class="py-3 px-4 pe-9 w-full border border-gray-200 rounded-lg"
+                                placeholder="Select or type units"
+                            />
+                            <div v-if="showUnitDropdown === index" class="absolute mt-2 z-50 w-full max-h-20 p-1 bg-white border border-gray-200 rounded-lg overflow-auto">
+                              <div
+                                  v-for="unit in filteredUnits[index]"
+                                  :key="unit.id"
+                                  @mousedown.prevent="selectUnit(index, unit)"
+                                  class="py-2 px-4 text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg"
+                              >
+                                {{ unit.name }}
+                              </div>
+                            </div>
+                          </div>
                         </div>
                         <!-- End Select -->
                       </div>
@@ -327,7 +350,7 @@
                   </svg>
                   Back
                 </button>
-                <button @click="handleNext" type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200" data-hs-stepper-next-btn="">
+                <button @click.stop.prevent="handleNext() ? null : $event.stopImmediatePropagation()" type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200" data-hs-stepper-next-btn="true">
                   Next
                   <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="m9 18 6-6-6-6"></path>
@@ -356,6 +379,7 @@
 import axios from 'axios';
 import { config } from "../../config.js";
 import { ref, onMounted, reactive } from 'vue';
+import Toaster from './Toaster.vue';
 
 axios.defaults.baseURL = config.BASE_URL;
 
@@ -368,6 +392,8 @@ const ingredientInputs = ref([
 const showDropdown = ref(null);
 const currentStep = ref(1);
 const totalSteps = 4;
+const toaster = ref();
+
 
 const errors = reactive({
   title: '',
@@ -377,6 +403,7 @@ const errors = reactive({
   servings: '',
   difficulty: ''
 });
+const units = ref([]);
 const selectedImage = ref(null);
 const imagePreviewUrl = ref('');
 const ingredients = ref([]);
@@ -386,12 +413,12 @@ const formData = reactive({
   title: '',
   description: '',
   preparationTime: {
-    hours: '',
-    minutes: ''
+    hours: '0',
+    minutes: '0'
   },
   cookingTime: {
-    hours: '',
-    minutes: ''
+    hours: '0',
+    minutes: '0'
   },
   servings: '',
   difficulty: '',
@@ -410,6 +437,40 @@ const handleImageChange = (event) => {
   reader.readAsDataURL(selectedImage.value);
 };
 
+const getUnits = async () => {
+  try{
+    const response = await axios.get('/unit');
+    if(response.status === 200){
+      units.value = response.data.data;
+    } else {
+      console.log('Failed to get units');
+    }
+  } catch (error) {
+    console.error('An error occurred while getting units:', error);
+  }
+}
+const unitInputs = ref([{ selectedUnitId: '', unitSearch: '' }]);
+const showUnitDropdown = ref(null);
+const filteredUnits = ref([[]]);
+
+const filterUnits = (index) => {
+  const searchTerm = unitInputs.value[index].unitSearch.toLowerCase();
+  filteredUnits.value[index] = units.value.filter(unit =>
+      unit.name.toLowerCase().includes(searchTerm)
+  );
+};
+
+const hideUnitDropdown = (index) => {
+  setTimeout(() => {
+    showUnitDropdown.value = null;
+  }, 200);
+};
+
+const selectUnit = (index, unit) => {
+  unitInputs.value[index].selectedUnitId = unit.id;
+  unitInputs.value[index].unitSearch = unit.name;
+  showUnitDropdown.value = null;
+};
 const getIngredients = async () => {
   try {
     const response = await axios.get('/ingredient');
@@ -429,14 +490,16 @@ const getIngredients = async () => {
 const addIngredient = () => {
   for (let i = 0; i < ingredientInputs.value.length; i++) {
     const currentInput = ingredientInputs.value[i];
-    if (currentInput.selectedIngredientId && currentInput.selectedQuantity) {
+    const currentUnitInput = unitInputs.value[i]; // Get the corresponding unit input
+    if (currentInput.selectedIngredientId && currentInput.selectedQuantity && currentUnitInput.selectedUnitId) {
       const ingredient = {
         id: currentInput.selectedIngredientId,
-        quantity: currentInput.selectedQuantity
+        quantity: currentInput.selectedQuantity,
+        unit: currentUnitInput.selectedUnitId // Add the selected unit's ID
       };
       recipeIngredients.value.push(ingredient);
     } else {
-      alert('Please select an ingredient and enter a quantity for all inputs.');
+      alert('Please select an ingredient, a unit, and enter a quantity for all inputs.');
       return;
     }
   }
@@ -445,7 +508,12 @@ const addIngredient = () => {
     selectedQuantity: '',
     search: '',
   });
+  unitInputs.value.push({
+    selectedUnitId: '',
+    unitSearch: '',
+  });
   filteredIngredients.value.push([]);
+  filteredUnits.value.push([]);
 };
 
 const filterIngredients = (index) => {
@@ -481,16 +549,17 @@ const validateForm = () => {
   return isValid;
 };
 const handleNext = () => {
-  console.log('handleNext called'); // Add this line
-  if (validateForm()) {
-    currentStep.value += 1;
-    console.log('Current step after increment:', currentStep.value); // Add this line
+  if (!validateForm()) {
+    console.log('Form is invalid, cannot proceed to the next step');
+    toaster.value.showToast('Fill up the form properly before proceeding');
 
-  } else {
-    console.log('Form is invalid, show errors');
     return false;
+  } else {
+    currentStep.value += 1;
+    return true;
   }
 };
+
 
 const postRecipeData = async () => {
   try {
@@ -500,7 +569,11 @@ const postRecipeData = async () => {
       prep_time: formData.preparationTime,
       cook_time: formData.cookingTime,
       servings: formData.servings,
-      ingredients: recipeIngredients.value,
+      ingredients: recipeIngredients.value.map(ingredient => ({
+        id: ingredient.id,
+        quantity: ingredient.quantity,
+        unit: ingredient.unit // Include the unit property
+      })),
       difficulty: formData.difficulty,
       image: selectedImage.value
     }, {
@@ -523,6 +596,7 @@ const postRecipeData = async () => {
 onMounted(() => {
   scrollToTop();
   getIngredients();
+  getUnits();
 });
 </script>
 
