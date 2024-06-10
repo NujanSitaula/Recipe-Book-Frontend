@@ -20,29 +20,29 @@
               </div>
             </div>
             <div v-else-if="recipe">
-            <h2 class="text-3xl font-bold lg:text-5xl">{{ recipe.name }}</h2>
+              <h2 class="text-3xl font-bold lg:text-5xl">{{ recipe.name }}</h2>
 
-            <div class="flex items-center gap-x-5 mt-5">
-              <a class="inline-flex items-center gap-1.5 py-1 px-3 sm:py-2 sm:px-4 rounded-full text-xs sm:text-sm bg-gray-100 text-gray-800 hover:bg-gray-200" href="#">
-                Company News
-              </a>
-              <p class="text-xs sm:text-sm text-gray-800">January 18, 2023</p>
-            </div>
-            <!-- Team -->
+              <div class="flex items-center gap-x-5 mt-5">
+                <a class="inline-flex items-center gap-1.5 py-1 px-3 sm:py-2 sm:px-4 rounded-full text-xs sm:text-sm bg-gray-100 text-gray-800 hover:bg-gray-200" href="#">
+                  Company News
+                </a>
+                <p class="text-xs sm:text-sm text-gray-800">January 18, 2023</p>
+              </div>
+              <!-- Team -->
             </div>
             <div class="max-w-5xl mx-auto">
               <!-- Grid -->
               <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 md:gap-12  border rounded-2xl p-5 border-t-primary-100 border-t-4">
                 <!-- Prep Time -->
                 <div class="text-center accordion-item">
-                    <div class="mt-2 sm:mt-4">
-                      <h3 class="font-medium text-gray-800">
-                        10 Min
-                      </h3>
-                      <p class="text-sm text-gray-600">
-                        Prep Time
-                      </p>
-                    </div>
+                  <div class="mt-2 sm:mt-4">
+                    <h3 class="font-medium text-gray-800">
+                      10 Min
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                      Prep Time
+                    </p>
+                  </div>
                   <div class="accordion-content">
                     <!-- Content Here -->
                   </div>
@@ -50,14 +50,14 @@
                 <!-- End Prep Time -->
                 <!-- Cook Time -->
                 <div class="text-center accordion-item">
-                    <div class="mt-2 sm:mt-4">
-                      <h3 class="font-medium text-gray-800">
-                        30 Min
-                      </h3>
-                      <p class="text-sm text-gray-600">
-                        Cook Time
-                      </p>
-                    </div>
+                  <div class="mt-2 sm:mt-4">
+                    <h3 class="font-medium text-gray-800">
+                      30 Min
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                      Cook Time
+                    </p>
+                  </div>
                   <div class="accordion-content">
                     <!-- Content Here -->
                   </div>
@@ -65,14 +65,14 @@
                 <!-- End Cook Time -->
                 <!-- Ingredients -->
                 <div class="text-center accordion-item">
-                    <div class="mt-2 sm:mt-4">
-                      <h3 class="font-medium text-gray-800">
-                        20 Approx
-                      </h3>
-                      <p class="text-sm text-gray-600">
-                        Ingredients
-                      </p>
-                    </div>
+                  <div class="mt-2 sm:mt-4">
+                    <h3 class="font-medium text-gray-800">
+                      20 Approx
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                      Ingredients
+                    </p>
+                  </div>
                   <div class="accordion-content">
                     <!-- Content Here -->
                   </div>
@@ -80,14 +80,14 @@
                 <!-- End Ingredients -->
                 <!-- Servings -->
                 <div class="text-center accordion-item">
-                    <div class="mt-2 sm:mt-4">
-                      <h3 class="font-medium text-gray-800">
-                        2 Person
-                      </h3>
-                      <p class="text-sm text-gray-600">
-                        Servings
-                      </p>
-                    </div>
+                  <div class="mt-2 sm:mt-4">
+                    <h3 class="font-medium text-gray-800">
+                      2 Person
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                      Servings
+                    </p>
+                  </div>
                   <div class="accordion-content">
                     <!-- Content Here -->
                   </div>
@@ -95,14 +95,14 @@
                 <!-- End Servings -->
                 <!-- Difficulty -->
                 <div class="text-center accordion-item">
-                    <div class="mt-2 sm:mt-4">
-                      <h3 class="font-medium text-gray-800">
-                        Hard
-                      </h3>
-                      <p class="text-sm text-gray-600">
-                        Difficulty
-                      </p>
-                    </div>
+                  <div class="mt-2 sm:mt-4">
+                    <h3 class="font-medium text-gray-800">
+                      Hard
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                      Difficulty
+                    </p>
+                  </div>
                   <div class="accordion-content">
                     <!-- Content Here -->
                   </div>
@@ -282,15 +282,15 @@
               <h2 class="text-lg lg:text-2xl font-bold text-gray-900">Discussion ({{ comments ? comments.length : 0 }})</h2>
             </div>
             <div v-if="username">
-            <form class="mb-6" @submit.prevent="postComment">
-              <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200">
-                <label for="comment" class="sr-only">Your comment</label>
-                <textarea v-model="commentContent" id="comment" rows="6" class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none" placeholder="Write a comment..." required></textarea>
-              </div>
-              <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800">
-                Post comment
-              </button>
-            </form>
+              <form class="mb-6" @submit.prevent="postComment">
+                <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200">
+                  <label for="comment" class="sr-only">Your comment</label>
+                  <textarea v-model="commentContent" id="comment" rows="6" class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none" placeholder="Write a comment..." required></textarea>
+                </div>
+                <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800">
+                  Post comment
+                </button>
+              </form>
             </div>
             <div v-else> <!-- If user is not logged in -->
               <p>You need to be logged in to post a comment.</p>
@@ -374,14 +374,14 @@
                       </div>
                     </footer>
                     <p class="text-gray-500">{{ reply.reply }}</p>
-<!--                    <div class="flex items-center mt-4 space-x-4">-->
-<!--                      <button type="button" class="flex items-center text-sm text-gray-500 hover:underline font-medium">-->
-<!--                        <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">-->
-<!--                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />-->
-<!--                        </svg>-->
-<!--                        Reply-->
-<!--                      </button>-->
-<!--                    </div>-->
+                    <!--                    <div class="flex items-center mt-4 space-x-4">-->
+                    <!--                      <button type="button" class="flex items-center text-sm text-gray-500 hover:underline font-medium">-->
+                    <!--                        <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">-->
+                    <!--                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />-->
+                    <!--                        </svg>-->
+                    <!--                        Reply-->
+                    <!--                      </button>-->
+                    <!--                    </div>-->
                   </article>
                 </div>
                 <hr>
@@ -424,19 +424,19 @@
             <div class="grow">
               <div class="flex">
                 <div v-if="!isLoadingUser">
-                  <button type="button"
-                  class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent transition duration-300 disabled:opacity-50 disabled:pointer-events-none"
+                  <button v-if="username" type="button"
+                          class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent transition duration-300 disabled:opacity-50 disabled:pointer-events-none"
                           :class="{'bg-primary-100 hover:bg-primary-200 text-white': user && !user.isFollowing, 'bg-gray-500 text-white': user && user.isFollowing}"
                           @click="handleFollowUnfollow(user)">
                     <template v-if="user && !user.isFollowing">
-                    <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                      <circle cx="9" cy="7" r="4" />
-                      <line x1="19" x2="19" y1="8" y2="14" />
-                      <line x1="22" x2="16" y1="11" y2="11" />
-                    </svg>
-                    <span>Follow</span>
-                  </template>
+                      <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <line x1="19" x2="19" y1="8" y2="14" />
+                        <line x1="22" x2="16" y1="11" y2="11" />
+                      </svg>
+                      <span>Follow</span>
+                    </template>
                     <template v-else>
                       <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
@@ -523,19 +523,13 @@ const commentContent = ref('');
 const user = ref(null);
 const isLoadingButton = ref(false);
 
-
 let userData = JSON.parse(localStorage.getItem('user'));
 let username = userData ? userData.data.username : null;
+
 
 axios.defaults.baseURL = config.BASE_URL;
 
 const handleFollowUnfollow = async (user) => {
-  console.log('User:', user);
-  if (!user) {
-    console.error('Error: User is null');
-    return;
-  }
-
   isLoadingButton.value = true;
   try {
     const response = await axios.post(`/follow/${user.id}`, '', {
@@ -590,7 +584,7 @@ const postComment = async () => {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           }
-          });
+        });
     if (response.data.status === 'success') {
       const newComment = response.data.data[0];
       comments.value.unshift(newComment);
@@ -624,6 +618,7 @@ const postReply = async (commentId) => {
     console.error('Error:', error);
   }
 };
-</script>
 
+
+</script>
 
