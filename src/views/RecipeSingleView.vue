@@ -555,6 +555,7 @@ onMounted(async () => {
     const recipeResponse = await axios.get(`/recipe/${route.params.id}`);
     if (recipeResponse.data.status === 'success') {
       recipe.value = recipeResponse.data.data;
+      user.value = recipe.value.user;
     }
   } catch (error) {
     console.error('Error:', error);
