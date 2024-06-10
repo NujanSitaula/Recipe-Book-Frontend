@@ -244,7 +244,7 @@
                     <h3 class="text-gray-500">
                       <div id="hs-wrapper-select-for-copy" class="space-y-3">
                         <!-- Select -->
-                        <div v-for="(input, index) in ingredientInputs" :key="index" class="relative grid grid-cols-2">
+                        <div v-for="(input, index) in ingredientInputs" :key="index" class="relative grid grid-cols-3">
                           <div class="relative col-span-1 mx-3">
                             <input
                                 v-model="input.search"
@@ -267,6 +267,27 @@
                             </div>
                           </div>
                           <input v-model="input.selectedQuantity" type="text" name="quantity" class="py-3 px-4 pe-9 w-full border border-gray-200 rounded-lg" placeholder="Quantity">
+                          <div class="relative col-span-1 mx-3">
+                            <input
+                                v-model="input.unitSearch"
+                                @input="filterUnits(index)"
+                                @focus="showUnitDropdown = index"
+                                @blur="hideUnitDropdown(index)"
+                                type="text"
+                                class="py-3 px-4 pe-9 w-full border border-gray-200 rounded-lg"
+                                placeholder="Select or type units"
+                            />
+                            <div v-if="showUnitDropdown === index" class="absolute mt-2 z-50 w-full max-h-20 p-1 bg-white border border-gray-200 rounded-lg overflow-auto">
+                              <div
+                                  v-for="unit in filteredUnits[index]"
+                                  :key="unit.id"
+                                  @mousedown.prevent="selectUnit(index, unit)"
+                                  class="py-2 px-4 text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg"
+                              >
+                                {{ unit.name }}
+                              </div>
+                            </div>
+                          </div>
                         </div>
                         <!-- End Select -->
                       </div>
@@ -382,6 +403,7 @@ const errors = reactive({
   servings: '',
   difficulty: ''
 });
+const units = ref([]);
 const selectedImage = ref(null);
 const imagePreviewUrl = ref('');
 const ingredients = ref([]);
@@ -415,6 +437,40 @@ const handleImageChange = (event) => {
   reader.readAsDataURL(selectedImage.value);
 };
 
+const getUnits = async () => {
+  try{
+    const response = await axios.get('/unit');
+    if(response.status === 200){
+      units.value = response.data.data;
+    } else {
+      console.log('Failed to get units');
+    }
+  } catch (error) {
+    console.error('An error occurred while getting units:', error);
+  }
+}
+const unitInputs = ref([{ selectedUnitId: '', unitSearch: '' }]);
+const showUnitDropdown = ref(null);
+const filteredUnits = ref([[]]);
+
+const filterUnits = (index) => {
+  const searchTerm = unitInputs.value[index].unitSearch.toLowerCase();
+  filteredUnits.value[index] = units.value.filter(unit =>
+      unit.name.toLowerCase().includes(searchTerm)
+  );
+};
+
+const hideUnitDropdown = (index) => {
+  setTimeout(() => {
+    showUnitDropdown.value = null;
+  }, 200);
+};
+
+const selectUnit = (index, unit) => {
+  unitInputs.value[index].selectedUnitId = unit.id;
+  unitInputs.value[index].unitSearch = unit.name;
+  showUnitDropdown.value = null;
+};
 const getIngredients = async () => {
   try {
     const response = await axios.get('/ingredient');
@@ -434,14 +490,16 @@ const getIngredients = async () => {
 const addIngredient = () => {
   for (let i = 0; i < ingredientInputs.value.length; i++) {
     const currentInput = ingredientInputs.value[i];
-    if (currentInput.selectedIngredientId && currentInput.selectedQuantity) {
+    const currentUnitInput = unitInputs.value[i]; // Get the corresponding unit input
+    if (currentInput.selectedIngredientId && currentInput.selectedQuantity && currentUnitInput.selectedUnitId) {
       const ingredient = {
         id: currentInput.selectedIngredientId,
-        quantity: currentInput.selectedQuantity
+        quantity: currentInput.selectedQuantity,
+        unit: currentUnitInput.selectedUnitId // Add the selected unit's ID
       };
       recipeIngredients.value.push(ingredient);
     } else {
-      alert('Please select an ingredient and enter a quantity for all inputs.');
+      alert('Please select an ingredient, a unit, and enter a quantity for all inputs.');
       return;
     }
   }
@@ -450,7 +508,12 @@ const addIngredient = () => {
     selectedQuantity: '',
     search: '',
   });
+  unitInputs.value.push({
+    selectedUnitId: '',
+    unitSearch: '',
+  });
   filteredIngredients.value.push([]);
+  filteredUnits.value.push([]);
 };
 
 const filterIngredients = (index) => {
@@ -506,7 +569,11 @@ const postRecipeData = async () => {
       prep_time: formData.preparationTime,
       cook_time: formData.cookingTime,
       servings: formData.servings,
-      ingredients: recipeIngredients.value,
+      ingredients: recipeIngredients.value.map(ingredient => ({
+        id: ingredient.id,
+        quantity: ingredient.quantity,
+        unit: ingredient.unit // Include the unit property
+      })),
       difficulty: formData.difficulty,
       image: selectedImage.value
     }, {
@@ -529,6 +596,7 @@ const postRecipeData = async () => {
 onMounted(() => {
   scrollToTop();
   getIngredients();
+  getUnits();
 });
 </script>
 
