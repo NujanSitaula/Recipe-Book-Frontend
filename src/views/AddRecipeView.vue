@@ -1,5 +1,5 @@
 <template>
-
+<Toaster ref="toaster" />
   <div class="overflow-hidden">
     <div class="mt-5 max-w-[50rem] mx-auto px-4 sm:px-6 lg:px-8 main-content">
       <div class="main">
@@ -160,7 +160,7 @@
                               </label>
                             </div>
                             <div class="sm:col-span-1 mx-10 inline-flex w-full">
-                              <input v-model="formData.preparationTime.minutes" type="text" class="mr-2 block w-full  text-gray-900 border border-gray-300 rounded-lg text-base focus:ring-blue-500 focus:border-blue-500">
+                              <input v-model="formData.preparationTime.minutes" type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg text-base focus:ring-blue-500 focus:border-blue-500">
                               <label for="minute" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
                                 Minutes
                               </label>
@@ -179,7 +179,7 @@
                               </label>
                             </div>
                             <div  class="sm:col-span-1 mx-10 inline-flex w-full">
-                              <input v-model="formData.cookingTime.minutes" type="text" class="mr-2 block w-full  text-gray-900 border border-gray-300 rounded-lg text-base focus:ring-blue-500 focus:border-blue-500">
+                              <input v-model="formData.cookingTime.minutes" type="text" class="mr-2 block w-full p-1 text-gray-900 border border-gray-300 rounded-lg text-base focus:ring-blue-500 focus:border-blue-500">
                               <label for="minute" class="inline-block text-sm font-medium text-gray-500 mt-1.5">
                                 Minutes
                               </label>
@@ -191,6 +191,8 @@
                           <label class=" m-1 text-sm font-medium text-gray-500 mt-2.5">
                             Servings
                             <input v-model="formData.servings" type="text" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg text-base focus:ring-blue-500 focus:border-blue-500" placeholder="#">
+                            <span v-if="errors.servings" class="text-red-500 text-xs">{{ errors.servings }}</span>
+
                           </label>
                         </div>
 
@@ -327,7 +329,7 @@
                   </svg>
                   Back
                 </button>
-                <button @click="handleNext" type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200" data-hs-stepper-next-btn="">
+                <button @click.stop.prevent="handleNext() ? null : $event.stopImmediatePropagation()" type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200" data-hs-stepper-next-btn="true">
                   Next
                   <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="m9 18 6-6-6-6"></path>
@@ -356,6 +358,7 @@
 import axios from 'axios';
 import { config } from "../../config.js";
 import { ref, onMounted, reactive } from 'vue';
+import Toaster from './Toaster.vue';
 
 axios.defaults.baseURL = config.BASE_URL;
 
@@ -368,6 +371,8 @@ const ingredientInputs = ref([
 const showDropdown = ref(null);
 const currentStep = ref(1);
 const totalSteps = 4;
+const toaster = ref();
+
 
 const errors = reactive({
   title: '',
@@ -386,12 +391,12 @@ const formData = reactive({
   title: '',
   description: '',
   preparationTime: {
-    hours: '',
-    minutes: ''
+    hours: '0',
+    minutes: '0'
   },
   cookingTime: {
-    hours: '',
-    minutes: ''
+    hours: '0',
+    minutes: '0'
   },
   servings: '',
   difficulty: '',
@@ -481,16 +486,17 @@ const validateForm = () => {
   return isValid;
 };
 const handleNext = () => {
-  console.log('handleNext called'); // Add this line
-  if (validateForm()) {
-    currentStep.value += 1;
-    console.log('Current step after increment:', currentStep.value); // Add this line
+  if (!validateForm()) {
+    console.log('Form is invalid, cannot proceed to the next step');
+    toaster.value.showToast('Fill up the form properly before proceeding');
 
-  } else {
-    console.log('Form is invalid, show errors');
     return false;
+  } else {
+    currentStep.value += 1;
+    return true;
   }
 };
+
 
 const postRecipeData = async () => {
   try {
