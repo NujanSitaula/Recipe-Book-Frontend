@@ -82,7 +82,7 @@
 
             <!-- Stepper Content -->
             <div class="mt-5 sm:mt-8">
-              <!--              add recipe basics-->
+              <!-- add recipe basics-->
               <div data-hs-stepper-content-item='{
         "index": 1
       }'>
@@ -222,10 +222,7 @@
                               </label>
                             </li>
                           </ul>
-
                         </div>
-
-
                       </div>
                     </form>
                   </div>
@@ -237,14 +234,21 @@
 
               <!-- add ingredients -->
               <!-- HTML Structure -->
-              <div data-hs-stepper-content-item='{"index": 2}' style="display: none;"  >
+              <div data-hs-stepper-content-item='{"index": 2}' style="display: none;">
 
               <form @submit.prevent="handleNext">
-                  <div class="p-4 h-auto bg-gray-50 flex justify-center items-center border border-dashed border-gray-200 rounded-xl">
-                    <h3 class="text-gray-500">
-                      <div id="hs-wrapper-select-for-copy" class="space-y-3">
+                <div class="h-auto bg-gray-50 p-4 sm:p-7 justify-center items-center border border-dashed border-gray-200 rounded-xl grid">                    <div class="sm:col-span-12">
+
+                      <h1 class="text-xl font-semibold text-gray-800">
+                        Add your ingredients here
+                      </h1>
+                      <hr>
+                    </div>
+                    <h3 class="text-gray-500 grid-cols-2 p-4 sm:p-7">
+
+                      <div id="hs-wrapper-select-for-copy" class="space-y-3 col-span-1">
                         <!-- Select -->
-                        <div v-for="(input, index) in ingredientInputs" :key="index" class="relative grid grid-cols-3">
+                        <div v-for="(input, index) in ingredientInputs" :key="index" class="relative grid grid-cols-2">
                           <div class="relative col-span-1 mx-3">
                             <input
                                 v-model="input.search"
@@ -252,8 +256,8 @@
                                 @focus="showDropdown = index"
                                 @blur="hideDropdown(index)"
                                 type="text"
-                                class="py-3 px-4 pe-9 w-full border border-gray-200 rounded-lg"
-                                placeholder="Select or type ingredients..."
+                                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Select ingredients..."
                             />
                             <div v-if="showDropdown === index" class="absolute mt-2 z-50 w-full max-h-20 p-1 bg-white border border-gray-200 rounded-lg overflow-auto">
                               <div
@@ -266,35 +270,38 @@
                               </div>
                             </div>
                           </div>
-                          <input v-model="input.selectedQuantity" type="text" name="quantity" class="py-3 px-4 pe-9 w-full border border-gray-200 rounded-lg" placeholder="Quantity">
-                          <div class="relative col-span-1 mx-3">
-                            <input
-                                v-model="input.unitSearch"
-                                @input="filterUnits(index)"
-                                @focus="showUnitDropdown = index"
-                                @blur="hideUnitDropdown(index)"
-                                type="text"
-                                class="py-3 px-4 pe-9 w-full border border-gray-200 rounded-lg"
-                                placeholder="Select or type units"
-                            />
-                            <div v-if="showUnitDropdown === index" class="absolute mt-2 z-50 w-full max-h-20 p-1 bg-white border border-gray-200 rounded-lg overflow-auto">
-                              <div
-                                  v-for="unit in filteredUnits[index]"
-                                  :key="unit.id"
-                                  @mousedown.prevent="selectUnit(index, unit)"
-                                  class="py-2 px-4 text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg"
-                              >
-                                {{ unit.name }}
+                          <div class="grid grid-cols-2">
+                          <input v-model="input.selectedQuantity" type="text" name="quantity" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Quantity">
+                            <div class="relative col-span-1 mx-3">
+                              <input
+                                  v-model="unitInputs[index].unitSearch"
+                                  @input="filterUnits(index)"
+                                  @focus="showUnitDropdown = index"
+                                  @blur="hideUnitDropdown(index)"
+                                  type="text"
+                                  class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500"
+                                  placeholder="Units"
+                              />
+                              <div v-if="showUnitDropdown === index" class="absolute mt-2 z-50 w-full max-h-20 p-1 bg-white border border-gray-200 rounded-lg overflow-auto">
+                                <div
+                                    v-for="unit in filteredUnits[index]"
+                                    :key="unit.id"
+                                    @mousedown.prevent="selectUnit(index, unit)"
+                                    class="py-2 px-4 text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg"
+                                >
+                                  {{ unit.name }}
+                                </div>
                               </div>
                             </div>
+
                           </div>
                         </div>
                         <!-- End Select -->
                       </div>
 
                       <p class="mt-3 text-end">
-                        <button @click="addIngredient" type="button" id="hs-copy-select-content" class="py-1.5 px-2 inline-flex items-center gap-x-1 text-s font-light rounded-full border border-dashed border-gray-200 bg-white text-gray-600 hover:bg-gray-50">
-                          <svg class="flex-shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <button @click="addIngredient" type="button" id="hs-copy-select-content" class="py-1.5 px-2 mr-1 inline-flex items-center gap-x-1 text-s font-light rounded-full border border-dashed border-gray-200 bg-white text-gray-600 hover:bg-gray-50 text-primary-100">
+                          <svg class="flex-shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M5 12h14"></path>
                             <path d="M12 5v14"></path>
                           </svg>
@@ -350,7 +357,8 @@
                   </svg>
                   Back
                 </button>
-                <button @click.stop.prevent="handleNext() ? null : $event.stopImmediatePropagation()" type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200" data-hs-stepper-next-btn="true">
+<!--                <button @click.stop.prevent="handleNext() ? null : $event.stopImmediatePropagation()" type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200" data-hs-stepper-next-btn="true">-->
+                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200" data-hs-stepper-next-btn="true">
                   Next
                   <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="m9 18 6-6-6-6"></path>
@@ -378,23 +386,20 @@
 <script setup>
 import axios from 'axios';
 import { config } from "../../config.js";
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive, nextTick } from 'vue';
 import Toaster from './Toaster.vue';
 
 axios.defaults.baseURL = config.BASE_URL;
 
 const ingredientInputs = ref([
   {
-    selectedIngredientId: '',
+    selectedIngredientId: '1',
     selectedQuantity: ''
   }
 ]);
 const showDropdown = ref(null);
 const currentStep = ref(1);
-const totalSteps = 4;
 const toaster = ref();
-
-
 const errors = reactive({
   title: '',
   description: '',
@@ -437,39 +442,49 @@ const handleImageChange = (event) => {
   reader.readAsDataURL(selectedImage.value);
 };
 
+const unitInputs = ref([
+  {
+    selectedUnitId: '',
+    unitSearch: '',
+  }
+]);
+const showUnitDropdown = ref(null);
+const filteredUnits = ref([[]]);
+
 const getUnits = async () => {
-  try{
+  try {
     const response = await axios.get('/unit');
-    if(response.status === 200){
+    if (response.status === 200) {
       units.value = response.data.data;
+      if (units.value.length > 0) {
+        unitInputs.value[0].selectedUnitId = units.value[0].id;
+        unitInputs.value[0].unitSearch = units.value[0].name; // Initialize the unit search with the first unit name
+      }
     } else {
       console.log('Failed to get units');
     }
   } catch (error) {
     console.error('An error occurred while getting units:', error);
   }
-}
-const unitInputs = ref([{ selectedUnitId: '', unitSearch: '' }]);
-const showUnitDropdown = ref(null);
-const filteredUnits = ref([[]]);
+};
 
 const filterUnits = (index) => {
   const searchTerm = unitInputs.value[index].unitSearch.toLowerCase();
   filteredUnits.value[index] = units.value.filter(unit =>
-      unit.name.toLowerCase().includes(searchTerm)
+      unit.name.toLowerCase().startsWith(searchTerm)
   );
+};
+
+const selectUnit = (index, unit) => {
+  unitInputs.value[index].selectedUnitId = unit.id;
+  unitInputs.value[index].unitSearch = unit.name; // Ensure the selected unit name is displayed
+  showUnitDropdown.value = null;
 };
 
 const hideUnitDropdown = (index) => {
   setTimeout(() => {
     showUnitDropdown.value = null;
   }, 200);
-};
-
-const selectUnit = (index, unit) => {
-  unitInputs.value[index].selectedUnitId = unit.id;
-  unitInputs.value[index].unitSearch = unit.name;
-  showUnitDropdown.value = null;
 };
 const getIngredients = async () => {
   try {
