@@ -237,7 +237,8 @@
               <div data-hs-stepper-content-item='{"index": 2}' style="display: none;">
 
               <form @submit.prevent="handleNext">
-                <div class="h-auto bg-gray-50 p-4 sm:p-7 justify-center items-center border border-dashed border-gray-200 rounded-xl grid">                    <div class="sm:col-span-12">
+                <div class="h-auto bg-gray-50 p-4 sm:p-7 justify-center items-center border border-dashed border-gray-200 rounded-xl grid">
+                  <div class="sm:col-span-12">
 
                       <h1 class="text-xl font-semibold text-gray-800">
                         Add your ingredients here
@@ -317,11 +318,43 @@
               <div data-hs-stepper-content-item='{
         "index": 3
       }' style="display: none;">
-                <div class="p-4 h-48 bg-gray-50 flex justify-center items-center border border-dashed border-gray-200 rounded-xl">
-                  <h3 class="text-gray-500">
-                    Third content
-                  </h3>
-                </div>
+                <form @submit.prevent="handleNext">
+                  <div class="h-auto bg-gray-50 p-4 sm:p-7  border border-dashed border-gray-200 rounded-xl">
+                    <div class="sm:col-span-12">
+
+                      <h1 class="text-xl font-semibold text-gray-800">
+                        Cook up your clever steps here
+                      </h1>
+                      <hr>
+                    </div>
+                    <h3 class="text-gray-500 grid-cols-2 p-4 sm:p-7 justify-center items-center">
+                        <!-- Input Group -->
+                      <div class="max-w space-y-3 justify-center items-center">
+                        <div v-for="(step, index) in steps" :key="index">
+                          <div class="flex rounded-lg shadow-sm">
+                            <span class="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500">{{ index + 1 }}.</span>
+                            <input v-model="steps[index]" type="text" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 disabled:opacity-50 disabled:pointer-events-none ">
+                          </div>
+                        </div>
+                      </div>
+
+                        <p class="mt-3 text-end">
+                          <button @click="handleAddStep" type="button" data-hs-copy-markup='{
+                                  "targetSelector": "#hs-content-for-copy",
+                                  "wrapperSelector": "#hs-wrapper-for-copy",
+                                  "limit": 0
+                                   }' id="hs-copy-content" class="py-1.5 px-2 inline-flex items-center gap-x-1 text-s font-medium rounded-full border border-dashed border-gray-200 bg-white text-primary-100 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+                              <svg class="flex-shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M5 12h14"></path>
+                              <path d="M12 5v14"></path>
+                            </svg>
+                            Add Steps
+                          </button>
+                        </p>
+                        <!-- End Input Group -->
+                    </h3>
+                  </div>
+                </form>
               </div>
               <!-- End First Content -->
 
@@ -357,8 +390,8 @@
                   </svg>
                   Back
                 </button>
-<!--                <button @click.stop.prevent="handleNext() ? null : $event.stopImmediatePropagation()" type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200" data-hs-stepper-next-btn="true">-->
-                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200" data-hs-stepper-next-btn="true">
+                <button @click.stop.prevent="handleNext() ? null : $event.stopImmediatePropagation()" type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200" data-hs-stepper-next-btn="true">
+<!--                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200" data-hs-stepper-next-btn="true">-->
                   Next
                   <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="m9 18 6-6-6-6"></path>
@@ -393,7 +426,7 @@ axios.defaults.baseURL = config.BASE_URL;
 
 const ingredientInputs = ref([
   {
-    selectedIngredientId: '1',
+    selectedIngredientId: '',
     selectedQuantity: ''
   }
 ]);
@@ -567,14 +600,12 @@ const handleNext = () => {
   if (!validateForm()) {
     console.log('Form is invalid, cannot proceed to the next step');
     toaster.value.showToast('Fill up the form properly before proceeding');
-
     return false;
   } else {
     currentStep.value += 1;
     return true;
   }
 };
-
 
 const postRecipeData = async () => {
   try {
@@ -584,14 +615,14 @@ const postRecipeData = async () => {
       prep_time: formData.preparationTime,
       cook_time: formData.cookingTime,
       servings: formData.servings,
+      difficulty: formData.difficulty,
+      instructions: steps.value,
       ingredients: recipeIngredients.value.map(ingredient => ({
         id: ingredient.id,
         quantity: ingredient.quantity,
         unit: ingredient.unit // Include the unit property
       })),
-      difficulty: formData.difficulty,
-      image: selectedImage.value
-    }, {
+    },{
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         'Content-Type': 'multipart/form-data',
@@ -607,11 +638,15 @@ const postRecipeData = async () => {
     console.error('An error occurred while posting recipe data:', error);
   }
 };
-
+const steps = ref(['']);
+const handleAddStep = () => {
+  steps.value.push('');
+};
 onMounted(() => {
   scrollToTop();
   getIngredients();
   getUnits();
 });
 </script>
+
 
