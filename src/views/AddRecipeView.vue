@@ -236,8 +236,8 @@
               <!-- HTML Structure -->
               <div data-hs-stepper-content-item='{"index": 2}' style="display: none;">
 
-              <form @submit.prevent="handleNext">
                 <div class="h-auto bg-gray-50 p-4 sm:p-7 justify-center items-center border border-dashed border-gray-200 rounded-xl grid">
+              <form @submit.prevent="handleNext">
                   <div class="sm:col-span-12">
 
                       <h1 class="text-xl font-semibold text-gray-800">
@@ -251,16 +251,26 @@
                         <!-- Select -->
                         <div v-for="(input, index) in ingredientInputs" :key="index" class="relative grid grid-cols-2">
                           <div class="relative col-span-1 mx-3">
-                            <input
-                                v-model="input.search"
-                                @input="filterIngredients(index)"
-                                @focus="showDropdown = index"
-                                @blur="hideDropdown(index)"
-                                type="text"
-                                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Select ingredients..."
-                            />
-                            <div v-if="showDropdown === index" class="absolute mt-2 z-50 w-full max-h-20 p-1 bg-white border border-gray-200 rounded-lg overflow-auto">
+                            <div class="relative">
+                              <label class="m-1 font-medium text-gray-500 mt-2.5">
+                                Select Ingredients
+                              </label>
+                              <div class="relative">
+                                <input
+                                    v-model="input.search"
+                                    @input="filterIngredients(index)"
+                                    @focus="showDropdown = index"
+                                    @blur="hideDropdown(index)"
+                                    type="text"
+                                    class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500"
+                                    :placeholder="ingredients[0]?.name || 'Select ingredients...'"
+                                />
+                                <svg class="absolute right-3 top-3 h-5 w-5 text-gray-500" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                                  <polygon points="396.6,160 416,180.7 256,352 96,180.7 115.3,160 256,310.5 "/>
+                                </svg>
+                              </div>
+                            </div>
+                              <div v-if="showDropdown === index" class="absolute mt-2 z-50 w-full max-h-20 p-1 bg-white border border-gray-200 rounded-lg overflow-auto">
                               <div
                                   v-for="ingredient in filteredIngredients[index]"
                                   :key="ingredient.id"
@@ -272,8 +282,22 @@
                             </div>
                           </div>
                           <div class="grid grid-cols-2">
-                          <input v-model="input.selectedQuantity" type="text" name="quantity" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Quantity">
+                            <div class="col-span-1">
+
+                              <label class="m-1 font-medium text-gray-500 mt-2.5">
+                                Quantity
+                              </label>
+                          <input v-model="input.selectedQuantity"
+                                 type="text" name="quantity"
+                                 class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500"
+                                 placeholder="2">
+                            </div>
                             <div class="relative col-span-1 mx-3">
+                              <div class="relative">
+
+                              <label class="m-1 font-medium text-gray-500 mt-2.5">
+                                Units
+                              </label>
                               <input
                                   v-model="unitInputs[index].unitSearch"
                                   @input="filterUnits(index)"
@@ -281,8 +305,12 @@
                                   @blur="hideUnitDropdown(index)"
                                   type="text"
                                   class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500"
-                                  placeholder="Units"
+                                  :placeholder="units[0]?.name || 'Units'"
                               />
+                              <svg class="absolute right-3 top-11 transform -translate-y-1/2 h-5 w-5 text-gray-500" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="396.6,160 416,180.7 256,352 96,180.7 115.3,160 256,310.5 "/>
+                              </svg>
+                              </div>
                               <div v-if="showUnitDropdown === index" class="absolute mt-2 z-50 w-full max-h-20 p-1 bg-white border border-gray-200 rounded-lg overflow-auto">
                                 <div
                                     v-for="unit in filteredUnits[index]"
@@ -310,8 +338,8 @@
                         </button>
                       </p>
                     </h3>
-                  </div>
                 </form>
+                  </div>
               </div>
 
               <!-- End of add ingredients -->
@@ -489,10 +517,7 @@ const getUnits = async () => {
     const response = await axios.get('/unit');
     if (response.status === 200) {
       units.value = response.data.data;
-      if (units.value.length > 0) {
-        unitInputs.value[0].selectedUnitId = units.value[0].id;
-        unitInputs.value[0].unitSearch = units.value[0].name; // Initialize the unit search with the first unit name
-      }
+
     } else {
       console.log('Failed to get units');
     }
@@ -547,7 +572,7 @@ const addIngredient = () => {
       };
       recipeIngredients.value.push(ingredient);
     } else {
-      alert('Please select an ingredient, a unit, and enter a quantity for all inputs.');
+      toaster.value.showToast('Please select an ingredient, a unit, and enter a quantity for all inputs.');
       return;
     }
   }
@@ -591,9 +616,6 @@ const validateForm = () => {
   errors.difficulty = formData.difficulty ? '' : 'Difficulty is required';
 
   const isValid = !Object.values(errors).some(error => error);
-  console.log('Form validation result:', isValid);
-  console.log('Form validation errors:', errors);
-
   return isValid;
 };
 const handleNext = () => {
@@ -646,7 +668,10 @@ onMounted(() => {
   scrollToTop();
   getIngredients();
   getUnits();
+
 });
 </script>
+
+
 
 
