@@ -1,6 +1,6 @@
 <template>
   <transition name="slide-fade">
-    <div v-if="show" class="fixed top-0 right-0 m-6 max-w-sm w-full">
+    <div v-if="show" class="fixed top-0 right-0 m-6 max-w-sm w-full z-50">
       <div class="rounded-lg shadow-lg overflow-hidden toaster" :class="{ 'bg-green-100': type === 'success', 'bg-red-100': type === 'failure' }">
         <div class="p-4">
           <div class="flex items-start">

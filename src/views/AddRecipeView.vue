@@ -1,7 +1,7 @@
 <template>
 <Toaster ref="toaster" />
   <div class="overflow-hidden">
-    <div class="mt-5 max-w-[50rem] mx-auto px-4 sm:px-6 lg:px-8 main-content">
+    <div class="mt-5 max-w-[50rem] mx-auto px-4 sm:px-6 lg:px-8 main-content pb-4">
       <div class="main">
         <div class="p-4 bg-white rounded-lg">
           <!-- Stepper -->
@@ -245,14 +245,14 @@
                       </h1>
                       <hr>
                     </div>
-                    <h3 class="text-gray-500 grid-cols-2 p-4 sm:p-7">
-
+                    <h3 class="text-gray-500 grid-cols-2 p-2">
+                    </h3>
                       <div id="hs-wrapper-select-for-copy" class="space-y-3 col-span-1">
                         <!-- Select -->
                         <div v-for="(input, index) in ingredientInputs" :key="index" class="relative grid grid-cols-2">
                           <div class="relative col-span-1 mx-3">
                             <div class="relative">
-                              <label class="m-1 font-medium text-gray-500 mt-2.5">
+                              <label class=" m-1 text-sm font-medium text-gray-500 mt-2.5">
                                 Select Ingredients
                               </label>
                               <div class="relative">
@@ -262,15 +262,17 @@
                                     @focus="showDropdown = index"
                                     @blur="hideDropdown(index)"
                                     type="text"
-                                    class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500"
+                                    class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg text-base focus:ring-blue-500 focus:border-blue-500 z-50 "
                                     :placeholder="ingredients[0]?.name || 'Select ingredients...'"
                                 />
                                 <svg class="absolute right-3 top-3 h-5 w-5 text-gray-500" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                                   <polygon points="396.6,160 416,180.7 256,352 96,180.7 115.3,160 256,310.5 "/>
                                 </svg>
                               </div>
+                           
+
                             </div>
-                              <div v-if="showDropdown === index" class="absolute mt-2 z-50 w-full max-h-20 p-1 bg-white border border-gray-200 rounded-lg overflow-auto">
+                              <div v-if="showDropdown === index" class="absolute mt-2 z-50 w-full max-h-40 p-1 bg-white border border-gray-200 rounded-lg overflow-auto">
                               <div
                                   v-for="ingredient in filteredIngredients[index]"
                                   :key="ingredient.id"
@@ -284,7 +286,7 @@
                           <div class="grid grid-cols-2">
                             <div class="col-span-1">
 
-                              <label class="m-1 font-medium text-gray-500 mt-2.5">
+                              <label class=" m-1 text-sm font-medium text-gray-500 mt-2.5">
                                 Quantity
                               </label>
                           <input v-model="input.selectedQuantity"
@@ -295,7 +297,7 @@
                             <div class="relative col-span-1 mx-3">
                               <div class="relative">
 
-                              <label class="m-1 font-medium text-gray-500 mt-2.5">
+                                <label class=" m-1 text-sm font-medium text-gray-500 mt-2.5">
                                 Units
                               </label>
                               <input
@@ -311,7 +313,7 @@
                                 <polygon points="396.6,160 416,180.7 256,352 96,180.7 115.3,160 256,310.5 "/>
                               </svg>
                               </div>
-                              <div v-if="showUnitDropdown === index" class="absolute mt-2 z-50 w-full max-h-20 p-1 bg-white border border-gray-200 rounded-lg overflow-auto">
+                              <div v-if="showUnitDropdown === index" class="absolute mt-2 z-50 w-full max-h-40 p-1 bg-white border border-gray-200 rounded-lg overflow-auto">
                                 <div
                                     v-for="unit in filteredUnits[index]"
                                     :key="unit.id"
@@ -329,7 +331,7 @@
                       </div>
 
                       <p class="mt-3 text-end">
-                        <button @click="addIngredient" type="button" id="hs-copy-select-content" class="py-1.5 px-2 mr-1 inline-flex items-center gap-x-1 text-s font-light rounded-full border border-dashed border-gray-200 bg-white text-gray-600 hover:bg-gray-50 text-primary-100">
+                        <button @click="addIngredient" type="button" id="hs-copy-select-content" class="mr-2.5 py-1.5 px-2 inline-flex items-center gap-x-1 text-s font-medium rounded-full border border-dashed border-gray-200 bg-white text-primary-100 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
                           <svg class="flex-shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M5 12h14"></path>
                             <path d="M12 5v14"></path>
@@ -337,7 +339,6 @@
                           Add Ingredient
                         </button>
                       </p>
-                    </h3>
                 </form>
                   </div>
               </div>
@@ -355,9 +356,8 @@
                       </h1>
                       <hr>
                     </div>
-                    <h3 class="text-gray-500 grid-cols-2 p-4 sm:p-7 justify-center items-center">
                         <!-- Input Group -->
-                      <div class="max-w space-y-3 justify-center items-center">
+                      <div class="max-w space-y-3 sm:p-7 p-4 justify-center items-center">
                         <div v-for="(step, index) in steps" :key="index">
                           <div class="flex rounded-lg shadow-sm">
                             <span class="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500">{{ index + 1 }}.</span>
@@ -366,12 +366,12 @@
                         </div>
                       </div>
 
-                        <p class="mt-3 text-end">
+                        <p class="text-end">
                           <button @click="handleAddStep" type="button" data-hs-copy-markup='{
                                   "targetSelector": "#hs-content-for-copy",
                                   "wrapperSelector": "#hs-wrapper-for-copy",
                                   "limit": 0
-                                   }' id="hs-copy-content" class="py-1.5 px-2 inline-flex items-center gap-x-1 text-s font-medium rounded-full border border-dashed border-gray-200 bg-white text-primary-100 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+                                   }' id="hs-copy-content" class="mr-6 py-1.5 px-2 inline-flex items-center gap-x-1 text-s font-medium rounded-full border border-dashed border-gray-200 bg-white text-primary-100 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
                               <svg class="flex-shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                               <path d="M5 12h14"></path>
                               <path d="M12 5v14"></path>
@@ -380,7 +380,6 @@
                           </button>
                         </p>
                         <!-- End Input Group -->
-                    </h3>
                   </div>
                 </form>
               </div>
@@ -389,10 +388,127 @@
               <div data-hs-stepper-content-item='{
         "index": 4
       }' style="display: none;">
-                <div class="p-4 h-48 bg-gray-50 flex justify-center items-center border border-dashed border-gray-200 rounded-xl">
-                  <h3 class="text-gray-500">
-                    Fourth content
-                  </h3>
+                <div class="h-auto bg-gray-50 border border-dashed border-gray-200 rounded-xl">
+                  <!-- Card -->
+                  <div class="rounded-xl  p-4 sm:p-7">
+                    <form @submit.prevent="handleNext">
+                      <div class="sm:col-span-12">
+                        <h1 class="text-xl font-semibold text-gray-800">
+                          Add the Finishing Details to Perfect Your Recipe
+                        </h1>
+                      </div>
+                      <!-- Section -->
+                      <div class="grid sm:grid-cols-12 gap-2 sm:gap-4 py-8 px-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200">
+                        <!-- End Col -->
+                        <div class="sm:col-span-12">
+                          <label class=" m-1 text-sm font-medium text-gray-500 mt-2.5">
+                            Meal Type
+                            <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex ">
+                              <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r ">
+                                <div class="flex items-center ps-3">
+                                  <input id="meal-breakfast" type="radio" name="meal-type" value="breakfast" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500">
+                                  <label for="meal-breakfast" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 ">Breakfast</label>
+                                </div>
+                              </li>
+                              <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                                <div class="flex items-center ps-3">
+                                  <input id="meal-lunch" type="radio" name="meal-type" value="lunch" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-100 ">
+                                  <label for="meal-lunch" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Lunch</label>
+                                </div>
+                              </li>
+                              <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                                <div class="flex items-center ps-3">
+                                  <input id="meal-dinner" type="radio" name="meal-type" value="dinner" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                  <label for="meal-dinner" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Dinner</label>
+                                </div>
+                              </li>
+                              <li class="w-full border-gray-200 sm:border-b-0 sm:border-r">
+                                <div class="flex items-center ps-3">
+                                  <input id="meal-dessert" type="radio" name="meal-type" value="dessert" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                  <label for="meal-dessert" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Dessert</label>
+                                </div>
+                              </li>
+                              <li class="w-full border-gray-200 sm:border-b-0 sm:border-r">
+                                <div class="flex items-center ps-3">
+                                  <input id="meal-snack" type="radio" name="meal-type" value="snack" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                  <label for="meal-snack" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Snack</label>
+                                </div>
+                              </li>
+                            </ul>
+
+                          </label>
+                          </div>
+
+
+                        <div class="sm:col-span-12 mb-2 relative">
+                          <label class="m-1 text-sm font-medium text-gray-500 mt-2.5">
+                            Select Cuisine
+                          </label>
+                          <div @click="toggleDropdown" class="bg-white border border-gray-200 text-sm font-medium text-gray-900 rounded-lg focus:ring-primary-100 focus:border-primary-100 block w-full p-2.5 cursor-pointer">
+                            {{ selectedCuisine || 'Choose a cuisine that matches your recipe' }}
+                          </div>
+                          <div v-if="isDropdownOpen" class="absolute bg-white border border-gray-200 rounded-lg mt-1 max-h-40 overflow-auto w-full z-10">
+                            <div
+                                v-for="cat in category"
+                                :key="cat.id"
+                                @click="selectCuisine(cat.name)"
+                                class="p-2 cursor-pointer hover:bg-gray-100"
+                            >
+                              {{ cat.name }}
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="sm:col-span-12">
+                          <label class=" m-1 text-sm font-medium text-gray-500 mt-2.5">
+                            Dietary Information
+                            <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex ">
+                              <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r ">
+                                <div class="flex items-center ps-3">
+                                  <input id="vegan" type="radio" name="diet-type" value="vegan" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500">
+                                  <label for="vegan" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 ">Vegan</label>
+                                </div>
+                              </li>
+                              <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                                <div class="flex items-center ps-3">
+                                  <input id="vegetarian" type="radio" name="diet-type" value="vegetarian" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-100 ">
+                                  <label for="vegetarian" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Vegetarian</label>
+                                </div>
+                              </li>
+                              <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                                <div class="flex items-center ps-3">
+                                  <input id="non-vegetarian" type="radio" name="diet-type" value="non-veg" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                  <label for="non-vegetarian" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Non-Vegetarian</label>
+                                </div>
+                              </li>
+                              <li class="w-full border-gray-200 sm:border-b-0 sm:border-r">
+                                <div class="flex items-center ps-3">
+                                  <input id="halal" type="radio" name="diet-type" value="halal" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                  <label for="halal" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Halal</label>
+                                </div>
+                              </li>
+
+                            </ul>
+
+                          </label>
+
+                        </div>
+
+
+                        <div class="sm:col-span-12">
+                          <label class="inline-block m-1 text-sm font-medium text-gray-500 mt-2.5">
+                            Additional Notes
+
+                          </label>
+                            <textarea class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Some tips to enhance your recipe"></textarea>
+
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- End Card -->
+
                 </div>
               </div>
 
@@ -572,7 +688,7 @@ const addIngredient = () => {
       };
       recipeIngredients.value.push(ingredient);
     } else {
-      toaster.value.showToast('Please select an ingredient, a unit, and enter a quantity for all inputs.');
+      toaster.value.showToast('Please select an ingredient, a unit, and enter a quantity for all inputs.','failure');
       return;
     }
   }
@@ -621,7 +737,7 @@ const validateForm = () => {
 const handleNext = () => {
   if (!validateForm()) {
     console.log('Form is invalid, cannot proceed to the next step');
-    toaster.value.showToast('Fill up the form properly before proceeding');
+    toaster.value.showToast('Fill up the form properly before proceeding','failure');
     return false;
   } else {
     currentStep.value += 1;
@@ -664,13 +780,42 @@ const steps = ref(['']);
 const handleAddStep = () => {
   steps.value.push('');
 };
+
+const category = ref([]);
+const selectedCuisine = ref('');
+const isDropdownOpen = ref(false);
+
+const getCategory = async () => {
+  try {
+    const response = await axios.get('/category');
+    if (response.status === 200) {
+      category.value = response.data.data;
+    } else {
+      console.log('Failed to get categories');
+    }
+  } catch (error) {
+    console.error('An error occurred while getting categories:', error);
+  }
+};
+
+const toggleDropdown = () => {
+  isDropdownOpen.value = !isDropdownOpen.value;
+};
+
+const selectCuisine = (cuisine) => {
+  selectedCuisine.value = cuisine;
+  isDropdownOpen.value = false;
+};
+
 onMounted(() => {
   scrollToTop();
   getIngredients();
   getUnits();
+  getCategory();
 
 });
 </script>
+
 
 
 
