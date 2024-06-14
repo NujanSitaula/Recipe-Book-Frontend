@@ -63,7 +63,7 @@ export default {
         if (response.data.status === 'success') {
           this.recipe = {
             title: response.data.data.split('\n\n')[0],
-            content: response.data.data.split('\n\n').slice(1).join('\n\n').replace(/\n/g, '<br />'),
+            content: this.formatRecipeContent(response.data.data.split('\n\n').slice(1).join('\n\n')),
           };
         }
       } catch (error) {
@@ -71,6 +71,26 @@ export default {
       } finally {
         this.isLoading = false;
       }
+    },
+
+    formatRecipeContent(content) {
+      const sections = content.split('**').filter(Boolean);
+
+      return sections.map(section => {
+        const lines = section.split('\n');
+
+        let [heading, ...items] = lines;
+
+        const formattedHeading = '<h3>' + heading.trim() + '</h3>';
+        const formattedItems = items.map(item => '<li>' + item.trim() + '</li>').join('');
+
+        return `
+        ${formattedHeading}
+        <ul>
+          ${formattedItems}
+        </ul>
+      `;
+      }).join('');
     },
   },
 };
