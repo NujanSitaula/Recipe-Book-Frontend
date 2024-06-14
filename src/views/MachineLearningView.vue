@@ -22,7 +22,9 @@
 
 <script>
 import axios from 'axios';
+import { config } from "../../config.js";
 
+axios.defaults.baseURL = config.BASE_URL;
 export default {
   data() {
     return {
@@ -44,7 +46,7 @@ export default {
       formData.append('image', this.file);
 
       try {
-        const response = await axios.post('https://recipe-book-backend.test/api/v1/ml/image', formData);
+        const response = await axios.post('/ml/image', formData);
         if (response.data.status === 'success') {
           this.recipe = {
             title: response.data.data.split('\n\n')[0],
