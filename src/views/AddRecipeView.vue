@@ -406,31 +406,31 @@
                             <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex ">
                               <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r ">
                                 <div class="flex items-center ps-3">
-                                  <input id="meal-breakfast" type="radio" name="meal-type" value="breakfast" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500">
+                                  <input v-model="formData.meal_type" id="meal-breakfast" type="radio" name="meal-type" value="breakfast" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500">
                                   <label for="meal-breakfast" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 ">Breakfast</label>
                                 </div>
                               </li>
                               <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
                                 <div class="flex items-center ps-3">
-                                  <input id="meal-lunch" type="radio" name="meal-type" value="lunch" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-100 ">
+                                  <input v-model="formData.meal_type" id="meal-lunch" type="radio" name="meal-type" value="lunch" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-100 ">
                                   <label for="meal-lunch" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Lunch</label>
                                 </div>
                               </li>
                               <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
                                 <div class="flex items-center ps-3">
-                                  <input id="meal-dinner" type="radio" name="meal-type" value="dinner" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                  <input v-model="formData.meal_type" id="meal-dinner" type="radio" name="meal-type" value="dinner" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                                   <label for="meal-dinner" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Dinner</label>
                                 </div>
                               </li>
                               <li class="w-full border-gray-200 sm:border-b-0 sm:border-r">
                                 <div class="flex items-center ps-3">
-                                  <input id="meal-dessert" type="radio" name="meal-type" value="dessert" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                  <input v-model="formData.meal_type" id="meal-dessert" type="radio" name="meal-type" value="dessert" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                                   <label for="meal-dessert" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Dessert</label>
                                 </div>
                               </li>
                               <li class="w-full border-gray-200 sm:border-b-0 sm:border-r">
                                 <div class="flex items-center ps-3">
-                                  <input id="meal-snack" type="radio" name="meal-type" value="snack" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                  <input v-model="formData.meal_type" id="meal-snack" type="radio" name="meal-type" value="snack" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                                   <label for="meal-snack" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Snack</label>
                                 </div>
                               </li>
@@ -444,14 +444,14 @@
                           <label class="m-1 text-sm font-medium text-gray-500 mt-2.5">
                             Select Cuisine
                           </label>
-                          <div @click="toggleDropdown" class="bg-white border border-gray-200 text-sm font-medium text-gray-900 rounded-lg focus:ring-primary-100 focus:border-primary-100 block w-full p-2.5 cursor-pointer">
-                            {{ selectedCuisine || 'Choose a cuisine that matches your recipe' }}
-                          </div>
+                          <input v-model="selectedCuisine" @click="toggleDropdown"
+                                 class="bg-white border border-gray-200 text-sm font-medium text-gray-900 rounded-lg focus:ring-primary-100 focus:border-primary-100 block w-full p-2.5 cursor-pointer"
+                                 placeholder="Choose a cuisine that matches your recipe">
                           <div v-if="isDropdownOpen" class="absolute bg-white border border-gray-200 rounded-lg mt-1 max-h-40 overflow-auto w-full z-10">
                             <div
                                 v-for="cat in category"
                                 :key="cat.id"
-                                @click="selectCuisine(cat.name)"
+                                @click="selectCuisine(cat)"
                                 class="p-2 cursor-pointer hover:bg-gray-100"
                             >
                               {{ cat.name }}
@@ -466,25 +466,25 @@
                             <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex ">
                               <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r ">
                                 <div class="flex items-center ps-3">
-                                  <input id="vegan" type="radio" name="diet-type" value="vegan" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500">
+                                  <input v-model="formData.dietary_information" id="vegan" type="radio" name="diet-type" value="vegan" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500">
                                   <label for="vegan" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 ">Vegan</label>
                                 </div>
                               </li>
                               <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
                                 <div class="flex items-center ps-3">
-                                  <input id="vegetarian" type="radio" name="diet-type" value="vegetarian" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-100 ">
+                                  <input v-model="formData.dietary_information" id="vegetarian" type="radio" name="diet-type" value="vegetarian" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-100 ">
                                   <label for="vegetarian" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Vegetarian</label>
                                 </div>
                               </li>
                               <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
                                 <div class="flex items-center ps-3">
-                                  <input id="non-vegetarian" type="radio" name="diet-type" value="non-veg" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                  <input v-model="formData.dietary_information" id="non-vegetarian" type="radio" name="diet-type" value="non-veg" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                                   <label for="non-vegetarian" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Non-Vegetarian</label>
                                 </div>
                               </li>
                               <li class="w-full border-gray-200 sm:border-b-0 sm:border-r">
                                 <div class="flex items-center ps-3">
-                                  <input id="halal" type="radio" name="diet-type" value="halal" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                  <input  v-model="formData.dietary_information" id="halal" type="radio" name="diet-type" value="halal" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                                   <label for="halal" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Halal</label>
                                 </div>
                               </li>
@@ -501,7 +501,7 @@
                             Additional Notes
 
                           </label>
-                            <textarea class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Some tips to enhance your recipe"></textarea>
+                            <textarea v-model="formData.additional_notes" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-base focus:ring-blue-500 focus:border-blue-500" placeholder="Some tips to enhance your recipe"></textarea>
 
                         </div>
                       </div>
@@ -604,7 +604,10 @@ const formData = reactive({
   },
   servings: '',
   difficulty: '',
-  image: ''
+  image: '',
+  meal_type: '',
+  dietary_information: '',
+  additional_notes: '',
 });
 
 const scrollToTop = () => {
@@ -758,14 +761,19 @@ const postRecipeData = async () => {
       ingredients: recipeIngredients.value.map(ingredient => ({
         id: ingredient.id,
         quantity: ingredient.quantity,
-        unit: ingredient.unit // Include the unit property
+        unit: ingredient.unit
       })),
+      category_id: selectedCuisineId.value,
+      meal_type: formData.meal_type,
+      dietary_information: formData.dietary_information,
+      additional_notes: formData.additional_notes,
     },{
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         'Content-Type': 'multipart/form-data',
       },
     });
+    console.log(formData);
     console.log(response);
     if (response.status === 200) {
       console.log('Recipe data posted successfully');
@@ -784,6 +792,7 @@ const handleAddStep = () => {
 const category = ref([]);
 const selectedCuisine = ref('');
 const isDropdownOpen = ref(false);
+const selectedCuisineId = ref(null);
 
 const getCategory = async () => {
   try {
@@ -802,8 +811,10 @@ const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
 };
 
-const selectCuisine = (cuisine) => {
-  selectedCuisine.value = cuisine;
+const selectCuisine = async(cat) => {
+  selectedCuisine.value = cat.name;
+  console.log(selectedCuisineId.value);
+  selectedCuisineId.value = cat.id;
   isDropdownOpen.value = false;
 };
 
@@ -812,7 +823,6 @@ onMounted(() => {
   getIngredients();
   getUnits();
   getCategory();
-
 });
 </script>
 
