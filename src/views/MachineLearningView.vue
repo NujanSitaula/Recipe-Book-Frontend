@@ -1,22 +1,29 @@
 <template>
-  <h3 class="mt-10 text-2xl">Drag Image Bellow To Generate Recipe:</h3>
-  <!-- ... -->
-  <div class="flex items-center justify-center w-full">
-    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  hover:bg-gray-100">
-      <div class="flex flex-col items-center justify-center pt-5 pb-6">
-        <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-        </svg>
-        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-        <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+  <div class="flex flex-col items-center justify-center ">
+    <h3 class="mt-10 text-2xl font-bold text-gray-700">Upload Image Below To Generate Recipe:</h3>
+    <div class="flex items-center justify-center w-full mt-5 relative">
+      <label
+          for="dropzone-file"
+          class="flex flex-col items-center justify-center w-64 h-64 rounded-lg cursor-pointer bg-white hover:bg-red-50"
+          :class="{ 'border-2 border-dashed border-primary-100': !imagePreview, 'opacity-50': isLoading }"
+          :style="{ backgroundImage: `url(${imagePreview})`, backgroundSize: 'cover' }"
+      >
+        <div v-if="!imagePreview" class="flex flex-col items-center justify-center pt-5 pb-6">
+          <!-- SVG icon here -->
+          <p class="mb-2 text-sm text-primary-100"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+          <p class="text-xs text-primary-100">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+        </div>
+        <input id="dropzone-file" type="file" class="hidden" @change="onFileChange" />
+      </label>
+      <div v-if="isLoading" class="absolute inset-0 flex items-center justify-center">
+        <div class="loader"></div>
       </div>
-      <input id="dropzone-file" type="file" class="hidden" @change="onFileChange" />
-    </label>
-  </div>
-  <button class="bg-primary-200 text-white p-5" @click="generateRecipe">Generate Recipe</button>
-  <div v-if="recipe" class="mt-5 p-5 border rounded shadow">
-    <h2 class="text-2xl font-bold mb-5">{{ recipe.title }}</h2>
-    <div v-html="recipe.content"></div>
+      </div>
+    <button class="mt-5 px-8 py-3 font-semibold text-white bg-primary-100 rounded hover:bg-primary-200" @click="generateRecipe">Generate Recipe</button>
+    <div v-if="recipe" class="mt-5 p-5 border rounded shadow">
+      <h2 class="text-2xl font-bold mb-5">{{ recipe.title }}</h2>
+      <div v-html="recipe.content" class="text-gray-700"></div>
+    </div>
   </div>
 </template>
 
@@ -30,17 +37,23 @@ export default {
     return {
       file: null,
       recipe: null,
+      imagePreview: null,
+      isLoading: false,
     };
   },
   methods: {
     onFileChange(e) {
       this.file = e.target.files[0];
+      // Create a URL object representing the selected file
+      this.imagePreview = URL.createObjectURL(this.file);
     },
     async generateRecipe() {
       if (!this.file) {
         alert('Please select a file');
         return;
       }
+
+      this.isLoading = true;
 
       const formData = new FormData();
       formData.append('image', this.file);
@@ -55,8 +68,46 @@ export default {
         }
       } catch (error) {
         console.error('Error:', error);
+      } finally {
+        this.isLoading = false;
       }
     },
   },
 };
 </script>
+
+<style scoped>
+
+.loader {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 8px solid #d1914b;
+  box-sizing: border-box;
+  --c:no-repeat radial-gradient(farthest-side, #d64123 94%,#0000);
+  --b:no-repeat radial-gradient(farthest-side, #000 94%,#0000);
+  background:
+      var(--c) 11px 15px,
+      var(--b) 6px 15px,
+      var(--c) 35px 23px,
+      var(--b) 29px 15px,
+      var(--c) 11px 46px,
+      var(--b) 11px 34px,
+      var(--c) 36px 0px,
+      var(--b) 50px 31px,
+      var(--c) 47px 43px,
+      var(--b) 31px 48px,
+      #f6d353;
+  background-size: 15px 15px,6px 6px;
+  animation: l4 3s infinite;
+}
+@keyframes l4 {
+  0%     {-webkit-mask:conic-gradient(#0000 0     ,#000 0)}
+  16.67% {-webkit-mask:conic-gradient(#0000 60deg ,#000 0)}
+  33.33% {-webkit-mask:conic-gradient(#0000 120deg,#000 0)}
+  50%    {-webkit-mask:conic-gradient(#0000 180deg,#000 0)}
+  66.67% {-webkit-mask:conic-gradient(#0000 240deg,#000 0)}
+  83.33% {-webkit-mask:conic-gradient(#0000 300deg,#000 0)}
+  100%   {-webkit-mask:conic-gradient(#0000 360deg,#000 0)}
+}
+</style>
