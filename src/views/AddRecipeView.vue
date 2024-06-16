@@ -750,30 +750,51 @@ const handleNext = () => {
 
 const postRecipeData = async () => {
   try {
-    const response = await axios.post('/recipe', {
-      name: formData.title,
-      description: formData.description,
-      prep_time: formData.preparationTime,
-      cook_time: formData.cookingTime,
-      servings: formData.servings,
-      difficulty: formData.difficulty,
-      instructions: steps.value,
-      ingredients: recipeIngredients.value.map(ingredient => ({
-        id: ingredient.id,
-        quantity: ingredient.quantity,
-        unit: ingredient.unit
-      })),
-      category_id: selectedCuisineId.value,
-      meal_type: formData.meal_type,
-      dietary_information: formData.dietary_information,
-      additional_notes: formData.additional_notes,
-    },{
+    const formDataToSend = new FormData();
+
+    formDataToSend.append('name', formData.title);
+    formDataToSend.append('description', formData.description);
+
+    // Append preparation time as a properly structured array
+    formDataToSend.append('prep_time[hours]', formData.preparationTime.hours);
+    formDataToSend.append('prep_time[minutes]', formData.preparationTime.minutes);
+
+    // Append cooking time as a properly structured array
+    formDataToSend.append('cook_time[hours]', formData.cookingTime.hours);
+    formDataToSend.append('cook_time[minutes]', formData.cookingTime.minutes);
+
+    formDataToSend.append('servings', formData.servings);
+    formDataToSend.append('difficulty', formData.difficulty);
+
+    // Append instructions as array elements
+    steps.value.forEach((step, index) => {
+      formDataToSend.append(`instructions[${index}]`, step);
+    });
+
+    // Append ingredients as array elements
+    recipeIngredients.value.forEach((ingredient, index) => {
+      formDataToSend.append(`ingredients[${index}][id]`, ingredient.id);
+      formDataToSend.append(`ingredients[${index}][quantity]`, ingredient.quantity);
+      formDataToSend.append(`ingredients[${index}][unit]`, ingredient.unit);
+    });
+
+    formDataToSend.append('category_id', selectedCuisineId.value);
+    formDataToSend.append('meal_type', formData.meal_type);
+    formDataToSend.append('dietary_information', formData.dietary_information);
+    formDataToSend.append('additional_notes', formData.additional_notes);
+
+    // Append image if selected
+    if (selectedImage.value) {
+      formDataToSend.append('image', selectedImage.value);
+    }
+
+    const response = await axios.post('/recipe', formDataToSend, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         'Content-Type': 'multipart/form-data',
       },
     });
-    console.log(formData);
+
     console.log(response);
     if (response.status === 200) {
       console.log('Recipe data posted successfully');
@@ -784,6 +805,8 @@ const postRecipeData = async () => {
     console.error('An error occurred while posting recipe data:', error);
   }
 };
+
+
 const steps = ref(['']);
 const handleAddStep = () => {
   steps.value.push('');
