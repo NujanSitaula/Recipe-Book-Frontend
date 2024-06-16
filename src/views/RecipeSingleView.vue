@@ -1,10 +1,9 @@
 <template>
-  <!-- Blog Article -->
+
   <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto main-content">
     <div class="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
-      <!-- Content -->
-      <div class="lg:col-span-2">
-        <div class="py-8 lg:pe-8">
+      <div class="lg:col-span-3">
+        <div class="py-6 lg:pe-8">
           <div class="space-y-5 lg:space-y-8">
             <a @click="$router.back()" class="inline-flex items-center gap-x-1.5 text-sm text-gray-600 decoration-2 hover:underline" href="#">
               <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -19,490 +18,71 @@
                 <span class="sr-only">Loading...</span>
               </div>
             </div>
-            <div v-else-if="recipe">
-              <h2 class="text-3xl font-bold lg:text-5xl">{{ recipe.name }}</h2>
-
-              <div class="flex items-center gap-x-5 mt-5">
-                <a class="inline-flex items-center gap-1.5 py-1 px-3 sm:py-2 sm:px-4 rounded-full text-xs sm:text-sm bg-gray-100 text-gray-800 hover:bg-gray-200" href="#">
-                  Company News
-                </a>
-                <p class="text-xs sm:text-sm text-gray-800">January 18, 2023</p>
+            <div v-else-if="recipe" >
+              <h2 class="text-3xl font-bold lg:text-5xl inline">{{ recipe.name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ') }}</h2>
+              <a class="items-center gap-1.5 py-1 px-3 sm:py-2 sm:px-4 rounded-full text-xs sm:text-sm bg-gray-100 text-gray-800 hover:bg-gray-200 ml-2" href="#">
+                {{ recipe.dietary_information.charAt(0).toUpperCase() + recipe.dietary_information.slice(1).toLowerCase() }}
+              </a>
+              <div class="grid grid-cols-2 ">
+                <div class="col-span-1 flex gap-x-5 mt-5">
+                  <div class="flex items-center align-center">
+                    <svg style="margin-right: -5px; margin-top:5px;"  width="32px" height="32px" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#DB2B39"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8.5 21H4C4 17.134 7.13401 14 11 14C11.1681 14 11.3348 14.0059 11.5 14.0176M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7ZM12.5898 21L14.6148 20.595C14.7914 20.5597 14.8797 20.542 14.962 20.5097C15.0351 20.4811 15.1045 20.4439 15.1689 20.399C15.2414 20.3484 15.3051 20.2848 15.4324 20.1574L19.5898 16C20.1421 15.4477 20.1421 14.5523 19.5898 14C19.0376 13.4477 18.1421 13.4477 17.5898 14L13.4324 18.1574C13.3051 18.2848 13.2414 18.3484 13.1908 18.421C13.1459 18.4853 13.1088 18.5548 13.0801 18.6279C13.0478 18.7102 13.0302 18.7985 12.9948 18.975L12.5898 21Z" stroke="#DB2B39" stroke-width="0.9600000000000002" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                    <p class="text-sm text-gray-800"><RouterLink :to="'/' +recipe.user.username">{{ recipe.user.firstName }} {{ recipe.user.lastName }}</RouterLink></p>
+                  </div>
+                  <div class="flex items-center align-center">
+                    <svg style="margin-right: -5px; margin-top:5px;" width="32px" height="32px" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#DB2B39"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 21H6.2C5.0799 21 4.51984 21 4.09202 20.782C3.71569 20.5903 3.40973 20.2843 3.21799 19.908C3 19.4802 3 18.9201 3 17.8V8.2C3 7.0799 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.0799 5 6.2 5H17.8C18.9201 5 19.4802 5 19.908 5.21799C20.2843 5.40973 20.5903 5.71569 20.782 6.09202C21 6.51984 21 7.0799 21 8.2V10M7 3V5M17 3V5M3 9H21M13.5 13.0001L7 13M10 17.0001L7 17M14 21L16.025 20.595C16.2015 20.5597 16.2898 20.542 16.3721 20.5097C16.4452 20.4811 16.5147 20.4439 16.579 20.399C16.6516 20.3484 16.7152 20.2848 16.8426 20.1574L21 16C21.5523 15.4477 21.5523 14.5523 21 14C20.4477 13.4477 19.5523 13.4477 19 14L14.8426 18.1574C14.7152 18.2848 14.6516 18.3484 14.601 18.421C14.5561 18.4853 14.5189 18.5548 14.4903 18.6279C14.458 18.7102 14.4403 18.7985 14.405 18.975L14 21Z" stroke="#DB2B39" stroke-width="0.9600000000000002" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                    <p class="text-xs sm:text-sm text-gray-800">{{ formatDate(recipe.created_at) }}</p>
+                  </div>
+                  <div class="flex items-center align-center">
+                    <svg style="margin-right: -5px; margin-top:5px;" width="32px" height="32px" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="DB2B39"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 12.9543C5.51239 14.0398 5.95555 15.076 6.73197 15.8348C7.50838 16.5936 8.55445 17.0128 9.64 17.0003H10.2L11.86 18.7323C12.0291 18.9036 12.2598 19 12.5005 19C12.7412 19 12.9719 18.9036 13.141 18.7323L14.8 17.0003H15.36C16.4456 17.0128 17.4916 16.5936 18.268 15.8348C19.0444 15.076 19.4876 14.0398 19.5 12.9543V8.04428C19.4731 5.7845 17.6198 3.97417 15.36 4.00028H9.64C7.38021 3.97417 5.5269 5.7845 5.5 8.04428V12.9543Z" stroke="#DB2B39" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M9.5 8.25024C9.08579 8.25024 8.75 8.58603 8.75 9.00024C8.75 9.41446 9.08579 9.75024 9.5 9.75024V8.25024ZM15.5 9.75024C15.9142 9.75024 16.25 9.41446 16.25 9.00024C16.25 8.58603 15.9142 8.25024 15.5 8.25024V9.75024ZM9.5 11.2502C9.08579 11.2502 8.75 11.586 8.75 12.0002C8.75 12.4145 9.08579 12.7502 9.5 12.7502V11.2502ZM15.5 12.7502C15.9142 12.7502 16.25 12.4145 16.25 12.0002C16.25 11.586 15.9142 11.2502 15.5 11.2502V12.7502ZM9.5 9.75024H15.5V8.25024H9.5V9.75024ZM9.5 12.7502H15.5V11.2502H9.5V12.7502Z" fill="#DB2B39"></path> </g></svg>
+                    <p class="text-xs sm:text-sm text-gray-800"> Comments</p>
+                  </div>
+                </div>
+                <div class="col-span-1">
+                  <div class="flex justify-end items-center gap-x-2">
+                    <svg fill="#DB2B39" width="32px" height="32px" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg" stroke="#DB2B39" stroke-width="0.00024000000000000003" transform="matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#3d0000" stroke-width="0.288"></g><g id="SVGRepo_iconCarrier"><path d="M20.5,4.609A5.811,5.811,0,0,0,16,2.5a5.75,5.75,0,0,0-4,1.455A5.75,5.75,0,0,0,8,2.5,5.811,5.811,0,0,0,3.5,4.609c-.953,1.156-1.95,3.249-1.289,6.66,1.055,5.447,8.966,9.917,9.3,10.1a1,1,0,0,0,.974,0c.336-.187,8.247-4.657,9.3-10.1C22.45,7.858,21.453,5.765,20.5,4.609Zm-.674,6.28C19.08,14.74,13.658,18.322,12,19.34c-2.336-1.41-7.142-4.95-7.821-8.451-.513-2.646.189-4.183.869-5.007A3.819,3.819,0,0,1,8,4.5a3.493,3.493,0,0,1,3.115,1.469,1.005,1.005,0,0,0,1.76.011A3.489,3.489,0,0,1,16,4.5a3.819,3.819,0,0,1,2.959,1.382C19.637,6.706,20.339,8.243,19.826,10.889Z"></path></g></svg>
+                    <svg width="32px" height="32px" viewBox="-1 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="" stroke=""><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>share</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke-width="1.04" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set" sketch:type="MSLayerGroup" transform="translate(-312.000000, -726.000000)" fill="#DB2B39"> <path d="M331,750 C329.343,750 328,748.657 328,747 C328,745.343 329.343,744 331,744 C332.657,744 334,745.343 334,747 C334,748.657 332.657,750 331,750 L331,750 Z M317,742 C315.343,742 314,740.657 314,739 C314,737.344 315.343,736 317,736 C318.657,736 320,737.344 320,739 C320,740.657 318.657,742 317,742 L317,742 Z M331,728 C332.657,728 334,729.343 334,731 C334,732.657 332.657,734 331,734 C329.343,734 328,732.657 328,731 C328,729.343 329.343,728 331,728 L331,728 Z M331,742 C329.23,742 327.685,742.925 326.796,744.312 L321.441,741.252 C321.787,740.572 322,739.814 322,739 C322,738.497 321.903,738.021 321.765,737.563 L327.336,734.38 C328.249,735.37 329.547,736 331,736 C333.762,736 336,733.762 336,731 C336,728.238 333.762,726 331,726 C328.238,726 326,728.238 326,731 C326,731.503 326.097,731.979 326.235,732.438 L320.664,735.62 C319.751,734.631 318.453,734 317,734 C314.238,734 312,736.238 312,739 C312,741.762 314.238,744 317,744 C318.14,744 319.179,743.604 320.02,742.962 L320,743 L326.055,746.46 C326.035,746.64 326,746.814 326,747 C326,749.762 328.238,752 331,752 C333.762,752 336,749.762 336,747 C336,744.238 333.762,742 331,742 L331,742 Z" id="share" sketch:type="MSShapeGroup"> </path> </g> </g> </g></svg>
+                  </div>
+                </div>
               </div>
-              <!-- Team -->
-            </div>
-            <div class="max-w-5xl mx-auto">
-              <!-- Grid -->
-              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 md:gap-12  border rounded-2xl p-5 border-t-primary-100 border-t-4">
-                <!-- Prep Time -->
-                <div class="text-center accordion-item">
-                  <div class="mt-2 sm:mt-4">
-                    <h3 class="font-medium text-gray-800">
-                      10 Min
-                    </h3>
-                    <p class="text-sm text-gray-600">
-                      Prep Time
-                    </p>
-                  </div>
-                  <div class="accordion-content">
-                    <!-- Content Here -->
-                  </div>
-                </div>
-                <!-- End Prep Time -->
-                <!-- Cook Time -->
-                <div class="text-center accordion-item">
-                  <div class="mt-2 sm:mt-4">
-                    <h3 class="font-medium text-gray-800">
-                      30 Min
-                    </h3>
-                    <p class="text-sm text-gray-600">
-                      Cook Time
-                    </p>
-                  </div>
-                  <div class="accordion-content">
-                    <!-- Content Here -->
-                  </div>
-                </div>
-                <!-- End Cook Time -->
-                <!-- Ingredients -->
-                <div class="text-center accordion-item">
-                  <div class="mt-2 sm:mt-4">
-                    <h3 class="font-medium text-gray-800">
-                      20 Approx
-                    </h3>
-                    <p class="text-sm text-gray-600">
-                      Ingredients
-                    </p>
-                  </div>
-                  <div class="accordion-content">
-                    <!-- Content Here -->
-                  </div>
-                </div>
-                <!-- End Ingredients -->
-                <!-- Servings -->
-                <div class="text-center accordion-item">
-                  <div class="mt-2 sm:mt-4">
-                    <h3 class="font-medium text-gray-800">
-                      2 Person
-                    </h3>
-                    <p class="text-sm text-gray-600">
-                      Servings
-                    </p>
-                  </div>
-                  <div class="accordion-content">
-                    <!-- Content Here -->
-                  </div>
-                </div>
-                <!-- End Servings -->
-                <!-- Difficulty -->
-                <div class="text-center accordion-item">
-                  <div class="mt-2 sm:mt-4">
-                    <h3 class="font-medium text-gray-800">
-                      Hard
-                    </h3>
-                    <p class="text-sm text-gray-600">
-                      Difficulty
-                    </p>
-                  </div>
-                  <div class="accordion-content">
-                    <!-- Content Here -->
-                  </div>
-                </div>
-                <!-- End Difficulty -->
-              </div>
-              <!-- End Grid -->
-            </div>
-            <!-- End Team -->
-
-
-
-            <p class="text-lg text-gray-800">At preline, our mission has always been focused on bringing openness and transparency to the design process. We've always believed that by providing a space where designers can share ongoing work not only empowers them to make
-              better products, it also helps them grow.</p>
-
-            <p class="text-lg text-gray-800">We're proud to be a part of creating a more open culture and to continue building a product that supports this vision.</p>
-
-            <div class="text-center">
-              <div class="grid lg:grid-cols-2 gap-3">
-                <div class="grid grid-cols-2 lg:grid-cols-1 gap-3">
-                  <figure class="relative w-full h-60">
-                    <img class="size-full absolute top-0 start-0 object-cover rounded-xl" src="https://images.unsplash.com/photo-1670272505340-d906d8d77d03?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="Image Description">
-                  </figure>
-                  <figure class="relative w-full h-60">
-                    <img class="size-full absolute top-0 start-0 object-cover rounded-xl" src="https://images.unsplash.com/photo-1671726203638-83742a2721a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="Image Description">
-                  </figure>
-                </div>
-                <figure class="relative w-full h-72 sm:h-96 lg:h-full">
-                  <img class="size-full absolute top-0 start-0 object-cover rounded-xl" src="https://images.unsplash.com/photo-1671726203394-491c8b574a0a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=988&q=80" alt="Image Description">
-                </figure>
-              </div>
-
-              <span class="mt-3 block text-sm text-center text-gray-500">
-              Working process
-            </span>
-            </div>
-
-            <p class="text-lg text-gray-800">As we've grown, we've seen how Preline has helped companies such as Spotify, Microsoft, Airbnb, Facebook, and Intercom bring their designers closer together to create amazing things. We've also learned that when the culture of
-              sharing is brought in earlier, the better teams adapt and communicate with one another.</p>
-
-            <p class="text-lg text-gray-800">That's why we are excited to share that we now have a <a class="text-primary-100 decoration-2 hover:underline font-medium" href="#">free version of Preline</a>, which will allow individual designers, startups and other small teams
-              a chance to create a culture of openness early on.</p>
-
-            <blockquote class="text-center p-4 sm:px-7">
-              <p class="text-xl font-medium text-gray-800 lg:text-2xl lg:leading-normal xl:text-2xl xl:leading-normal">
-                To say that switching to Preline has been life-changing is an understatement. My business has tripled and I got my life back.
-              </p>
-              <p class="mt-5 text-gray-800">
-                Nicole Grazioso
-              </p>
-            </blockquote>
-
-            <figure>
-              <img class="w-full object-cover rounded-xl" src="https://images.unsplash.com/photo-1671726203454-488ab18f7eda?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="Image Description">
-              <figcaption class="mt-3 text-sm text-center text-gray-500">
-                A man and a woman looking at a cell phone.
-              </figcaption>
-            </figure>
-
-            <div class="space-y-3">
-              <h3 class="text-2xl font-semibold">Bringing the culture of sharing to everyone</h3>
-
-              <p class="text-lg text-gray-800">We know the power of sharing is real, and we want to create an opportunity for everyone to try Preline and explore how transformative open communication can be. Now you can have a team of one or two designers and unlimited
-                spectators (think PMs, management, marketing, etc.) share work and explore the design process earlier.</p>
-            </div>
-
-            <ul class="list-disc list-outside space-y-5 ps-5 text-lg text-gray-800">
-              <li class="ps-2">Preline allows us to collaborate in real time and is a really great way for leadership on the team to stay up-to-date with what everybody is working on," <a class="text-primary-100 decoration-2 hover:underline font-medium" href="#">said</a>                                Stewart Scott-Curran, Intercom's Director of Brand Design.</li>
-              <li class="ps-2">Preline opened a new way of sharing. It's a persistent way for everyone to see and absorb each other's work," said David Scott, Creative Director at <a class="text-primary-100 decoration-2 hover:underline font-medium" href="#">Eventbrite</a>.</li>
-            </ul>
-
-            <p class="text-lg text-gray-800">Small teams and individual designers need a space where they can watch the design process unfold, both for themselves and for the people they work with – no matter if it's a fellow designer, product manager, developer or client.
-              Preline allows you to invite more people into the process, creating a central place for conversation around design. As those teams grow, transparency and collaboration becomes integrated in how they communicate and work together.</p>
-
-            <div class="grid lg:flex lg:justify-between lg:items-center gap-y-5 lg:gap-y-0">
-              <!-- Badges/Tags -->
-              <div>
-                <a class="m-0.5 inline-flex items-center gap-1.5 py-2 px-3 rounded-full text-sm bg-gray-100 text-gray-800 hover:bg-gray-200" href="#">
-                  Plan
-                </a>
-                <a class="m-0.5 inline-flex items-center gap-1.5 py-2 px-3 rounded-full text-sm bg-gray-100 text-gray-800 hover:bg-gray-200" href="#">
-                  Web development
-                </a>
-                <a class="m-0.5 inline-flex items-center gap-1.5 py-2 px-3 rounded-full text-sm bg-gray-100 text-gray-800 hover:bg-gray-200" href="#">
-                  Free
-                </a>
-                <a class="m-0.5 inline-flex items-center gap-1.5 py-2 px-3 rounded-full text-sm bg-gray-100 text-gray-800 hover:bg-gray-200" href="#">
-                  Team
-                </a>
-              </div>
-              <!-- End Badges/Tags -->
-
-              <div class="flex justify-end items-center gap-x-1.5">
-                <!-- Button -->
-                <div class="hs-tooltip inline-block">
-                  <button type="button" class="hs-tooltip-toggle flex items-center gap-x-2 text-sm text-gray-500 hover:text-gray-800">
-                    <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                    </svg>
-                    875
-                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm" role="tooltip">
-                    Like
-                  </span>
-                  </button>
-                </div>
-                <!-- Button -->
-
-                <div class="block h-3 border-e border-gray-300 mx-3"></div>
-
-                <!-- Button -->
-                <div class="hs-tooltip inline-block">
-                  <button type="button" class="hs-tooltip-toggle flex items-center gap-x-2 text-sm text-gray-500 hover:text-gray-800">
-                    <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" />
-                    </svg>
-                    16
-                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm" role="tooltip">
-                    Comment
-                  </span>
-                  </button>
-                </div>
-                <!-- Button -->
-
-                <div class="block h-3 border-e border-gray-300 mx-3"></div>
-
-                <!-- Button -->
-                <div class="hs-dropdown relative inline-flex">
-                  <button type="button" id="blog-article-share-dropdown" class="hs-dropdown-toggle flex items-center gap-x-2 text-sm text-gray-500 hover:text-gray-800">
-                    <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-                      <polyline points="16 6 12 2 8 6" />
-                      <line x1="12" x2="12" y1="2" y2="15" />
-                    </svg>
-                    Share
-                  </button>
-                  <div class="hs-dropdown-menu w-56 transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden mb-1 z-10 bg-gray-900 shadow-md rounded-xl p-2" aria-labelledby="blog-article-share-dropdown">
-                    <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-400 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gray-400" href="#">
-                      <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-                      </svg>
-                      Copy link
-                    </a>
-                    <div class="border-t border-gray-600 my-2"></div>
-                    <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-400 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gray-400" href="#">
-                      <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"
-                        />
-                      </svg>
-                      Share on Twitter
-                    </a>
-                    <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-400 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gray-400" href="#">
-                      <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"
-                        />
-                      </svg>
-                      Share on Facebook
-                    </a>
-                    <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-400 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gray-400" href="#">
-                      <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"
-                        />
-                      </svg>
-                      Share on LinkedIn
-                    </a>
-                  </div>
-                </div>
-                <!-- Button -->
-              </div>
-            </div>
+              <hr class="my-2">
           </div>
-        </div>
-        <!-- Comment Section Starts -->
-        <section class="bg-white antialiased">
-          <div class="max-w-2xl px-4">
-            <div class="flex justify-between items-center mb-6">
-              <h2 class="text-lg lg:text-2xl font-bold text-gray-900">Discussion ({{ comments ? comments.length : 0 }})</h2>
-            </div>
-            <div v-if="username">
-              <form class="mb-6" @submit.prevent="postComment">
-                <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200">
-                  <label for="comment" class="sr-only">Your comment</label>
-                  <textarea v-model="commentContent" id="comment" rows="6" class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none" placeholder="Write a comment..." required></textarea>
-                </div>
-                <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800">
-                  Post comment
-                </button>
-              </form>
-            </div>
-            <div v-else> <!-- If user is not logged in -->
-              <p>You need to be logged in to post a comment.</p>
-              <router-link to="/login">Login</router-link>
-            </div>
-            <div v-if="comments && comments.length > 0">
-              <div v-for="comment in comments" :key="comment.id">
-                <article class="p-6 text-base bg-white rounded-lg">
-                  <footer class="flex justify-between items-center mb-2">
-                    <div class="flex items-center">
-                      <p class="inline-flex items-center mr-3 text-sm text-gray-900 font-semibold"><img class="mr-2 w-6 h-6 rounded-full" :src="comment.user.image" alt="Michael Gough">{{ comment.user.firstName }} {{ comment.user.lastName }}</p>
-                      <p class="text-sm text-gray-600">
-                        <time datetime="2022-02-08" title="February 8th, 2022">{{ comment.created_at }}</time>
-                      </p>
-                    </div>
-                    <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50" type="button">
-                      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-                        <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                      </svg>
-                      <span class="sr-only">Comment settings</span>
-                    </button>
-                    <!-- Dropdown menu -->
-                    <div id="dropdownComment1" class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow">
-                      <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdownMenuIconHorizontalButton">
-                        <li>
-                          <a href="#" class="block py-2 px-4 hover:bg-gray-100">Edit</a>
-                        </li>
-                        <li>
-                          <a href="#" class="block py-2 px-4 hover:bg-gray-100">Remove</a>
-                        </li>
-                        <li>
-                          <a href="#" class="block py-2 px-4 hover:bg-gray-100">Report</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </footer>
-                  <p class="text-gray-500">{{ comment.comment }}</p>
-                  <div class="flex items-center mt-4 space-x-4">
-                    <button v-if="username"  @click="showReplyField(comment.id)" type="button" class="flex items-center text-sm text-gray-500 hover:underline font-medium">
-                      <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
-                      </svg>
-                      Reply
-                    </button>
-                    <div v-if="replyingTo === comment.id">
-                      <form @submit.prevent="postReply(comment.id)">
-                        <input v-model="replyContent" type="text" placeholder="Write a reply..." required>
-                        <button type="submit">Post Reply</button>
-                      </form>
-                    </div>
-                  </div>
-                </article>
-                <div v-for="reply in comment.replies" :key="reply.id">
-                  <article class="p-6 mb-3 ml-6 lg:ml-12 text-base bg-white rounded-lg">
-                    <footer class="flex justify-between items-center mb-2">
-                      <div class="flex items-center">
-                        <p class="inline-flex items-center mr-3 text-sm text-gray-900 font-semibold"><img class="mr-2 w-6 h-6 rounded-full" :src="reply.user.image" alt="Jese Leos">{{ reply.user.firstName }} {{ reply.user.lastName }}</p>
-                        <p class="text-sm text-gray-600">
-                          <time datetime="2022-02-12" title="February 12th, 2022">{{ reply.created_at }}</time>
-                        </p>
-                      </div>
-                      <button id="dropdownComment2Button" data-dropdown-toggle="dropdownComment2" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50" type="button">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                        </svg>
-                        <span class="sr-only">Comment settings</span>
-                      </button>
-                      <!-- Dropdown menu -->
-                      <div id="dropdownComment2" class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow">
-                        <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdownMenuIconHorizontalButton">
-                          <li>
-                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Edit</a>
-                          </li>
-                          <li>
-                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Remove</a>
-                          </li>
-                          <li>
-                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Report</a>
-                          </li>
-                        </ul>
-                      </div>
-                    </footer>
-                    <p class="text-gray-500">{{ reply.reply }}</p>
-                    <!--                    <div class="flex items-center mt-4 space-x-4">-->
-                    <!--                      <button type="button" class="flex items-center text-sm text-gray-500 hover:underline font-medium">-->
-                    <!--                        <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">-->
-                    <!--                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />-->
-                    <!--                        </svg>-->
-                    <!--                        Reply-->
-                    <!--                      </button>-->
-                    <!--                    </div>-->
-                  </article>
-                </div>
-                <hr>
-              </div>
-            </div>
-            <div v-else>
-              <div class="flex items-center gap-2">
-                <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 01-6 0 3 3 0 016 0zm-6 0a3 3 0 006 0 3 3 0 00-6 0zm6 0a3 3 0 01-6 0 3 3 0 016 0zm-6 0a3 3 0 006 0 3 3 0 00-6 0zm6 0a3 3 0 01-6 0 3 3 0 016 0zm0 0a3 3 0 00-6 0 3 3 0 006 0zm0 0a3 3 0 01-6 0 3 3 0 016 0z"></path>
-                </svg>
-                <span class="text-gray-500">No Comments Yet! Be the first to comment</span>
-              </div>
-            </div>
           </div>
-        </section>
-
-        <!-- Comment Section Ends -->
+         </div>
       </div>
-      <!-- End Content -->
-
-      <!-- Sidebar -->
-      <div class="lg:col-span-1 lg:w-full lg:h-full lg:bg-gradient-to-r lg:from-gray-50 lg:via-transparent lg:to-transparent">
-        <div class="sticky top-14 start-0 py-8 lg:ps-8">
-          <!-- Avatar Media -->
-          <div v-if="recipe" class="group flex items-center gap-x-3 border-b border-gray-200 pb-8 mb-8">
-            <a class="block flex-shrink-0" href="#">
-              <img class="size-10 rounded-full" :src="recipe.user.image" alt="Image Description">
-            </a>
-
-            <a class="group grow block" href="">
-              <h5 class="group-hover:text-gray-600 text-sm font-semibold text-gray-800">
-                <RouterLink :to="'/' +recipe.user.username">{{ recipe.user.firstName }} {{ recipe.user.lastName }}</RouterLink>
-              </h5>
-              <p class="text-sm text-gray-500">
-                UI/UX enthusiast
-              </p>
-            </a>
-
-            <div class="grow">
-              <div class="flex">
-                <div v-if="!isLoadingUser">
-                  <button v-if="username" type="button"
-                          class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-transparent transition duration-300 disabled:opacity-50 disabled:pointer-events-none"
-                          :class="{'bg-primary-100 hover:bg-primary-200 text-white': user && !user.isFollowing, 'bg-gray-500 text-white': user && user.isFollowing}"
-                          @click="handleFollowUnfollow(user)">
-                    <template v-if="user && !user.isFollowing">
-                      <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                        <circle cx="9" cy="7" r="4" />
-                        <line x1="19" x2="19" y1="8" y2="14" />
-                        <line x1="22" x2="16" y1="11" y2="11" />
-                      </svg>
-                      <span>Follow</span>
-                    </template>
-                    <template v-else>
-                      <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                        <circle cx="9" cy="7" r="4" />
-                        <line x1="16" y1="8" x2="22" y2="14" />
-                        <line x1="16" y1="14" x2="22" y2="8" />
-                      </svg>
-                      <span>Unfollow</span>
-                    </template>
-                  </button>
-
-                </div>
-              </div>
+      <div v-if="recipe" class="col-span-2">
+        <div>
+        <img class="w-full h-96 object-cover rounded-lg" :src="recipe.image" :alt="recipe.name">
+          <div class="grid grid-cols-4 my-3">
+            <div class="col-span-1 border-r border-gray-300 px-4 text-center">
+              <p class="text-gray-600">Prep Time</p>
+              <p v-if="prep_time">{{ prep_time_in_minutes }} minutes</p>
             </div>
-          </div>
-          <!-- End Avatar Media -->
+            <div class="col-span-1 border-r border-gray-300 px-4 text-center">
+              <p class="text-gray-600">Cook Time</p>
+              <p v-if="cook_time">{{ cook_time_in_minutes }} minutes</p>
+            </div>
+            <div class="col-span-1 border-r border-gray-300 px-4 text-center">
+              <p class="text-gray-600">Servings</p>
+              <p>{{ recipe.servings }}</p>
+            </div>
+            <div class=" flex justify-end col-span-1 px-4 text-center">
+              <svg width="36px" height="36px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 6.2C5 5.07989 5 4.51984 5.21799 4.09202C5.40973 3.71569 5.71569 3.40973 6.09202 3.21799C6.51984 3 7.07989 3 8.2 3H15.8C16.9201 3 17.4802 3 17.908 3.21799C18.2843 3.40973 18.5903 3.71569 18.782 4.09202C19 4.51984 19 5.07989 19 6.2V21L12 16L5 21V6.2Z" stroke="#DB2B39" stroke-width="1.44" stroke-linejoin="round"></path> </g></svg>
+            </div>
+            </div>
+        </div>
+        <div>
 
-          <div class="space-y-6">
-            <!-- Media -->
-            <a class="group flex items-center gap-x-6" href="#">
-              <div class="grow">
-                                <span class="text-sm font-bold text-gray-800 group-hover:text-primary-100">
-                5 Reasons to Not start a UX Designer Career in 2022/2023
-              </span>
-              </div>
-
-              <div class="flex-shrink-0 relative rounded-lg overflow-hidden size-20">
-                <img class="size-full absolute top-0 start-0 object-cover rounded-lg" src="https://images.unsplash.com/photo-1567016526105-22da7c13161a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80" alt="Image Description">
-              </div>
-            </a>
-            <!-- End Media -->
-
-            <!-- Media -->
-            <a class="group flex items-center gap-x-6" href="#">
-              <div class="grow">
-                                <span class="text-sm font-bold text-gray-800 group-hover:text-primary-100">
-                If your UX Portfolio has this 20% Well Done, it Will Give You an 80% Result
-              </span>
-              </div>
-
-              <div class="flex-shrink-0 relative rounded-lg overflow-hidden size-20">
-                <img class="size-full absolute top-0 start-0 object-cover rounded-lg" src="https://images.unsplash.com/photo-1542125387-c71274d94f0a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80" alt="Image Description">
-              </div>
-            </a>
-            <!-- End Media -->
-
-            <!-- Media -->
-            <a class="group flex items-center gap-x-6" href="#">
-              <div class="grow">
-                                <span class="text-sm font-bold text-gray-800 group-hover:text-primary-100">
-                7 Principles of Icon Design
-              </span>
-              </div>
-
-              <div class="flex-shrink-0 relative rounded-lg overflow-hidden size-20">
-                <img class="size-full absolute top-0 start-0 object-cover rounded-lg" src="https://images.unsplash.com/photo-1586232702178-f044c5f4d4b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80" alt="Image Description">
-              </div>
-            </a>
-            <!-- End Media -->
-          </div>
         </div>
       </div>
-      <!-- End Sidebar -->
+      <div class="col-span-1 px-3">
+        <div class="sticky top-20 start-0">
+         <h3 class="font-bold text-2xl" v-if="recipe">More From {{ recipe.user.firstName }}</h3>
+        </div>
+      </div>
     </div>
   </div>
-  <!-- End Blog Article -->
+
 
 </template>
 
@@ -514,7 +94,7 @@ import { config } from "../../config.js";
 
 const route = useRoute();
 const recipe = ref(null);
-const isLoading = ref(false); // Add this line
+const isLoading = ref(false);
 const comments = ref([]);
 const replyingTo = ref(null);
 const replyContent = ref('');
@@ -525,7 +105,10 @@ const isLoadingButton = ref(false);
 
 let userData = JSON.parse(localStorage.getItem('user'));
 let username = userData ? userData.data.username : null;
-
+const prep_time = ref(null);
+const prep_time_in_minutes = ref(0);
+const cook_time = ref(null);
+const cook_time_in_minutes = ref(0);
 
 axios.defaults.baseURL = config.BASE_URL;
 
@@ -556,7 +139,11 @@ onMounted(async () => {
     if (recipeResponse.data.status === 'success') {
       recipe.value = recipeResponse.data.data;
       user.value = recipe.value.user;
-    }
+      console.log('recipe data:', recipe.value);
+      prep_time.value = JSON.parse(recipe.value.prep_time);
+      prep_time_in_minutes.value = prep_time.value.hours * 60 + prep_time.value.minutes;
+      cook_time.value = JSON.parse(recipe.value.cook_time);
+      cook_time_in_minutes.value = Number(cook_time.value.hours) * 60 + Number(cook_time.value.minutes);    }
   } catch (error) {
     console.error('Error:', error);
   }
@@ -597,6 +184,11 @@ const postComment = async () => {
   }
 };
 
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
+
 const postReply = async (commentId) => {
   try {
     const response = await axios.post(`/comment/${commentId}/reply`, { reply: replyContent.value },
@@ -621,5 +213,13 @@ const postReply = async (commentId) => {
 };
 
 
+
 </script>
+
+
+
+
+
+
+
 
