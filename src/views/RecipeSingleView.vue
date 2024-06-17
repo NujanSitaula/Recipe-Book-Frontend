@@ -2,7 +2,7 @@
 
   <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto main-content">
     <div class="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
-      <div class="lg:col-span-3">
+      <div class="lg:col-span-2">
         <div class="py-6 lg:pe-8">
           <div class="space-y-5 lg:space-y-8">
             <a @click="$router.back()" class="inline-flex items-center gap-x-1.5 text-sm text-gray-600 decoration-2 hover:underline" href="#">
@@ -40,43 +40,50 @@
                 </div>
                 <div class="col-span-1">
                   <div class="flex justify-end items-center gap-x-2">
-                    <svg fill="#DB2B39" width="32px" height="32px" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg" stroke="#DB2B39" stroke-width="0.00024000000000000003" transform="matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#3d0000" stroke-width="0.288"></g><g id="SVGRepo_iconCarrier"><path d="M20.5,4.609A5.811,5.811,0,0,0,16,2.5a5.75,5.75,0,0,0-4,1.455A5.75,5.75,0,0,0,8,2.5,5.811,5.811,0,0,0,3.5,4.609c-.953,1.156-1.95,3.249-1.289,6.66,1.055,5.447,8.966,9.917,9.3,10.1a1,1,0,0,0,.974,0c.336-.187,8.247-4.657,9.3-10.1C22.45,7.858,21.453,5.765,20.5,4.609Zm-.674,6.28C19.08,14.74,13.658,18.322,12,19.34c-2.336-1.41-7.142-4.95-7.821-8.451-.513-2.646.189-4.183.869-5.007A3.819,3.819,0,0,1,8,4.5a3.493,3.493,0,0,1,3.115,1.469,1.005,1.005,0,0,0,1.76.011A3.489,3.489,0,0,1,16,4.5a3.819,3.819,0,0,1,2.959,1.382C19.637,6.706,20.339,8.243,19.826,10.889Z"></path></g></svg>
-                    <svg width="32px" height="32px" viewBox="-1 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="" stroke=""><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>share</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke-width="1.04" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set" sketch:type="MSLayerGroup" transform="translate(-312.000000, -726.000000)" fill="#DB2B39"> <path d="M331,750 C329.343,750 328,748.657 328,747 C328,745.343 329.343,744 331,744 C332.657,744 334,745.343 334,747 C334,748.657 332.657,750 331,750 L331,750 Z M317,742 C315.343,742 314,740.657 314,739 C314,737.344 315.343,736 317,736 C318.657,736 320,737.344 320,739 C320,740.657 318.657,742 317,742 L317,742 Z M331,728 C332.657,728 334,729.343 334,731 C334,732.657 332.657,734 331,734 C329.343,734 328,732.657 328,731 C328,729.343 329.343,728 331,728 L331,728 Z M331,742 C329.23,742 327.685,742.925 326.796,744.312 L321.441,741.252 C321.787,740.572 322,739.814 322,739 C322,738.497 321.903,738.021 321.765,737.563 L327.336,734.38 C328.249,735.37 329.547,736 331,736 C333.762,736 336,733.762 336,731 C336,728.238 333.762,726 331,726 C328.238,726 326,728.238 326,731 C326,731.503 326.097,731.979 326.235,732.438 L320.664,735.62 C319.751,734.631 318.453,734 317,734 C314.238,734 312,736.238 312,739 C312,741.762 314.238,744 317,744 C318.14,744 319.179,743.604 320.02,742.962 L320,743 L326.055,746.46 C326.035,746.64 326,746.814 326,747 C326,749.762 328.238,752 331,752 C333.762,752 336,749.762 336,747 C336,744.238 333.762,742 331,742 L331,742 Z" id="share" sketch:type="MSShapeGroup"> </path> </g> </g> </g></svg>
-                  </div>
+                      </div>
                 </div>
               </div>
               <hr class="my-2">
           </div>
           </div>
          </div>
-      </div>
-      <div v-if="recipe" class="col-span-2">
-        <div>
-        <img class="w-full h-96 object-cover rounded-lg" :src="recipe.image" :alt="recipe.name">
-          <div class="grid grid-cols-4 my-3">
-            <div class="col-span-1 border-r border-gray-300 px-4 text-center">
-              <p class="text-gray-600">Prep Time</p>
-              <p v-if="prep_time">{{ prep_time_in_minutes }} minutes</p>
-            </div>
-            <div class="col-span-1 border-r border-gray-300 px-4 text-center">
-              <p class="text-gray-600">Cook Time</p>
-              <p v-if="cook_time">{{ cook_time_in_minutes }} minutes</p>
-            </div>
-            <div class="col-span-1 border-r border-gray-300 px-4 text-center">
-              <p class="text-gray-600">Servings</p>
-              <p>{{ recipe.servings }}</p>
-            </div>
-            <div class=" flex justify-end col-span-1 px-4 text-center">
-              <svg width="36px" height="36px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 6.2C5 5.07989 5 4.51984 5.21799 4.09202C5.40973 3.71569 5.71569 3.40973 6.09202 3.21799C6.51984 3 7.07989 3 8.2 3H15.8C16.9201 3 17.4802 3 17.908 3.21799C18.2843 3.40973 18.5903 3.71569 18.782 4.09202C19 4.51984 19 5.07989 19 6.2V21L12 16L5 21V6.2Z" stroke="#DB2B39" stroke-width="1.44" stroke-linejoin="round"></path> </g></svg>
-            </div>
-            </div>
-        </div>
-        <div>
+        <div v-if="recipe" class="col-span-2">
+          <div>
+            <img class="w-full h-96 object-cover rounded-lg" :src="recipe.image" :alt="recipe.name">
+            <div class="grid grid-cols-4 my-3">
+              <div class="col-span-1 border-r border-gray-300 px-4 text-center">
+                <p class="text-gray-600">Prep Time</p>
+                <p v-if="prep_time">{{ prep_time_in_minutes }} minutes</p>
+              </div>
+              <div class="col-span-1 border-r border-gray-300 px-4 text-center">
+                <p class="text-gray-600">Cook Time</p>
+                <p v-if="cook_time">{{ cook_time_in_minutes }} minutes</p>
+              </div>
+              <div class="col-span-1 border-r border-gray-300 px-4 text-center">
+                <p class="text-gray-600">Servings</p>
+                <p>{{ recipe.servings }}</p>
+              </div>
+              <div class=" flex justify-end col-span-1 px-4 text-center gap-x-2">
+                <svg width="36px" height="36px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 6.2C5 5.07989 5 4.51984 5.21799 4.09202C5.40973 3.71569 5.71569 3.40973 6.09202 3.21799C6.51984 3 7.07989 3 8.2 3H15.8C16.9201 3 17.4802 3 17.908 3.21799C18.2843 3.40973 18.5903 3.71569 18.782 4.09202C19 4.51984 19 5.07989 19 6.2V21L12 16L5 21V6.2Z" stroke="#DB2B39" stroke-width="1.44" stroke-linejoin="round"></path> </g></svg>
+                <svg width="32px" height="32px" viewBox="-1 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="" stroke=""><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>share</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke-width="1.04" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set" sketch:type="MSLayerGroup" transform="translate(-312.000000, -726.000000)" fill="#DB2B39"> <path d="M331,750 C329.343,750 328,748.657 328,747 C328,745.343 329.343,744 331,744 C332.657,744 334,745.343 334,747 C334,748.657 332.657,750 331,750 L331,750 Z M317,742 C315.343,742 314,740.657 314,739 C314,737.344 315.343,736 317,736 C318.657,736 320,737.344 320,739 C320,740.657 318.657,742 317,742 L317,742 Z M331,728 C332.657,728 334,729.343 334,731 C334,732.657 332.657,734 331,734 C329.343,734 328,732.657 328,731 C328,729.343 329.343,728 331,728 L331,728 Z M331,742 C329.23,742 327.685,742.925 326.796,744.312 L321.441,741.252 C321.787,740.572 322,739.814 322,739 C322,738.497 321.903,738.021 321.765,737.563 L327.336,734.38 C328.249,735.37 329.547,736 331,736 C333.762,736 336,733.762 336,731 C336,728.238 333.762,726 331,726 C328.238,726 326,728.238 326,731 C326,731.503 326.097,731.979 326.235,732.438 L320.664,735.62 C319.751,734.631 318.453,734 317,734 C314.238,734 312,736.238 312,739 C312,741.762 314.238,744 317,744 C318.14,744 319.179,743.604 320.02,742.962 L320,743 L326.055,746.46 C326.035,746.64 326,746.814 326,747 C326,749.762 328.238,752 331,752 C333.762,752 336,749.762 336,747 C336,744.238 333.762,742 331,742 L331,742 Z" id="share" sketch:type="MSShapeGroup"> </path> </g> </g> </g></svg>
 
+              </div>
+            </div>
+            <p class="py-5 text-lg"> {{ recipe.description }}</p>
+            <h3 class="text-3xl">Ingredients</h3>
+            <ul>
+              <li v-for="ingredient in ingredients" :key="ingredient.id">
+                {{ ingredient.quantity }} {{ ingredient.unitName }} of {{ ingredient.name }}
+              </li>
+            </ul>
+          </div>
+          <div>
+          </div>
         </div>
       </div>
-      <div class="col-span-1 px-3">
-        <div class="sticky top-20 start-0">
+
+      <div class="col-span-1 p-3 mt-12">
+        <div class="sticky top-20 start-0 p-2 bg-gray-100 rounded-xl">
          <h3 class="font-bold text-2xl" v-if="recipe">More From {{ recipe.user.firstName }}</h3>
         </div>
       </div>
@@ -87,7 +94,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 import { config } from "../../config.js";
@@ -109,6 +116,7 @@ const prep_time = ref(null);
 const prep_time_in_minutes = ref(0);
 const cook_time = ref(null);
 const cook_time_in_minutes = ref(0);
+const ingredients = ref([]);
 
 axios.defaults.baseURL = config.BASE_URL;
 
@@ -134,19 +142,60 @@ onMounted(async () => {
   scrollTo(0, 0); // Scroll to top of the page
   isLoading.value = true;
   try {
+    const getUnitName = async (unitId) => {
+      try {
+        const response = await axios.get(`/unit/${unitId}`);
+        return response.data.data.name;
+      } catch (error) {
+        console.error('Error fetching unit name:', error);
+        return null;
+      }
+    };
+
+    const getIngredientName = async (ingredientId) => {
+      try {
+        const response = await axios.get(`/ingredient/${ingredientId}`);
+        return response.data.data.name;
+      } catch (error) {
+        console.error('Error fetching ingredient name:', error);
+        return null;
+      }
+    };
+
     // Fetch recipe data
     const recipeResponse = await axios.get(`/recipe/${route.params.id}`);
     if (recipeResponse.data.status === 'success') {
       recipe.value = recipeResponse.data.data;
       user.value = recipe.value.user;
-      console.log('recipe data:', recipe.value);
+
       prep_time.value = JSON.parse(recipe.value.prep_time);
-      prep_time_in_minutes.value = prep_time.value.hours * 60 + prep_time.value.minutes;
+      prep_time_in_minutes.value = Number(prep_time.value.hours) * 60 + Number(prep_time.value.minutes);
       cook_time.value = JSON.parse(recipe.value.cook_time);
-      cook_time_in_minutes.value = Number(cook_time.value.hours) * 60 + Number(cook_time.value.minutes);    }
+      cook_time_in_minutes.value = Number(cook_time.value.hours) * 60 + Number(cook_time.value.minutes);
+
+      // Transform ingredients object into an array
+      const ingredientsData = JSON.parse(recipe.value.ingredients);
+      if (typeof ingredientsData === 'object' && ingredientsData !== null) {
+        const ingredientsArray = Object.entries(ingredientsData).map(([id, details]) => ({ id, ...details }));
+
+        const ingredientPromises = ingredientsArray.map(async (ingredient) => {
+          const ingredientName = await getIngredientName(ingredient.id);
+          const unitName = await getUnitName(ingredient.unit);
+          return { ...ingredient, name: ingredientName, unitName: unitName };
+        });
+
+        ingredients.value = await Promise.all(ingredientPromises);
+        console.log('Ingredients with Names and Units:', ingredients.value); // Debugging statement
+      } else {
+        console.error('Error: Ingredients data is not an object', ingredientsData);
+      }
+    }
   } catch (error) {
     console.error('Error:', error);
+  } finally {
+    isLoading.value = false;
   }
+
 
   try {
     // Fetch comments data
@@ -161,60 +210,61 @@ onMounted(async () => {
   }
 });
 
-const showReplyField = (commentId) => {
-  replyingTo.value = commentId;
-};
+// const showReplyField = (commentId) => {
+//   replyingTo.value = commentId;
+// };
 
-const postComment = async () => {
-  try {
-    const response = await axios.post(`/comment`, { comment: commentContent.value, recipe_id: recipe.value.id },
-        {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-          }
-        });
-    if (response.data.status === 'success') {
-      const newComment = response.data.data[0];
-      comments.value.unshift(newComment);
-      newComment.user.image = response.data.data[0].user.image;
-      commentContent.value = '';
-    }
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
+// const postComment = async () => {
+//   try {
+//     const response = await axios.post(`/comment`, { comment: commentContent.value, recipe_id: recipe.value.id },
+//         {
+//           headers: {
+//             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+//           }
+//         });
+//     if (response.data.status === 'success') {
+//       const newComment = response.data.data[0];
+//       comments.value.unshift(newComment);
+//       newComment.user.image = response.data.data[0].user.image;
+//       commentContent.value = '';
+//     }
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+// };
 
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
-const postReply = async (commentId) => {
-  try {
-    const response = await axios.post(`/comment/${commentId}/reply`, { reply: replyContent.value },
-        {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-          }
-        });
-    if (response.data.status === 'success') {
-      const commentIndex = comments.value.findIndex(comment => comment.id === commentId);
-      const newComment = { ...comments.value[commentIndex] };
-      const newReply = response.data.data[0];
-      newComment.replies = [...(newComment.replies || []), newReply];
-      newReply.user.image = response.data.data[0].user.image;
-      comments.value.splice(commentIndex, 1, newComment);
-      replyContent.value = '';
-      replyingTo.value = null;
-    }
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
+// const postReply = async (commentId) => {
+//   try {
+//     const response = await axios.post(`/comment/${commentId}/reply`, { reply: replyContent.value },
+//         {
+//           headers: {
+//             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+//           }
+//         });
+//     if (response.data.status === 'success') {
+//       const commentIndex = comments.value.findIndex(comment => comment.id === commentId);
+//       const newComment = { ...comments.value[commentIndex] };
+//       const newReply = response.data.data[0];
+//       newComment.replies = [...(newComment.replies || []), newReply];
+//       newReply.user.image = response.data.data[0].user.image;
+//       comments.value.splice(commentIndex, 1, newComment);
+//       replyContent.value = '';
+//       replyingTo.value = null;
+//     }
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+// };
 
 
 
 </script>
+
 
 
 
