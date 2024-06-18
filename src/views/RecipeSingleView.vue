@@ -69,24 +69,39 @@
               </div>
             </div>
             <p class="py-5 text-lg"> {{ recipe.description }}</p>
-            <h3 class="text-4xl mt-6">Ingredients</h3>
-            <ul class="mt-4">
-              <li class="flex gap-x-2 align-middle my-3 text-xl" v-for="ingredient in ingredients"
-                  :key="ingredient.id"
-                  :class="{ 'strikethrough': ingredient.isClicked }"
-                  @click="ingredient.isClicked = !ingredient.isClicked">
-<!--                <svg width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="4" y="4" width="16" height="16" rx="2" stroke="#DB2B39" stroke-width="0.9600000000000002" stroke-linecap="round" stroke-linejoin="round"></rect> </g></svg>-->
-                <svg v-if="!ingredient.isClicked" width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="4" y="4" width="16" height="16" rx="2" stroke="#DB2B39" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></rect> </g></svg>
-                <svg v-else width="28px" height="28px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M15 22.75H9C3.57 22.75 1.25 20.43 1.25 15V9C1.25 3.57 3.57 1.25 9 1.25H15C20.43 1.25 22.75 3.57 22.75 9V15C22.75 20.43 20.43 22.75 15 22.75ZM9 2.75C4.39 2.75 2.75 4.39 2.75 9V15C2.75 19.61 4.39 21.25 9 21.25H15C19.61 21.25 21.25 19.61 21.25 15V9C21.25 4.39 19.61 2.75 15 2.75H9Z" fill="#DB2B39"></path><path d="M10.5795 15.5801C10.3795 15.5801 10.1895 15.5001 10.0495 15.3601L7.21945 12.5301C6.92945 12.2401 6.92945 11.7601 7.21945 11.4701C7.50945 11.1801 7.98945 11.1801 8.27945 11.4701L10.5795 13.7701L15.7195 8.6301C16.0095 8.3401 16.4895 8.3401 16.7795 8.6301C17.0695 8.9201 17.0695 9.4001 16.7795 9.6901L11.1095 15.3601C10.9695 15.5001 10.7795 15.5801 10.5795 15.5801Z" fill="#DB2B39"></path></g></svg>
-                <p>{{ ingredient.quantity }} {{ ingredient.unitName }} {{ ingredient.name }}</p>
-              </li>
-            </ul>
-            <h3 class="text-4xl mt-10">Instructions</h3>
-            <ol class="mt-4">
-              <li class="my-3 text-lg" v-for="(instruction, index) in instructions" :key="index">
-                <p>{{ index + 1 }}. {{ instruction ? instruction.charAt(0).toUpperCase() + instruction.slice(1) : '' }}</p>
-              </li>
-            </ol>
+            <div class="grid grid-cols-3">
+            <div class="col-span-1">
+              <h3 class="text-4xl mt-6">Ingredients</h3>
+              <ul class="mt-4">
+                <li class="flex gap-x-2 align-middle my-3 text-xl" v-for="ingredient in ingredients"
+                    :key="ingredient.id"
+                    :class="{ 'strikethrough': ingredient.isClicked }"
+                    @click="ingredient.isClicked = !ingredient.isClicked">
+                  <!--                <svg width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="4" y="4" width="16" height="16" rx="2" stroke="#DB2B39" stroke-width="0.9600000000000002" stroke-linecap="round" stroke-linejoin="round"></rect> </g></svg>-->
+                  <svg v-if="!ingredient.isClicked" width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="4" y="4" width="16" height="16" rx="2" stroke="#DB2B39" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></rect> </g></svg>
+                  <svg v-else width="28px" height="28px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M15 22.75H9C3.57 22.75 1.25 20.43 1.25 15V9C1.25 3.57 3.57 1.25 9 1.25H15C20.43 1.25 22.75 3.57 22.75 9V15C22.75 20.43 20.43 22.75 15 22.75ZM9 2.75C4.39 2.75 2.75 4.39 2.75 9V15C2.75 19.61 4.39 21.25 9 21.25H15C19.61 21.25 21.25 19.61 21.25 15V9C21.25 4.39 19.61 2.75 15 2.75H9Z" fill="#DB2B39"></path><path d="M10.5795 15.5801C10.3795 15.5801 10.1895 15.5001 10.0495 15.3601L7.21945 12.5301C6.92945 12.2401 6.92945 11.7601 7.21945 11.4701C7.50945 11.1801 7.98945 11.1801 8.27945 11.4701L10.5795 13.7701L15.7195 8.6301C16.0095 8.3401 16.4895 8.3401 16.7795 8.6301C17.0695 8.9201 17.0695 9.4001 16.7795 9.6901L11.1095 15.3601C10.9695 15.5001 10.7795 15.5801 10.5795 15.5801Z" fill="#DB2B39"></path></g></svg>
+                  <p>{{ ingredient.quantity }} {{ ingredient.unitName }} {{ ingredient.name }}</p>
+                </li>
+              </ul>
+            </div>
+              <div class="col-span-2">
+              <h3 class="text-4xl mt-6">Instructions</h3>
+              <ol class="mt-4">
+                <li class="my-4 text-lg flex gap-x-2" v-for="(instruction, index) in instructions" :key="index">
+                <p class="text-primary-100">{{ index + 1 }}. </p>
+                  <p>{{ instruction ? instruction.charAt(0).toUpperCase() + instruction.slice(1) : '' }}</p>
+                </li>
+              </ol>
+              </div>
+            </div>
+            <div  v-if="recipe.additional_notes" class="col-span-1 flex bg-red-100 rounded-2xl p-2 mr-6">
+
+              <svg width="48px" height="48px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 7C9.23858 7 7 9.23858 7 12C7 13.3613 7.54402 14.5955 8.42651 15.4972C8.77025 15.8484 9.05281 16.2663 9.14923 16.7482L9.67833 19.3924C9.86537 20.3272 10.6862 21 11.6395 21H12.3605C13.3138 21 14.1346 20.3272 14.3217 19.3924L14.8508 16.7482C14.9472 16.2663 15.2297 15.8484 15.5735 15.4972C16.456 14.5955 17 13.3613 17 12C17 9.23858 14.7614 7 12 7Z" stroke="#DB2B39" stroke-width="1.344"></path> <path d="M12 4V3" stroke="#DB2B39" stroke-width="1.344" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M18 6L19 5" stroke="#DB2B39" stroke-width="1.344" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M20 12H21" stroke="#DB2B39" stroke-width="1.344" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M4 12H3" stroke="#DB2B39" stroke-width="1.344" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M5 5L6 6" stroke="#DB2B39" stroke-width="1.344" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M10 17H14" stroke="#DB2B39" stroke-width="1.344" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+              <div>
+              <h3 class="my-auto text-xl">Chef 's Note</h3>
+                <p>{{ recipe.additional_notes }}</p>
+              </div>
+            </div>
           </div>
           <div>
           </div>
@@ -96,6 +111,17 @@
       <div class="col-span-1 p-3 mt-12">
         <div class="sticky top-20 start-0 p-2 bg-gray-100 rounded-xl">
          <h3 class="font-bold text-2xl" v-if="recipe">More From {{ recipe.user.firstName }}</h3>
+
+          <a href="#" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 ">
+            <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="" alt="">
+            <div class="flex flex-col justify-between p-4 leading-normal">
+              <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Noteworthy technology acquisitions 2021</h5>
+              <p class="mb-3 font-normal text-gray-700 ">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+            </div>
+          </a>
+
+
+
         </div>
       </div>
     </div>
@@ -131,6 +157,10 @@ const ingredients = ref([]);
 const instructions = ref(null);
 const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
+};
+const isCollapsed = ref(true);
+const toggleCollapse = () => {
+  isCollapsed.value = !isCollapsed.value;
 };
 
 axios.defaults.baseURL = config.BASE_URL;
@@ -189,8 +219,7 @@ onMounted(async () => {
       prep_time_in_minutes.value = Number(prep_time.value.hours) * 60 + Number(prep_time.value.minutes);
       cook_time.value = JSON.parse(recipe.value.cook_time);
       cook_time_in_minutes.value = Number(cook_time.value.hours) * 60 + Number(cook_time.value.minutes);
-      instructions.value = JSON.parse(recipe.value.instructions);
-      console.log('Instructions:', instructions.value); // Debugging statement
+      instructions.value = JSON.parse(recipe.value.instructions).filter(instruction => instruction && instruction.trim().length);
 
       // Transform ingredients object into an array
       const ingredientsData = JSON.parse(recipe.value.ingredients);
@@ -293,6 +322,7 @@ const formatDate = (dateString) => {
   text-decoration: line-through;
  text-decoration-color: gray;
 }
+
 </style>
 
 

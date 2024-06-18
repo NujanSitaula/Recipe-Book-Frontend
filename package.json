@@ -10,6 +10,7 @@
     "serve": "vue-cli-service serve --host checkcsrf.test"
   },
   "dependencies": {
+    "@preline/collapse": "^2.3.0",
     "@preline/overlay": "^2.1.0",
     "algoliasearch": "^4.23.3",
     "axios": "^1.6.8",
