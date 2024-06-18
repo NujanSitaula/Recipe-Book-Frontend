@@ -591,6 +591,8 @@ const imagePreviewUrl = ref('');
 const ingredients = ref([]);
 const filteredIngredients = ref([[]]);
 const recipeIngredients = ref([]);
+const steps = ref(['']);
+
 const formData = reactive({
   title: '',
   description: '',
@@ -766,7 +768,6 @@ const postRecipeData = async () => {
     formDataToSend.append('servings', formData.servings);
     formDataToSend.append('difficulty', formData.difficulty);
 
-    // Append instructions as array elements
     steps.value.forEach((step, index) => {
       formDataToSend.append(`instructions[${index}]`, step);
     });
@@ -806,14 +807,10 @@ const postRecipeData = async () => {
   }
 };
 
-
-const steps = ref(['']);
 const handleAddStep = () => {
-  if (steps.value[steps.value.length - 1] !== '') {
-    steps.value.push('');
-  }
-};
 
+    steps.value.push('');
+};
 const category = ref([]);
 const selectedCuisine = ref('');
 const isDropdownOpen = ref(false);
