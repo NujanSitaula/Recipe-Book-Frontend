@@ -809,7 +809,9 @@ const postRecipeData = async () => {
 
 const steps = ref(['']);
 const handleAddStep = () => {
-  steps.value.push('');
+  if (steps.value[steps.value.length - 1] !== '') {
+    steps.value.push('');
+  }
 };
 
 const category = ref([]);
@@ -842,6 +844,7 @@ const selectCuisine = async(cat) => {
 };
 
 onMounted(() => {
+
   scrollToTop();
   getIngredients();
   getUnits();
