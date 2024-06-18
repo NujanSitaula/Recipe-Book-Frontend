@@ -145,7 +145,8 @@
       <div v-for="recipe in recipes.data" :key="recipe.id">
         <div class="bg-white rounded-lg shadow-md overflow-hidden hover-zoom relative">
           <router-link :to="`/recipe/${recipe.id}`"><div class="relative">
-            <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Pizza" class="w-full h-64 object-cover transition-transform duration-300">
+<!--            <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Pizza" class="w-full h-64 object-cover transition-transform duration-300">-->
+            <img :src="recipe.image"  alt="Pizza" class="w-full h-64 object-cover transition-transform duration-300">
             <div class="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M3.172 5.172a4.002 4.002 0 015.656 0L10 6.343l1.172-1.171a4.002 4.002 0 115.656 5.656L10 17.657l-6.828-6.829a4.002 4.002 0 010-5.656z"/>
@@ -154,10 +155,9 @@
           </div></router-link>
           <div class="p-4">
             <div class="flex items-center justify-between mb-2">
-              <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Vegan</span>
-            </div>
+              <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">{{ recipe.dietary_information && recipe.dietary_information.charAt(0).toUpperCase() + recipe.dietary_information.slice(1).toLowerCase() }}</span>            </div>
             <router-link :to="`/recipe/${recipe.id}`"> <h3 class="font-bold text-lg"> {{ recipe.name }}</h3></router-link>
-            <p class="text-gray-600">{{ recipe.description }}</p>
+            <p class="text-gray-600 limited-text">{{ recipe.description }}</p>
             <div class="flex items-center mt-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.066 3.28a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.066 3.28c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.066-3.28a1 1 0 00-.364-1.118L2.935 8.707c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.066-3.28z"/>
@@ -288,11 +288,11 @@
       Register Now
     </button>
   </RouterLink>
-  <RouterLink v-else to="/addRecipe">
+    <a href="/addRecipe">
     <button class="py-3 px-4 inline-flex justify-center float-end gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200 disabled:opacity-50 disabled:pointer-events-none">
       Add Recipe
     </button>
-  </RouterLink>
+    </a>
 </div>
       </div>
     </div>
@@ -453,4 +453,12 @@ h1, h2, h3{
   font-family: "Arapey", serif;
   font-weight: 400;
 }
+.limited-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 </style>

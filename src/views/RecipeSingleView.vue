@@ -21,7 +21,7 @@
             <div v-else-if="recipe" >
               <h2 class="text-3xl font-bold lg:text-5xl inline">{{ recipe.name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ') }}</h2>
               <a class="items-center gap-1.5 py-1 px-3 sm:py-2 sm:px-4 rounded-full text-xs sm:text-sm bg-gray-100 text-gray-800 hover:bg-gray-200 ml-2" href="#">
-                {{ recipe.dietary_information.charAt(0).toUpperCase() + recipe.dietary_information.slice(1).toLowerCase() }}
+                {{ recipe && recipe.dietary_information ? recipe.dietary_information.charAt(0).toUpperCase() + recipe.dietary_information.slice(1).toLowerCase() : '' }}
               </a>
               <div class="grid grid-cols-2 ">
                 <div class="col-span-1 flex gap-x-5 mt-5">
@@ -69,7 +69,7 @@
               </div>
             </div>
             <p class="py-5 text-lg"> {{ recipe.description }}</p>
-            <h3 class="text-4xl">Ingredients</h3>
+            <h3 class="text-4xl mt-6">Ingredients</h3>
             <ul class="mt-4">
               <li class="flex gap-x-2 align-middle my-3 text-xl" v-for="ingredient in ingredients"
                   :key="ingredient.id"
@@ -81,8 +81,12 @@
                 <p>{{ ingredient.quantity }} {{ ingredient.unitName }} {{ ingredient.name }}</p>
               </li>
             </ul>
-            <h3 class="text-4xl">Instructions</h3>
-            
+            <h3 class="text-4xl mt-10">Instructions</h3>
+            <ol class="mt-4">
+              <li class="my-3 text-lg" v-for="(instruction, index) in instructions" :key="index">
+                <p>{{ index + 1 }}. {{ instruction ? instruction.charAt(0).toUpperCase() + instruction.slice(1) : '' }}</p>
+              </li>
+            </ol>
           </div>
           <div>
           </div>
@@ -124,6 +128,10 @@ const prep_time_in_minutes = ref(0);
 const cook_time = ref(null);
 const cook_time_in_minutes = ref(0);
 const ingredients = ref([]);
+const instructions = ref(null);
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 axios.defaults.baseURL = config.BASE_URL;
 
@@ -148,6 +156,7 @@ const handleFollowUnfollow = async (user) => {
 onMounted(async () => {
   scrollTo(0, 0); // Scroll to top of the page
   isLoading.value = true;
+
   try {
     const getUnitName = async (unitId) => {
       try {
@@ -174,11 +183,14 @@ onMounted(async () => {
     if (recipeResponse.data.status === 'success') {
       recipe.value = recipeResponse.data.data;
       user.value = recipe.value.user;
+      console.log('Recipe:', recipe.value); // Debugging statement
 
       prep_time.value = JSON.parse(recipe.value.prep_time);
       prep_time_in_minutes.value = Number(prep_time.value.hours) * 60 + Number(prep_time.value.minutes);
       cook_time.value = JSON.parse(recipe.value.cook_time);
       cook_time_in_minutes.value = Number(cook_time.value.hours) * 60 + Number(cook_time.value.minutes);
+      instructions.value = JSON.parse(recipe.value.instructions);
+      console.log('Instructions:', instructions.value); // Debugging statement
 
       // Transform ingredients object into an array
       const ingredientsData = JSON.parse(recipe.value.ingredients);
