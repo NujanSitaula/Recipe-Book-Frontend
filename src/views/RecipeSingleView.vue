@@ -105,12 +105,14 @@
                       v-for="(instruction, index) in instructions"
                       :key="index"
                       :class="['instruction flex items-center p-4 bg-gray-100 rounded-lg cursor-pointer mt-2', { active: instruction.active }]"
-                      @click="toggleActive(index)">
-                    <div class="numbering flex items-center justify-center w-10 h-10 rounded-full bg-primary-200 text-white font-bold mr-4">
-                      {{ index + 1 }}
+                      @click="toggleActive(index)"
+                  >
+                    <div class="numbering flex items-center justify-center w-10 h-10 rounded-full bg-primary-200 text-white font-bold mr-4"
+                         :class="{ 'bg-green-500': instruction.active }">
+                      <svg v-if="instruction.active" fill="#ffff" width="64px" height="64px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M760 380.4l-61.6-61.6-263.2 263.1-109.6-109.5L264 534l171.2 171.2L760 380.4z"></path></g></svg>
+                      <span v-else>{{ index + 1 }}</span>
                     </div>
                     <div class="w-10/12">
-                      <!--            <span class="font-semibold" :class="{ 'line-through': instruction.active }">{{ instruction.title }}</span>-->
                       <p>{{ instruction.title ? instruction.title.charAt(0).toUpperCase() + instruction.title.slice(1) : '' }}</p>
                     </div>
                   </div>
