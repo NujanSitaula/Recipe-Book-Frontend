@@ -138,7 +138,7 @@
                       <label for="comment" class="sr-only">Your comment</label>
                       <textarea v-model="commentContent" id="comment" rows="6" class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none" placeholder="Write a comment..." required></textarea>
                     </div>
-                    <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800">
+                    <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-100 rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800">
                       Post comment
                     </button>
                   </form>
@@ -434,56 +434,56 @@ try {
   }
 }
 
-// const showReplyField = (commentId) => {
-//   replyingTo.value = commentId;
-// };
+const showReplyField = (commentId) => {
+  replyingTo.value = commentId;
+};
 
-// const postComment = async () => {
-//   try {
-//     const response = await axios.post(`/comment`, { comment: commentContent.value, recipe_id: recipe.value.id },
-//         {
-//           headers: {
-//             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-//           }
-//         });
-//     if (response.data.status === 'success') {
-//       const newComment = response.data.data[0];
-//       comments.value.unshift(newComment);
-//       newComment.user.image = response.data.data[0].user.image;
-//       commentContent.value = '';
-//     }
-//   } catch (error) {
-//     console.error('Error:', error);
-//   }
-// };
+const postComment = async () => {
+  try {
+    const response = await axios.post(`/comment`, { comment: commentContent.value, recipe_id: recipe.value.id },
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          }
+        });
+    if (response.data.status === 'success') {
+      const newComment = response.data.data[0];
+      comments.value.unshift(newComment);
+      newComment.user.image = response.data.data[0].user.image;
+      commentContent.value = '';
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
 
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
-// const postReply = async (commentId) => {
-//   try {
-//     const response = await axios.post(`/comment/${commentId}/reply`, { reply: replyContent.value },
-//         {
-//           headers: {
-//             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-//           }
-//         });
-//     if (response.data.status === 'success') {
-//       const commentIndex = comments.value.findIndex(comment => comment.id === commentId);
-//       const newComment = { ...comments.value[commentIndex] };
-//       const newReply = response.data.data[0];
-//       newComment.replies = [...(newComment.replies || []), newReply];
-//       newReply.user.image = response.data.data[0].user.image;
-//       comments.value.splice(commentIndex, 1, newComment);
-//       replyContent.value = '';
-//       replyingTo.value = null;
-//     }
-//   } catch (error) {
-//     console.error('Error:', error);
-//   }
-// };
+const postReply = async (commentId) => {
+  try {
+    const response = await axios.post(`/comment/${commentId}/reply`, { reply: replyContent.value },
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          }
+        });
+    if (response.data.status === 'success') {
+      const commentIndex = comments.value.findIndex(comment => comment.id === commentId);
+      const newComment = { ...comments.value[commentIndex] };
+      const newReply = response.data.data[0];
+      newComment.replies = [...(newComment.replies || []), newReply];
+      newReply.user.image = response.data.data[0].user.image;
+      comments.value.splice(commentIndex, 1, newComment);
+      replyContent.value = '';
+      replyingTo.value = null;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
 onMounted(() => {
   fetchRecipeData(route.params.id);
 });
