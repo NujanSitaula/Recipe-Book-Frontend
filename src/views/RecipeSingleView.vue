@@ -98,12 +98,23 @@
             </div>
               <div class="col-span-2">
               <h3 class="text-4xl mt-6">Instructions</h3>
-              <ol class="mt-4">
-                <li class="my-4 text-lg flex gap-x-2" v-for="(instruction, index) in instructions" :key="index">
-                <p class="text-primary-100">{{ index + 1 }}. </p>
-                  <p>{{ instruction ? instruction.charAt(0).toUpperCase() + instruction.slice(1) : '' }}</p>
-                </li>
-              </ol>
+                <div>
+                  <div
+                      v-for="(instruction, index) in instructions"
+                      :key="index"
+                      :class="['instruction flex items-center p-4 bg-gray-100 rounded-lg cursor-pointer mt-2', { active: instruction.active }]"
+                      @click="toggleActive(index)"
+                  >
+                    <div class="numbering flex items-center justify-center w-10 h-10 rounded-full bg-primary-200 text-white font-bold mr-4"
+                         :class="{ 'bg-green-500': instruction.active }">
+                      <svg v-if="instruction.active" fill="#ffff" width="64px" height="64px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M760 380.4l-61.6-61.6-263.2 263.1-109.6-109.5L264 534l171.2 171.2L760 380.4z"></path></g></svg>
+                      <span v-else>{{ index + 1 }}</span>
+                    </div>
+                    <div class="w-10/12">
+                      <p>{{ instruction.title ? instruction.title.charAt(0).toUpperCase() + instruction.title.slice(1) : '' }}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             <div  v-if="recipe.additional_notes" class="col-span-1 flex bg-red-100 rounded-2xl p-2 mr-6">
 
@@ -249,7 +260,9 @@ const fetchRecipeData = async (id) => {
       prep_time_in_minutes.value = Number(prep_time.value.hours) * 60 + Number(prep_time.value.minutes);
       cook_time.value = JSON.parse(recipe.value.cook_time);
       cook_time_in_minutes.value = Number(cook_time.value.hours) * 60 + Number(cook_time.value.minutes);
-      instructions.value = JSON.parse(recipe.value.instructions).filter(instruction => instruction && instruction.trim().length);
+      instructions.value = JSON.parse(recipe.value.instructions)
+          .filter(instruction => instruction && instruction.trim().length)
+          .map(instruction => ({ title: instruction, active: false }));
 
       // Transform ingredients object into an array
       const ingredientsData = JSON.parse(recipe.value.ingredients);
@@ -350,9 +363,25 @@ onMounted(() => {
 watch(() => route.params.id, (newId) => {
   fetchRecipeData(newId);
 });
+
+const toggleActive = (index) => {
+  if (instructions.value[index]) {
+    instructions.value[index].active = !instructions.value[index].active;
+  }
+};
+
 </script>
 <style scoped>
-
+.active {
+  opacity: 0.6;
+}
+.line-through {
+  text-decoration: line-through;
+}
+.numbering {
+  width: 2.5rem; /* Equal width and height to ensure the circle shape */
+  height: 2.5rem;
+}
 tr:hover .tick-icon {
   fill: #DB2B39;
 }

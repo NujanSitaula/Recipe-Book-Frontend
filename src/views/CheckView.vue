@@ -1,83 +1,58 @@
 <template>
-  <div style="margin-top: 100px;">
-    <h1>Pusher Test</h1>
-    <p>
-      Publish an event to channel <code>my-channel</code>
-      with event name <code>my-event</code>; it will appear below:
-    </p>
-    <div>
-      <ul>
-        <li v-for="(message, index) in messages" :key="index">
-          {{message}}
+  <div class="container mx-auto mt-10">
+    <div class="p-6 max-w-xl mx-auto bg-white rounded-xl shadow-lg space-y-4">
+      <h1 class="text-2xl font-bold">Instructions</h1>
+      <div>
+        <div
+            v-for="(instruction, index) in instructions"
+            :key="index"
+            :class="['instruction flex items-center p-4 bg-gray-100 rounded-lg cursor-pointer mt-2', { active: instruction.active }]"
+            @click="toggleActive(index)"
+        >
+          <div class="numbering flex items-center justify-center w-10 h-10 rounded-full bg-primary-200 text-white font-bold mr-4">
+            {{ index + 1 }}
+          </div>
+          <div class="w-10/12">
+<!--            <span class="font-semibold" :class="{ 'line-through': instruction.active }">{{ instruction.title }}</span>-->
+            <p>{{ instruction ? instruction.charAt(0).toUpperCase() + instruction.slice(1) : '' }}</p>
+          </div>
+        </div>
+      </div>
+
+      <ol class="mt-4">
+        <li class="my-4 text-lg flex gap-x-2" v-for="(instruction, index) in instructions" :key="index">
+          <p class="text-primary-100">{{ index + 1 }}. </p>
+          <p>{{ instruction ? instruction.charAt(0).toUpperCase() + instruction.slice(1) : '' }}</p>
         </li>
-      </ul>
-    </div>
-    <div v-if="showPopup" class="popup">
-      {{showPopup}} <!-- Display the message here -->
-    </div>
-    <div v-else>
-      No popup <!-- This will be displayed when showPopup is falsy -->
+      </ol>
     </div>
   </div>
 </template>
 
+
+
 <script>
-import {ref, onMounted, watch, watchEffect} from 'vue';
-import {useUserStore} from "@/stores/userStore.js";
-
-
-
 export default {
-  setup() {
-    const userStore = useUserStore();
-    const messages = ref([]);
-    const showPopup = ref('');
-
-
-    let userData = JSON.parse(localStorage.getItem('user'));
-
-    console.log(userData.data.id);
-    let userID = userData.data.id;
-
-    watch(showPopup, (newValue, oldValue) => {
-      console.log('showPopup changed from', oldValue, 'to', newValue);
-    });
-
-    onMounted(() => {
-      // Enable pusher logging - don't include this in production
-      Pusher.logToConsole = true;
-
-      const pusher = new Pusher('b5b8a1e03c5d9801ca27', {
-        cluster: 'ap2'
-      });
-      const channel = pusher.subscribe('my-channel'+ userID);
-      channel.bind('my-event'+ userID, function(data) {
-        console.log('Event triggered with data:', data); // Log the event data
-        const message = JSON.stringify(data.message);
-        messages.value.push(message);
-        showPopup.value = message; // Show the message in the popup
-        setTimeout(() => {
-          showPopup.value = ''; // Hide the popup after 3 seconds
-        }, 3000);
-      });
-    });
-
+  data() {
     return {
-      messages,
-      showPopup
-    };
+
+  methods: {
+    toggleActive(index) {
+      this.instructions[index].active = !this.instructions[index].active;
+    }
   }
 };
 </script>
 
 <style scoped>
-.popup {
-  position: fixed;
-  top: 20px; /* Change this to position the popup from the top */
-  right: 20px; /* Change this to position the popup from the right */
-  padding: 20px;
-  background-color: #f44336;
-  color: white;
-  z-index: 1000; /* Add this to ensure the popup is above other elements */
+.active {
+  opacity: 0.6;
+}
+.line-through {
+  text-decoration: line-through;
+}
+.numbering {
+  width: 2.5rem; /* Equal width and height to ensure the circle shape */
+  height: 2.5rem;
 }
 </style>
