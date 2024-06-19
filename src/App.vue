@@ -63,7 +63,7 @@ watchEffect(() => {
 </style>
 <template>
   <!-- ========== HEADER ========== -->
-  <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white-900 border-b border-gray-700 text-sm py-2.5 sm:py-4">
+  <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white-900 border-b border-gray-700 text-sm py-2.5 sm:py-4 mb-8">
 
 
     <nav class="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200">

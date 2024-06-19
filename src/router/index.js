@@ -69,6 +69,11 @@ const router = createRouter({
     {
       path: '/checkuser',
       name: 'checkuser',
+      component: () => import('../views/CheckView.vue')
+    },
+    {
+      path: '/aitool',
+      name: 'aitool',
       component: () => import('../views/MachineLearningView.vue')
     },
     {
