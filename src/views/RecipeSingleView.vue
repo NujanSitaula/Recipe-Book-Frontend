@@ -50,7 +50,7 @@
         <div v-if="recipe" class="col-span-2 ">
           <div>
             <img class="w-full h-96 object-cover" :src="recipe.image" :alt="recipe.name">
-            <div class=" border-r-2 px-8 border-l-2 border-b-2 pb-8">
+            <div class=" border-r px-8 border-l border-b pb-8">
             <div class="grid grid-cols-4 py-3">
               <div class="col-span-1 border-r border-gray-300 px-4 text-center">
                 <p class="text-gray-600">Prep Time</p>
