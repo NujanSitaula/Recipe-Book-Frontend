@@ -18,14 +18,14 @@
                 <span class="sr-only">Loading...</span>
               </div>
             </div>
-            <div v-else-if="recipe" >
+            <div v-else-if="recipe">
               <h2 class="text-3xl font-bold lg:text-5xl inline">{{ recipe.name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ') }}</h2>
               <a class="items-center gap-1.5 py-1 px-3 sm:py-2 sm:px-4 rounded-full text-xs sm:text-sm bg-gray-100 text-gray-800 hover:bg-gray-200 ml-2" href="#">
                 {{ recipe && recipe.dietary_information ? recipe.dietary_information.charAt(0).toUpperCase() + recipe.dietary_information.slice(1).toLowerCase() : '' }}
               </a>
-              <div class="grid grid-cols-2 ">
-                <div class="col-span-1 flex gap-x-5 mt-5">
-                  <div class="flex items-center align-center">
+              <div class="grid grid-cols-2">
+                <div class="col-span-1 flex gap-x-5 mt-5 ">
+                  <div class="flex items-center align-center ">
                     <svg style="margin-right: -5px; margin-top:5px;"  width="32px" height="32px" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#DB2B39"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8.5 21H4C4 17.134 7.13401 14 11 14C11.1681 14 11.3348 14.0059 11.5 14.0176M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7ZM12.5898 21L14.6148 20.595C14.7914 20.5597 14.8797 20.542 14.962 20.5097C15.0351 20.4811 15.1045 20.4439 15.1689 20.399C15.2414 20.3484 15.3051 20.2848 15.4324 20.1574L19.5898 16C20.1421 15.4477 20.1421 14.5523 19.5898 14C19.0376 13.4477 18.1421 13.4477 17.5898 14L13.4324 18.1574C13.3051 18.2848 13.2414 18.3484 13.1908 18.421C13.1459 18.4853 13.1088 18.5548 13.0801 18.6279C13.0478 18.7102 13.0302 18.7985 12.9948 18.975L12.5898 21Z" stroke="#DB2B39" stroke-width="0.9600000000000002" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     <p class="text-sm text-gray-800"><RouterLink :to="'/' +recipe.user.username">{{ recipe.user.firstName }} {{ recipe.user.lastName }}</RouterLink></p>
                   </div>
@@ -47,10 +47,11 @@
           </div>
           </div>
          </div>
-        <div v-if="recipe" class="col-span-2">
+        <div v-if="recipe" class="col-span-2 ">
           <div>
-            <img class="w-full h-96 object-cover rounded-lg" :src="recipe.image" :alt="recipe.name">
-            <div class="grid grid-cols-4 my-3">
+            <img class="w-full h-96 object-cover" :src="recipe.image" :alt="recipe.name">
+            <div class=" border-r-2 px-8 border-l-2 border-b-2 pb-8">
+            <div class="grid grid-cols-4 py-3">
               <div class="col-span-1 border-r border-gray-300 px-4 text-center">
                 <p class="text-gray-600">Prep Time</p>
                 <p v-if="prep_time">{{ prep_time_in_minutes }} minutes</p>
@@ -75,12 +76,12 @@
                 <tbody>
                 <tr v-for="ingredient in ingredients" :key="ingredient.id" class="border-b border-t border-gray-400 cursor-pointer"
                     @click="ingredient.isClicked = !ingredient.isClicked">
-                  <td class="border-r border-gray-400 w-10">
-                      <div class="flex gap-x-2 align-middle my-3 text-xl hover:text-primary-100">
+                  <td class="border-r border-gray-400 w-10 ">
+                      <div class="flex gap-x-2 align-middle my-1.5 text-xl hover:text-primary-100">
 <!--                        <svg v-if="!ingredient.isClicked"  width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4.89163 13.2687L9.16582 17.5427L18.7085 8" stroke="#c0bfbf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>-->
 <!--                        <svg v-else width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4.89163 13.2687L9.16582 17.5427L18.7085 8" stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>-->
                         <svg v-if="!ingredient.isClicked"  fill="#CDC2BF" class="tick-icon" width="32px" height="32px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" stroke="#ffff" stroke-width="0.01024"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M760 380.4l-61.6-61.6-263.2 263.1-109.6-109.5L264 534l171.2 171.2L760 380.4z"></path></g></svg>
-                        <svg v-else fill="#000000" width="32px" height="32px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.01024"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M760 380.4l-61.6-61.6-263.2 263.1-109.6-109.5L264 534l171.2 171.2L760 380.4z"></path></g></svg>
+                        <svg v-else fill="#DB2B39" width="32px" height="32px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.01024"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M760 380.4l-61.6-61.6-263.2 263.1-109.6-109.5L264 534l171.2 171.2L760 380.4z"></path></g></svg>
                       </div>
                       </td>
                       <td>
@@ -125,11 +126,137 @@
               </div>
             </div>
           </div>
+            <!-- Comment Section Starts -->
+            <section class="bg-white antialiased">
+              <div class="max-w-2xl px-4 py-2">
+                <div class="flex justify-between items-center mb-6">
+                  <h2 class="text-lg lg:text-2xl font-bold text-gray-900">Discussion ({{ comments ? comments.length : 0 }})</h2>
+                </div>
+                <div v-if="username">
+                  <form class="mb-6" @submit.prevent="postComment">
+                    <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200">
+                      <label for="comment" class="sr-only">Your comment</label>
+                      <textarea v-model="commentContent" id="comment" rows="6" class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none" placeholder="Write a comment..." required></textarea>
+                    </div>
+                    <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-100 rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800">
+                      Post comment
+                    </button>
+                  </form>
+                </div>
+                <div v-else> <!-- If user is not logged in -->
+                  <p>You need to be logged in to post a comment.</p>
+                  <router-link to="/login">Login</router-link>
+                </div>
+                <div v-if="comments && comments.length > 0">
+                  <div v-for="comment in comments" :key="comment.id">
+                    <article class="p-6 text-base bg-white rounded-lg">
+                      <footer class="flex justify-between items-center mb-2">
+                        <div class="flex items-center">
+                          <p class="inline-flex items-center mr-3 text-sm text-gray-900 font-semibold"><img class="mr-2 w-6 h-6 rounded-full" :src="comment.user.image" alt="Michael Gough">{{ comment.user.firstName }} {{ comment.user.lastName }}</p>
+                          <p class="text-sm text-gray-600">
+                            <time datetime="2022-02-08" title="February 8th, 2022">{{ comment.created_at }}</time>
+                          </p>
+                        </div>
+                        <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50" type="button">
+                          <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                            <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                          </svg>
+                          <span class="sr-only">Comment settings</span>
+                        </button>
+                        <!-- Dropdown menu -->
+                        <div id="dropdownComment1" class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow">
+                          <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdownMenuIconHorizontalButton">
+                            <li>
+                              <a href="#" class="block py-2 px-4 hover:bg-gray-100">Edit</a>
+                            </li>
+                            <li>
+                              <a href="#" class="block py-2 px-4 hover:bg-gray-100">Remove</a>
+                            </li>
+                            <li>
+                              <a href="#" class="block py-2 px-4 hover:bg-gray-100">Report</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </footer>
+                      <p class="text-gray-500">{{ comment.comment }}</p>
+                      <div class="flex items-center mt-4 space-x-4">
+                        <button v-if="username"  @click="showReplyField(comment.id)" type="button" class="flex items-center text-sm text-gray-500 hover:underline font-medium">
+                          <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
+                          </svg>
+                          Reply
+                        </button>
+                        <div v-if="replyingTo === comment.id">
+                          <form @submit.prevent="postReply(comment.id)">
+                            <input v-model="replyContent" type="text" placeholder="Write a reply..." required>
+                            <button type="submit">Post Reply</button>
+                          </form>
+                        </div>
+                      </div>
+                    </article>
+                    <div v-for="reply in comment.replies" :key="reply.id">
+                      <article class="p-6 mb-3 ml-6 lg:ml-12 text-base bg-white rounded-lg">
+                        <footer class="flex justify-between items-center mb-2">
+                          <div class="flex items-center">
+                            <p class="inline-flex items-center mr-3 text-sm text-gray-900 font-semibold"><img class="mr-2 w-6 h-6 rounded-full" :src="reply.user.image" alt="Jese Leos">{{ reply.user.firstName }} {{ reply.user.lastName }}</p>
+                            <p class="text-sm text-gray-600">
+                              <time datetime="2022-02-12" title="February 12th, 2022">{{ reply.created_at }}</time>
+                            </p>
+                          </div>
+                          <button id="dropdownComment2Button" data-dropdown-toggle="dropdownComment2" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50" type="button">
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                              <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                            </svg>
+                            <span class="sr-only">Comment settings</span>
+                          </button>
+                          <!-- Dropdown menu -->
+                          <div id="dropdownComment2" class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow">
+                            <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdownMenuIconHorizontalButton">
+                              <li>
+                                <a href="#" class="block py-2 px-4 hover:bg-gray-100">Edit</a>
+                              </li>
+                              <li>
+                                <a href="#" class="block py-2 px-4 hover:bg-gray-100">Remove</a>
+                              </li>
+                              <li>
+                                <a href="#" class="block py-2 px-4 hover:bg-gray-100">Report</a>
+                              </li>
+                            </ul>
+                          </div>
+                        </footer>
+                        <p class="text-gray-500">{{ reply.reply }}</p>
+                        <!--                    <div class="flex items-center mt-4 space-x-4">-->
+                        <!--                      <button type="button" class="flex items-center text-sm text-gray-500 hover:underline font-medium">-->
+                        <!--                        <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">-->
+                        <!--                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />-->
+                        <!--                        </svg>-->
+                        <!--                        Reply-->
+                        <!--                      </button>-->
+                        <!--                    </div>-->
+                      </article>
+                    </div>
+                    <hr>
+                  </div>
+                </div>
+                <div v-else>
+                  <div class="flex items-center gap-2">
+                    <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 01-6 0 3 3 0 016 0zm-6 0a3 3 0 006 0 3 3 0 00-6 0zm6 0a3 3 0 01-6 0 3 3 0 016 0zm-6 0a3 3 0 006 0 3 3 0 00-6 0zm6 0a3 3 0 01-6 0 3 3 0 016 0zm0 0a3 3 0 00-6 0 3 3 0 006 0zm0 0a3 3 0 01-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span class="text-gray-500">No Comments Yet! Be the first to comment</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Comment Section Ends -->
           <div>
+          </div>
           </div>
         </div>
       </div>
-
+<!--Sticky Sidebar start-->
       <div  class="col-span-1 p-3 mt-12">
         <div class="sticky top-20 start-0 p-2 rounded-xl">
 
@@ -141,7 +268,7 @@
               <router-link :to="`/recipe/${userRecipe.id}`"
                            class="flex flex-col items-center md:flex-row md:max-w-xl hover:transition-transform my-3"
                            v-if="userRecipe.id !== recipe.id">
-              <img class="md:object-cover md:rounded-lg w-full h-96 object-co md:h-28 md:w-28 md:ml-1 shadow-lg hover:transform-scale" :src="userRecipe.image" :alt="userRecipe.name">
+              <img class="md:object-cover  w-full h-96 object-co md:h-28 md:w-28 md:ml-1 shadow-lg hover:transform-scale" :src="userRecipe.image" :alt="userRecipe.name">
               <div class="flex flex-col justify-between p-4 leading-normal" >
                 <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ userRecipe.name }}</h5>
                 <p class="mb-3 font-normal text-gray-700 three-line-clamp">{{ userRecipe.description }}</p>
@@ -153,6 +280,7 @@
 
         </div>
       </div>
+<!--Sticky Sidebar ends-->
     </div>
   </div>
 
@@ -306,56 +434,56 @@ try {
   }
 }
 
-// const showReplyField = (commentId) => {
-//   replyingTo.value = commentId;
-// };
+const showReplyField = (commentId) => {
+  replyingTo.value = commentId;
+};
 
-// const postComment = async () => {
-//   try {
-//     const response = await axios.post(`/comment`, { comment: commentContent.value, recipe_id: recipe.value.id },
-//         {
-//           headers: {
-//             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-//           }
-//         });
-//     if (response.data.status === 'success') {
-//       const newComment = response.data.data[0];
-//       comments.value.unshift(newComment);
-//       newComment.user.image = response.data.data[0].user.image;
-//       commentContent.value = '';
-//     }
-//   } catch (error) {
-//     console.error('Error:', error);
-//   }
-// };
+const postComment = async () => {
+  try {
+    const response = await axios.post(`/comment`, { comment: commentContent.value, recipe_id: recipe.value.id },
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          }
+        });
+    if (response.data.status === 'success') {
+      const newComment = response.data.data[0];
+      comments.value.unshift(newComment);
+      newComment.user.image = response.data.data[0].user.image;
+      commentContent.value = '';
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
 
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
-// const postReply = async (commentId) => {
-//   try {
-//     const response = await axios.post(`/comment/${commentId}/reply`, { reply: replyContent.value },
-//         {
-//           headers: {
-//             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-//           }
-//         });
-//     if (response.data.status === 'success') {
-//       const commentIndex = comments.value.findIndex(comment => comment.id === commentId);
-//       const newComment = { ...comments.value[commentIndex] };
-//       const newReply = response.data.data[0];
-//       newComment.replies = [...(newComment.replies || []), newReply];
-//       newReply.user.image = response.data.data[0].user.image;
-//       comments.value.splice(commentIndex, 1, newComment);
-//       replyContent.value = '';
-//       replyingTo.value = null;
-//     }
-//   } catch (error) {
-//     console.error('Error:', error);
-//   }
-// };
+const postReply = async (commentId) => {
+  try {
+    const response = await axios.post(`/comment/${commentId}/reply`, { reply: replyContent.value },
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          }
+        });
+    if (response.data.status === 'success') {
+      const commentIndex = comments.value.findIndex(comment => comment.id === commentId);
+      const newComment = { ...comments.value[commentIndex] };
+      const newReply = response.data.data[0];
+      newComment.replies = [...(newComment.replies || []), newReply];
+      newReply.user.image = response.data.data[0].user.image;
+      comments.value.splice(commentIndex, 1, newComment);
+      replyContent.value = '';
+      replyingTo.value = null;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
 onMounted(() => {
   fetchRecipeData(route.params.id);
 });
