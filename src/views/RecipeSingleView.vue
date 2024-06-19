@@ -73,21 +73,19 @@
               <h3 class="text-4xl mt-6">Ingredients</h3>
               <table class="mt-4 w-full">
                 <tbody>
-                <tr v-for="ingredient in ingredients" :key="ingredient.id" class="border-b border-t border-gray-400">
+                <tr v-for="ingredient in ingredients" :key="ingredient.id" class="border-b border-t border-gray-400 cursor-pointer"
+                    @click="ingredient.isClicked = !ingredient.isClicked">
                   <td class="border-r border-gray-400 w-10">
                       <div class="flex gap-x-2 align-middle my-3 text-xl hover:text-primary-100">
 <!--                        <svg v-if="!ingredient.isClicked"  width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4.89163 13.2687L9.16582 17.5427L18.7085 8" stroke="#c0bfbf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>-->
 <!--                        <svg v-else width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4.89163 13.2687L9.16582 17.5427L18.7085 8" stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>-->
-                        <svg v-if="!ingredient.isClicked" fill="#CDC2BF"  class="hover:text-primary-100 tick" width="32px" height="32px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" stroke="#ffff" stroke-width="0.01024"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M760 380.4l-61.6-61.6-263.2 263.1-109.6-109.5L264 534l171.2 171.2L760 380.4z"></path></g></svg>
+                        <svg v-if="!ingredient.isClicked"  fill="#CDC2BF" class="tick-icon" width="32px" height="32px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" stroke="#ffff" stroke-width="0.01024"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M760 380.4l-61.6-61.6-263.2 263.1-109.6-109.5L264 534l171.2 171.2L760 380.4z"></path></g></svg>
                         <svg v-else fill="#000000" width="32px" height="32px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.01024"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M760 380.4l-61.6-61.6-263.2 263.1-109.6-109.5L264 534l171.2 171.2L760 380.4z"></path></g></svg>
-
-
                       </div>
                       </td>
                       <td>
                     <li class="flex gap-x-2 align-middle  mx-2"
                         :class="{ 'strikethrough': ingredient.isClicked }"
-                        @click="ingredient.isClicked = !ingredient.isClicked"
                     >
                       <div class="flex-1">
                         <p>{{ ingredient.quantity }} {{ ingredient.unitName }} {{ ingredient.name }}</p>
@@ -171,6 +169,9 @@ const route = useRoute();
 const recipe = ref(null);
 const isLoading = ref(false);
 const comments = ref([]);
+const replyingTo = ref(null);
+const replyContent = ref('');
+const commentContent = ref('');
 
 const user = ref(null);
 const isLoadingButton = ref(false);
@@ -381,8 +382,8 @@ const toggleActive = (index) => {
   width: 2.5rem; /* Equal width and height to ensure the circle shape */
   height: 2.5rem;
 }
-.tick:hover {
-  color: red;
+tr:hover .tick-icon {
+  fill: #DB2B39;
 }
 .strikethrough {
   text-decoration: line-through;
