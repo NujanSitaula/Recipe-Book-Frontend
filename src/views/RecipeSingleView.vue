@@ -69,7 +69,7 @@
               </div>
             </div>
             <p class="py-5 text-lg"> {{ recipe.description }}</p>
-            <div class="grid grid-cols-3">
+            <div class="grid grid-cols-3 ingredients">
             <div class="col-span-1">
               <h3 class="text-4xl mt-6">Ingredients</h3>
               <ul class="mt-4">
@@ -108,18 +108,25 @@
         </div>
       </div>
 
-      <div class="col-span-1 p-3 mt-12">
-        <div class="sticky top-20 start-0 p-2 bg-gray-100 rounded-xl">
-         <h3 class="font-bold text-2xl" v-if="recipe">More From {{ recipe.user.firstName }}</h3>
+      <div  class="col-span-1 p-3 mt-12">
+        <div class="sticky top-20 start-0 p-2 rounded-xl">
 
-          <a href="#" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 ">
-            <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="" alt="">
-            <div class="flex flex-col justify-between p-4 leading-normal">
-              <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Noteworthy technology acquisitions 2021</h5>
-              <p class="mb-3 font-normal text-gray-700 ">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-            </div>
-          </a>
+          <div v-if="userRecipes && userRecipes.length > 0 && recipe" class="sticky top-20 start-0 py-2 rounded-xl">
+            <h3 class="font-bold mx-1 text-2xl">More From {{ recipe.user.firstName }}</h3>
+            <div  v-for="userRecipe in userRecipes.slice(0, 5)" :key="userRecipe.id">
 
+
+              <router-link :to="`/recipe/${userRecipe.id}`"
+                           class="flex flex-col items-center md:flex-row md:max-w-xl hover:transition-transform my-3"
+                           v-if="userRecipe.id !== recipe.id">
+              <img class="md:object-cover md:rounded-lg w-full h-96 object-co md:h-28 md:w-28 md:ml-1 shadow-lg hover:transform-scale" :src="userRecipe.image" :alt="userRecipe.name">
+              <div class="flex flex-col justify-between p-4 leading-normal" >
+                <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ userRecipe.name }}</h5>
+                <p class="mb-3 font-normal text-gray-700 three-line-clamp">{{ userRecipe.description }}</p>
+              </div>
+            </router-link>
+              </div>
+          </div>
 
 
         </div>
@@ -131,7 +138,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 import { config } from "../../config.js";
@@ -155,6 +162,7 @@ const cook_time = ref(null);
 const cook_time_in_minutes = ref(0);
 const ingredients = ref([]);
 const instructions = ref(null);
+const userRecipes = ref([]);
 const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
@@ -182,11 +190,22 @@ const handleFollowUnfollow = async (user) => {
     isLoadingButton.value = false;
   }
 };
+const fetchUserRecipes = async (userId) => {
+  try {
+    const response = await axios.get(`/recipe/user/${userId}`);
+    if (response.data.status === 'success') {
+      userRecipes.value = response.data.data;
+      console.log("userrecipes",userRecipes.value); // Debugging statement
+    } else {
+      console.error('Error: Unexpected response from server:', response.data);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
 
-onMounted(async () => {
-  scrollTo(0, 0); // Scroll to top of the page
+const fetchRecipeData = async (id) => {
   isLoading.value = true;
-
   try {
     const getUnitName = async (unitId) => {
       try {
@@ -209,7 +228,7 @@ onMounted(async () => {
     };
 
     // Fetch recipe data
-    const recipeResponse = await axios.get(`/recipe/${route.params.id}`);
+    const recipeResponse = await axios.get(`/recipe/${id}`);
     if (recipeResponse.data.status === 'success') {
       recipe.value = recipeResponse.data.data;
       user.value = recipe.value.user;
@@ -233,7 +252,9 @@ onMounted(async () => {
         });
 
         ingredients.value = await Promise.all(ingredientPromises);
-        console.log('Ingredients with Names and Units:', ingredients.value); // Debugging statement
+        if (recipe.value && recipe.value.user) {
+          await fetchUserRecipes(recipe.value.user.id);
+        }
       } else {
         console.error('Error: Ingredients data is not an object', ingredientsData);
       }
@@ -248,8 +269,7 @@ onMounted(async () => {
     ingredient.isClicked = false;
   });
 
-
-  try {
+try {
     // Fetch comments data
     const commentsResponse = await axios.get(`/comment/${route.params.id}`);
     if (commentsResponse.data.status === 'success') {
@@ -260,7 +280,7 @@ onMounted(async () => {
   } finally {
     isLoading.value = false;
   }
-});
+}
 
 // const showReplyField = (commentId) => {
 //   replyingTo.value = commentId;
@@ -312,17 +332,40 @@ const formatDate = (dateString) => {
 //     console.error('Error:', error);
 //   }
 // };
+onMounted(() => {
+  fetchRecipeData(route.params.id);
+});
 
-
-
+watch(() => route.params.id, (newId) => {
+  fetchRecipeData(newId);
+});
 </script>
-
 <style scoped>
 .strikethrough {
   text-decoration: line-through;
  text-decoration-color: gray;
 }
+.three-line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
+@media only screen and (max-width: 700px) {
+  .ingredients{
+    display:block;
+  }
+}
+a:hover img {
+  transform: scale(1.05); /* Slight zoom */
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+img {
+  transition: transform 0.3s ease; /* Ensure transition is smooth on both hover and normal state */
+}
 </style>
 
 
