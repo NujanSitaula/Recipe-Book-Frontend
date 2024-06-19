@@ -33,9 +33,9 @@
                     <svg style="margin-right: -5px; margin-top:5px;" width="32px" height="32px" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#DB2B39"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 21H6.2C5.0799 21 4.51984 21 4.09202 20.782C3.71569 20.5903 3.40973 20.2843 3.21799 19.908C3 19.4802 3 18.9201 3 17.8V8.2C3 7.0799 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.0799 5 6.2 5H17.8C18.9201 5 19.4802 5 19.908 5.21799C20.2843 5.40973 20.5903 5.71569 20.782 6.09202C21 6.51984 21 7.0799 21 8.2V10M7 3V5M17 3V5M3 9H21M13.5 13.0001L7 13M10 17.0001L7 17M14 21L16.025 20.595C16.2015 20.5597 16.2898 20.542 16.3721 20.5097C16.4452 20.4811 16.5147 20.4439 16.579 20.399C16.6516 20.3484 16.7152 20.2848 16.8426 20.1574L21 16C21.5523 15.4477 21.5523 14.5523 21 14C20.4477 13.4477 19.5523 13.4477 19 14L14.8426 18.1574C14.7152 18.2848 14.6516 18.3484 14.601 18.421C14.5561 18.4853 14.5189 18.5548 14.4903 18.6279C14.458 18.7102 14.4403 18.7985 14.405 18.975L14 21Z" stroke="#DB2B39" stroke-width="0.9600000000000002" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     <p class="text-xs sm:text-sm text-gray-800">{{ formatDate(recipe.created_at) }}</p>
                   </div>
-                  <div class="flex items-center align-center">
+                  <div class="flex items-center align-center cursor-pointer" @click="scrollToComments">
                     <svg style="margin-right: -5px; margin-top:5px;" width="32px" height="32px" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="DB2B39"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 12.9543C5.51239 14.0398 5.95555 15.076 6.73197 15.8348C7.50838 16.5936 8.55445 17.0128 9.64 17.0003H10.2L11.86 18.7323C12.0291 18.9036 12.2598 19 12.5005 19C12.7412 19 12.9719 18.9036 13.141 18.7323L14.8 17.0003H15.36C16.4456 17.0128 17.4916 16.5936 18.268 15.8348C19.0444 15.076 19.4876 14.0398 19.5 12.9543V8.04428C19.4731 5.7845 17.6198 3.97417 15.36 4.00028H9.64C7.38021 3.97417 5.5269 5.7845 5.5 8.04428V12.9543Z" stroke="#DB2B39" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M9.5 8.25024C9.08579 8.25024 8.75 8.58603 8.75 9.00024C8.75 9.41446 9.08579 9.75024 9.5 9.75024V8.25024ZM15.5 9.75024C15.9142 9.75024 16.25 9.41446 16.25 9.00024C16.25 8.58603 15.9142 8.25024 15.5 8.25024V9.75024ZM9.5 11.2502C9.08579 11.2502 8.75 11.586 8.75 12.0002C8.75 12.4145 9.08579 12.7502 9.5 12.7502V11.2502ZM15.5 12.7502C15.9142 12.7502 16.25 12.4145 16.25 12.0002C16.25 11.586 15.9142 11.2502 15.5 11.2502V12.7502ZM9.5 9.75024H15.5V8.25024H9.5V9.75024ZM9.5 12.7502H15.5V11.2502H9.5V12.7502Z" fill="#DB2B39"></path> </g></svg>
-                    <p class="text-xs sm:text-sm text-gray-800"> Comments</p>
+                    <p class="text-xs sm:text-sm text-gray-800 ">{{ comments ? comments.length : 0 }} Comments</p>
                   </div>
                 </div>
                 <div class="col-span-1">
@@ -50,7 +50,7 @@
         <div v-if="recipe" class="col-span-2 ">
           <div>
             <img class="w-full h-96 object-cover" :src="recipe.image" :alt="recipe.name">
-            <div class=" border-r-2 px-8 border-l-2 border-b-2 pb-8">
+            <div class=" border-r px-8 border-l border-b pb-8">
             <div class="grid grid-cols-4 py-3">
               <div class="col-span-1 border-r border-gray-300 px-4 text-center">
                 <p class="text-gray-600">Prep Time</p>
@@ -125,7 +125,7 @@
             </div>
           </div>
             <!-- Comment Section Starts -->
-            <section class="bg-white antialiased">
+            <section  id="comments-section" class="bg-white antialiased">
               <div class="max-w-2xl px-4 py-2">
                 <div class="flex justify-between items-center mb-6">
                   <h2 class="text-lg lg:text-2xl font-bold text-gray-900">Discussion ({{ comments ? comments.length : 0 }})</h2>
@@ -419,7 +419,9 @@ const fetchRecipeData = async (id) => {
     ingredient.isClicked = false;
   });
 
-try {
+}
+const fetchComments = async () => {
+  try {
     // Fetch comments data
     const commentsResponse = await axios.get(`/comment/${route.params.id}`);
     if (commentsResponse.data.status === 'success') {
@@ -430,7 +432,8 @@ try {
   } finally {
     isLoading.value = false;
   }
-}
+};
+
 
 const showReplyField = (commentId) => {
   replyingTo.value = commentId;
@@ -484,6 +487,7 @@ const postReply = async (commentId) => {
 };
 onMounted(() => {
   fetchRecipeData(route.params.id);
+  fetchComments();
 });
 
 watch(() => route.params.id, (newId) => {
@@ -495,6 +499,13 @@ const toggleActive = (index) => {
     instructions.value[index].active = !instructions.value[index].active;
   }
 };
+const scrollToComments = () => {
+  const commentsSection = document.getElementById('comments-section');
+  if (commentsSection) {
+    commentsSection.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
 
 </script>
 <style scoped>
