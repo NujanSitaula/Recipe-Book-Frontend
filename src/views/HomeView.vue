@@ -288,11 +288,14 @@
       Register Now
     </button>
   </RouterLink>
+          <div v-else>
+
     <a href="/addRecipe">
     <button class="py-3 px-4 inline-flex justify-center float-end gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-200 disabled:opacity-50 disabled:pointer-events-none">
       Add Recipe
     </button>
     </a>
+          </div>
 </div>
       </div>
     </div>
