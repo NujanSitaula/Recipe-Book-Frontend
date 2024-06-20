@@ -11,6 +11,7 @@ import ProfileDetailsView from '@/components/profile/ProfileDetailsView.vue';
 import ProfileSavedView from '@/components/profile/ProfileSavedView.vue';
 import TfaSetupView from "@/components/profile/TfaSetupView.vue";
 import AddRecipeView from "@/views/AddRecipeView.vue";
+import CategoryView from "@/views/CategoryView.vue";
 
 
 
@@ -59,7 +60,7 @@ const router = createRouter({
         path: 'saved',
         name: 'saved',
         component: ProfileSavedView
-      },{
+      }, {
         path: 'setup-tfa',
         name: 'setup-tfa',
         component: TfaSetupView
@@ -88,6 +89,11 @@ const router = createRouter({
         component: AddRecipeView,
         meta: { requiresAuth: true }
 
+    },
+    {
+      path: '/category/:id',
+      name: 'category',
+      component: CategoryView
     }
   ]
 })

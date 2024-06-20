@@ -181,47 +181,37 @@
     <h2 class="text-2xl font-bold md:text-4xl md:leading-tight">Recipe Categories</h2>
     <p class="mt-1 text-gray-600">These mouthwatering recipes are breaking the internet! </p>
   </div>
-  <!-- End Title -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <!-- Card 1 -->
-      <div class="bg-white rounded-lg shadow-md overflow-hidden hover-zoom relative">
-        <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Chicken Fried Rice" class="w-full h-40 object-cover transition-transform duration-300">
-
-        <div class="p-4">
-          <div class="flex items-center justify-between">
-            <h3 class="font-bold text-xl">Chicken Fried Rice With Tomato Sauce</h3>
-            <span class="bg-red-500 text-white text-sm px-2 py-1 rounded">Non-Veg</span>
-          </div>
-          <p class="text-gray-600">By Makenna Lipshutz</p>
-          <p class="text-gray-500 mt-2">Total Time: 20 mins</p>
+    <!--    Category Cards start-->
+    <div class="flex flex-wrap items-center w-full gap-10">
+      <div v-for="category in categories.data.slice(0, 8)" :key="category.id" >
+        <RouterLink :to="`/category/${category.id}`">
+        <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
+          <img :src="category.image" :alt="category.name" class="w-32 h-32 rounded-full object-cover mb-2">
+          <p class="text-md transition-colors duration-500 hover:text-primary-100"> {{ category.name }}</p>
         </div>
+        </RouterLink>
       </div>
-      </div>
+    </div>
+    <!--    Category Cards end-->
+  <!-- End Title -->
+<!--    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">-->
+<!--      &lt;!&ndash; Card 1 &ndash;&gt;-->
+<!--      <div class="bg-white rounded-lg shadow-md overflow-hidden hover-zoom relative">-->
+<!--        <img src="https://www.southernliving.com/thmb/HSEUOjJVCl4kIRJRMAZ1eblQlWE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Millionaire_Spaghetti_019-34e9c04b1ae8405088f53450a048e413.jpg" alt="Chicken Fried Rice" class="w-full h-40 object-cover transition-transform duration-300">-->
+
+<!--        <div class="p-4">-->
+<!--          <div class="flex items-center justify-between">-->
+<!--            <h3 class="font-bold text-xl">Chicken Fried Rice With Tomato Sauce</h3>-->
+<!--            <span class="bg-red-500 text-white text-sm px-2 py-1 rounded">Non-Veg</span>-->
+<!--          </div>-->
+<!--          <p class="text-gray-600">By Makenna Lipshutz</p>-->
+<!--          <p class="text-gray-500 mt-2">Total Time: 20 mins</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      </div>-->
   <!-- Card Section -->
   <!-- Grid -->
-  <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
-    <!-- Card -->
-    <div v-for="category in categories.data" :key="category.id">
-    <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition" href="#">
-      <div class="p-4 md:p-5">
-        <div class="flex justify-between items-center">
-          <div class="flex items-center">
-            <img class="size-[38px] rounded-full" src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image Description">
-            <div class="ms-3">
-              <h3 class="group-hover:text-primary-100 font-semibold text-gray-800">
-                {{ category.name }}
-              </h3>
-            </div>
-          </div>
-          <div class="ps-3">
-            <svg class="flex-shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-          </div>
-        </div>
-      </div>
-    </a>
-  </div>
-    </div>
-  <!-- End Grid -->
+
 <!-- End Card Section -->
 
   <!-- Title -->
@@ -229,49 +219,6 @@
     <h2 class="text-2xl font-bold md:text-4xl md:leading-tight">People's Favorites</h2>
     <p class="mt-1 text-gray-600">These mouthwatering recipes are breaking the internet! </p>
   </div>
-    <div class="flex flex-wrap justify-between w-full gap-12">
-      <!-- Category 1 -->
-      <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
-        <img src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/coconut-squash-dhansak-7b25508.jpg?quality=90&resize=500,454" alt="Quick and Easy" class="w-32 h-32 rounded-full object-cover mb-2">
-        <p class="text-md transition-colors duration-500 hover:text-blue-500">QUICK AND EASY</p>
-      </div>
-
-      <!-- Category 2 -->
-      <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
-        <img src="https://assets.epicurious.com/photos/59a48f237e283157d14a5a6a/4:3/w_7548,h_5661,c_limit/How-to-Throw-a-Grocery-Store-Dinner-Party-hero-with-hands-15082017.jpg" alt="Dinner" class="w-32 h-32 rounded-full object-cover mb-2">
-        <span class="text-md transition-colors duration-500 hover:text-blue-500">DINNER</span>
-      </div>
-
-      <!-- Category 3 -->
-      <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
-        <img src="https://assets-global.website-files.com/63ed08484c069d0492f5b0bc/642c5de2f6aa2bd4c9abbe86_6406876a4676d1734a14a9a3_Bowl-of-vegetables-and-fruits-for-a-vegetarian-diet-vegetarian-weight-loss-plan.jpeg" alt="Vegetarian" class="w-32 h-32 rounded-full object-cover mb-2">
-        <span class="text-md">VEGETARIAN</span>
-      </div>
-
-      <!-- Category 4 -->
-      <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
-        <img src="https://cdn.aarp.net/content/dam/aarp/health/caregiving/2018/03/1140-nutrients-food-loved-ones-caregiving.jpg" alt="Healthy" class="w-32 h-32 rounded-full object-cover mb-2">
-        <span class="text-md transition-colors duration-500 hover:text-blue-500">HEALTHY</span>
-      </div>
-
-      <!-- Category 5 -->
-      <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
-        <img src="https://www.modernhoney.com/wp-content/uploads/2019/12/Detox-Vegetable-Soup-1.jpg" alt="Soups" class="w-32 h-32 rounded-full object-cover mb-2">
-        <span class="text-md transition-colors duration-500 hover:text-blue-500">SOUPS</span>
-      </div>
-
-      <!-- Category 6 -->
-      <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Soups" class="w-32 h-32 rounded-full object-cover mb-2">
-        <span class="text-md transition-colors duration-500 hover:text-blue-500">SOUPS</span>
-      </div>
-
-      <!-- Category 7 -->
-      <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1892&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Soups" class="w-32 h-32 rounded-full object-cover mb-2">
-        <span class="text-md transition-colors duration-500 ">SOUPS</span>
-      </div>
-    </div>
 
   </div>
   <!-- End Card Blog -->
@@ -308,6 +255,7 @@ import { config } from '../../config.js';
 import algoliasearch from 'algoliasearch/lite';
 import { RouterLink } from 'vue-router';
 import { computed } from 'vue';
+import { getSingleCategory } from "@/api/Categories.js";
 
 export default {
   components: { RouterLink },
@@ -330,6 +278,7 @@ export default {
   },
 
   setup() {
+    const singleCategory = reactive({ data: {} });
     const isLoggedIn = computed(() => !!localStorage.getItem('access_token'));
 
     const recipes = reactive({ data: [] });
@@ -355,6 +304,12 @@ export default {
         if (response.data.status === 'success') {
           categories.data = response.data.data;
         }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+      try {
+        const categoryId = this.$route.params.id;
+        singleCategory.data = await getSingleCategory(categoryId);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -446,7 +401,8 @@ export default {
       searchInput,
       recipes,
       categories,
-      isLoggedIn
+      isLoggedIn,
+      singleCategory,
     };
   },
 };
