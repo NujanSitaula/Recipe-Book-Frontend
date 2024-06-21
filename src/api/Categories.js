@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { config } from '../../config.js'; // Assuming you have a config.js file for your base URL
+import { config } from '../../config.js';
 
 axios.defaults.baseURL = config.BASE_URL;
 

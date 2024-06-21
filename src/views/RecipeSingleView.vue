@@ -486,6 +486,7 @@ const postReply = async (commentId) => {
   }
 };
 onMounted(() => {
+  window.scrollTo(0, 0);
   fetchRecipeData(route.params.id);
   fetchComments();
 });
