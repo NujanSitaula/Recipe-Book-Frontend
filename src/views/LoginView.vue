@@ -74,7 +74,7 @@
               </div>
               <!-- End Checkbox -->
 
-              <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Sign in</button>
+              <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-100 text-white hover:bg-primary-2 disabled:opacity-50 disabled:pointer-events-none">Sign in</button>
             </div>
           </form>
           <!-- End Form -->

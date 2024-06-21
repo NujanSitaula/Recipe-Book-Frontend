@@ -1,10 +1,14 @@
 <template>
   <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto main-content">
     <div class=" gap-y-8 lg:gap-y-0 lg:gap-x-6">
-    <h1>Category View</h1>
-    <div v-if="singleCategory.data">
-      <h2>{{ singleCategory.data.name }}</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div v-if="singleCategory.data">
+        <div class="relative w-full h-64 flex">
+          <img :src="singleCategory.data.image" alt="Category Image" class="w-full h-64 object-cover rounded-lg shadow-md">
+          <div class="absolute inset-0 bg-black rounded-lg opacity-50"></div>
+          <h1 class="absolute bottom-2 top-0 left-0 right-0 text-white flex items-center text-4xl font-bold justify-center px-2 py-1">{{ singleCategory.data.name }}</h1>
+          <p class="absolute bottom-0 top-0 left-0 right-0 text-white flex items-center mt-14 text-xl justify-center px-2 py-1">{{ singleCategory.data.description }}</p>
+        </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-4 gap-6">
         <div v-for="recipe in singleCategory.data.recipes" :key="recipe.id" class="bg-white rounded-lg shadow-md overflow-hidden hover-zoom relative">
           <router-link :to="`/recipe/${recipe.id}`">
             <div class="relative">
@@ -40,18 +44,18 @@
 </template>
 
 <script setup>
-import {getSingleCategory} from '../api/Categories.js';
-import {onMounted, reactive} from 'vue';
-import {useRoute} from 'vue-router';
+import { getSingleCategory } from '../api/Categories.js';
+import { onMounted, reactive } from 'vue';
+import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const singleCategory = reactive({data: {}});
 
 onMounted(async () => {
+  window.scrollTo(0,0);
   try {
     const categoryId = route.params.id;
     singleCategory.data = await getSingleCategory(categoryId);
-    console.log(singleCategory.data.recipes);
   } catch (error) {
     console.error('Error:', error);
   }

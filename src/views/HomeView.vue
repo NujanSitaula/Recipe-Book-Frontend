@@ -182,16 +182,33 @@
     <p class="mt-1 text-gray-600">These mouthwatering recipes are breaking the internet! </p>
   </div>
     <!--    Category Cards start-->
-    <div class="flex flex-wrap items-center w-full gap-10">
-      <div v-for="category in categories.data.slice(0, 8)" :key="category.id" >
+    <div class="swiper-container">
+
+    <swiper
+        :modules="modules"
+        :slides-per-view="8"
+        :autoplay="{ delay: 1500,
+        disableOnInteraction: true,
+        pauseOnMouseEnter: true
+        }"
+        :pagination="{ clickable: true }"
+        @slideChange="onSlideChange"
+        class="category-swiper mr-4"
+        loop
+
+    >
+      <swiper-slide v-for="category in categories.data" class="py-2" :key="category.id">
         <RouterLink :to="`/category/${category.id}`">
-        <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
-          <img :src="category.image" :alt="category.name" class="w-32 h-32 rounded-full object-cover mb-2">
-          <p class="text-md transition-colors duration-500 hover:text-primary-100"> {{ category.name }}</p>
-        </div>
+          <div class="flex flex-col items-center transform transition-transform duration-500 hover:scale-110 hover:text-primary-100 cursor-pointer">
+            <img :src="category.image" :alt="category.name" class="w-32 h-32 rounded-full object-cover mb-2">
+            <p class="text-md transition-colors duration-500 hover:text-primary-100"> {{ category.name }}</p>
+          </div>
         </RouterLink>
-      </div>
-    </div>
+      </swiper-slide>
+<!--      <div class="swiper-button-next"></div>-->
+<!--      <div class="swiper-button-prev"></div>-->
+    </swiper>
+  </div>
     <!--    Category Cards end-->
   <!-- End Title -->
 <!--    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">-->
@@ -256,9 +273,21 @@ import algoliasearch from 'algoliasearch/lite';
 import { RouterLink } from 'vue-router';
 import { computed } from 'vue';
 import { getSingleCategory } from "@/api/Categories.js";
+import { Navigation,  Autoplay, A11y } from 'swiper/modules';
+
+import { Swiper, SwiperSlide } from 'swiper/vue';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/autoplay';
 
 export default {
-  components: { RouterLink },
+  components: {
+    Swiper,
+    SwiperSlide,
+    RouterLink },
 
   beforeRouteEnter(to, from, next) {
     const modal = document.getElementById('hs-scroll-inside-body-modal-backdrop');
@@ -278,6 +307,12 @@ export default {
   },
 
   setup() {
+    const onSwiper = (swiper) => {
+      console.log(swiper);
+    };
+    const onSlideChange = () => {
+      console.log('slide change');
+    };
     const singleCategory = reactive({ data: {} });
     const isLoggedIn = computed(() => !!localStorage.getItem('access_token'));
 
@@ -372,9 +407,6 @@ export default {
         animatePlaceholder(inputNode, newPlaceholder, onAnimationEnd);
       }, DELAY_AFTER_ANIMATION);
     };
-
-
-
     // Watching input value
     watch(inputValue, (newValue) => {
       showHits.value = newValue.length >= 1;
@@ -403,6 +435,9 @@ export default {
       categories,
       isLoggedIn,
       singleCategory,
+      onSwiper,
+      onSlideChange,
+      modules: [Autoplay, Navigation, A11y],
     };
   },
 };

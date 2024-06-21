@@ -18,6 +18,7 @@
     "marked": "^13.0.0",
     "pinia": "^2.1.7",
     "preline": "^2.1.0",
+    "swiper": "^11.1.4",
     "vue": "^3.4.21",
     "vue-instantsearch": "^4.16.2",
     "vue-router": "^4.3.0"
