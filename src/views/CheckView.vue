@@ -36,10 +36,12 @@ export default {
   data() {
     return {
 
-  methods: {
-    toggleActive(index) {
-      this.instructions[index].active = !this.instructions[index].active;
-    }
+      methods: {
+        toggleActive(index) {
+          this.instructions[index].active = !this.instructions[index].active;
+        }
+      }
+    };
   }
 };
 </script>
