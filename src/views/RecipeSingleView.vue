@@ -18,11 +18,25 @@
                 <span class="sr-only">Loading...</span>
               </div>
             </div>
-            <div v-else-if="recipe">
-              <h2 class="text-3xl font-bold lg:text-5xl inline">{{ recipe.name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ') }}</h2>
-              <a class="items-center gap-1.5 py-1 px-3 sm:py-2 sm:px-4 rounded-full text-xs sm:text-sm bg-gray-100 text-gray-800 hover:bg-gray-200 ml-2" href="#">
-                {{ recipe && recipe.dietary_information ? recipe.dietary_information.charAt(0).toUpperCase() + recipe.dietary_information.slice(1).toLowerCase() : '' }}
-              </a>
+            <div v-else-if="recipe" >
+              <div class="flex items-center">
+              <h2 class="text-3xl font-bold lg:text-5xl inline ">{{ recipe.name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ') }}</h2>
+              <div class="mt-2">
+<!--                {{ // recipe && recipe.dietary_information ? recipe.dietary_information.charAt(0).toUpperCase() + recipe.dietary_information.slice(1).toLowerCase() : '' }}-->
+                <div v-if="recipe.dietary_information === 'vegan'" class="ml-2 w-10 h-10">
+                  <img src="https://svgshare.com/i/15tx.svg" alt="Vegan" title="Vegan">
+                </div>
+                <div v-else-if="recipe.dietary_information === 'vegetarian'" class="ml-2 w-10 h-10">
+                  <img src="https://svgshare.com/i/15vL.svg" alt="Vegetarian" title="Vegetarian">
+                </div>
+                <div v-else-if="recipe.dietary_information === 'non-veg'" class="ml-2 w-10 h-10">
+                  <img src="https://svgshare.com/i/15tx.svg" alt="Non-vegetarian" title="Non-vegetarian">
+                </div>
+                <div v-else-if="recipe.dietary_information === 'halal'" class="ml-2 w-10 h-10">
+                  <img src="https://svgshare.com/i/15tx.svg" alt="Halal" title="Halal">
+                </div>
+              </div>
+              </div>
               <div class="grid grid-cols-2">
                 <div class="col-span-1 flex gap-x-5 mt-5 ">
                   <div class="flex items-center align-center ">
@@ -255,7 +269,7 @@
         </div>
       </div>
 <!--Sticky Sidebar start-->
-      <div  class="col-span-1 p-3 mt-12">
+      <div  class="col-span-1 p-3 mt-10">
         <div class="sticky top-20 start-0 p-2 rounded-xl">
 
           <div v-if="userRecipes && userRecipes.length > 0 && recipe" class="sticky top-20 start-0 py-2 rounded-xl">
@@ -489,11 +503,12 @@ onMounted(() => {
   window.scrollTo(0, 0);
   fetchRecipeData(route.params.id);
   fetchComments();
+  watch(() => route.params.id, (newId) => {
+    fetchRecipeData(newId);
+  });
 });
 
-watch(() => route.params.id, (newId) => {
-  fetchRecipeData(newId);
-});
+
 
 const toggleActive = (index) => {
   if (instructions.value[index]) {
