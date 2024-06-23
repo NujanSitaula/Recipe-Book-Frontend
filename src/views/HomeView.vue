@@ -195,7 +195,6 @@
         @slideChange="onSlideChange"
         class="category-swiper mr-4"
         loop
-
     >
       <swiper-slide v-for="category in categories.data" class="py-2" :key="category.id">
         <RouterLink :to="`/category/${category.id}`">

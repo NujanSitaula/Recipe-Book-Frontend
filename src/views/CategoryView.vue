@@ -1,14 +1,27 @@
 <template>
   <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto main-content">
-    <div class=" gap-y-8 lg:gap-y-0 lg:gap-x-6">
-      <div v-if="singleCategory.data">
+    <div class=" gap-y-8 lg:gap-y-0 lg:gap-x-6" v-if="singleCategory.data">
+      <div >
         <div class="relative w-full h-64 flex">
           <img :src="singleCategory.data.image" alt="Category Image" class="w-full h-64 object-cover rounded-lg shadow-md">
           <div class="absolute inset-0 bg-black rounded-lg opacity-50"></div>
           <h1 class="absolute bottom-2 top-0 left-0 right-0 text-white flex items-center text-4xl font-bold justify-center px-2 py-1">{{ singleCategory.data.name }}</h1>
-          <p class="absolute bottom-0 top-0 left-0 right-0 text-white flex items-center mt-14 text-xl justify-center px-2 py-1">{{ singleCategory.data.description }}</p>
         </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-4 gap-6">
+        <p class="text-black text-xl px-2 my-3 py-1  ">{{ singleCategory.data.description }}</p>
+
+<!--        Cuisine filter starts-->
+        <div class="my-4 flex items-center" v-if="!loading.value">
+          <h2 class="text-xl font-bold mb-2">Filter by Cuisine:</h2>
+          <VueNextSelect :options="categories.data"
+                         label-by="name"
+                         value-by="id"
+                         v-model="selectedCategory"
+                         class="scrollable-select w-full mx-2"
+                         >
+          </VueNextSelect>
+          </div>
+<!--        Cuisine filter ends-->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-4 gap-6">
         <div v-for="recipe in singleCategory.data.recipes" :key="recipe.id" class="bg-white rounded-lg shadow-md overflow-hidden hover-zoom relative">
           <router-link :to="`/recipe/${recipe.id}`">
             <div class="relative">
@@ -44,20 +57,91 @@
 </template>
 
 <script setup>
-import { getSingleCategory } from '../api/Categories.js';
-import { onMounted, reactive } from 'vue';
-import { useRoute } from 'vue-router';
+import { getSingleCategory, getCategories } from '../api/Categories.js';
+import { onMounted, reactive, ref, watch, watchEffect } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import VueNextSelect from 'vue-next-select';
+import 'vue-next-select/dist/index.min.css';
+
 
 const route = useRoute();
+const router = useRouter();
 const singleCategory = reactive({data: {}});
+const categories = reactive({data: []});
+const loading = ref(true);
+const selectedCategory = ref('');
 
 onMounted(async () => {
   window.scrollTo(0,0);
   try {
     const categoryId = route.params.id;
     singleCategory.data = await getSingleCategory(categoryId);
+    loading.value = false;
+
+  } catch (error) {
+    console.error('Error:', error);
+  }
+  try {
+    categories.data = await getCategories();
+    console.log(categories.data); // Add this line
+
   } catch (error) {
     console.error('Error:', error);
   }
 });
+
+watch(selectedCategory, (newCategoryId) => {
+  if (newCategoryId) {
+    router.push(`/category/${newCategoryId}`);
+  }
+});
+
+watchEffect(async () => {
+  const categoryId = route.params.id;
+  if (categoryId) {
+    try {
+      singleCategory.data = await getSingleCategory(categoryId);
+      categories.data = await getCategories();
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+});
 </script>
+
+<style scoped>
+
+.scrollable-select ::v-deep .vue-dropdown {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  max-height: 10px; /* Adjust dropdown max height */
+  overflow-y: auto; /* Enable vertical scroll */
+}
+
+.scrollable-select ::v-deep .vue-dropdown-item {
+  padding: 10px;
+  background-color: #fff;
+}
+
+.scrollable-select ::v-deep .vue-dropdown-item:hover {
+  background-color: #e2e8f0; /* Light blue on hover */
+}
+
+.scrollable-select ::v-deep .vue-dropdown-item.highlighted {
+  background-color: #f0f0f0; /* Light gray for highlighted items */
+}
+
+.scrollable-select ::v-deep .vue-dropdown-item.selected {
+  background-color: rgba(219,43,57,0.75) /* Light green for selected item */
+}
+
+.scrollable-select ::v-deep .vue-select-header .vue-input input {
+  border-radius:10px;
+  padding: 10px;
+  width: 100%;
+}
+
+.scrollable-select ::v-deep .vue-select-header .icon.arrow-downward {
+  fill: #333;
+}
+</style>
