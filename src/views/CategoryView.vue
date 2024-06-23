@@ -110,38 +110,48 @@ watchEffect(async () => {
 </script>
 
 <style scoped>
+.scrollable-select ::v-deep .vue-select.vue-select-single.vue-select-container.vue-select-open {
+  border: 1px solid #ccc !important;
+  border-radius: 10px !important;
+  padding: 10px !important;
+  font-size: 16px !important;
+  color: #333 !important;
+  background-color: #f8f8f8 !important;
+}
 
-.scrollable-select ::v-deep .vue-dropdown {
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  max-height: 10px; /* Adjust dropdown max height */
-  overflow-y: auto; /* Enable vertical scroll */
+.scrollable-select ::v-deep .vue-dropdown.vue-dropdown-list.vue-dropdown-list-open {
+  border: 1px solid #ccc !important;
+  border-radius: 10px !important;
+  background-color: #f8f8f8 !important;
 }
 
 .scrollable-select ::v-deep .vue-dropdown-item {
-  padding: 10px;
-  background-color: #fff;
+  padding: 10px !important;
+  background-color: #fff !important;
 }
 
 .scrollable-select ::v-deep .vue-dropdown-item:hover {
-  background-color: #e2e8f0; /* Light blue on hover */
+  background-color: #e2e8f0 !important; /* Light blue on hover */
 }
 
 .scrollable-select ::v-deep .vue-dropdown-item.highlighted {
-  background-color: #f0f0f0; /* Light gray for highlighted items */
+  background-color: #f0f0f0 !important; /* Light gray for highlighted items */
 }
 
 .scrollable-select ::v-deep .vue-dropdown-item.selected {
-  background-color: rgba(219,43,57,0.75) /* Light green for selected item */
+  background-color: rgba(219,43,57,0.75) !important; /* Light green for selected item */
 }
 
 .scrollable-select ::v-deep .vue-select-header .vue-input input {
-  border-radius:10px;
-  padding: 10px;
-  width: 100%;
+  border-radius:10px !important;
+  padding: 2px !important;
+  width: 100% !important;
+  font-size: 15px !important;
+  color: #DB2B39 !important;
+
 }
 
 .scrollable-select ::v-deep .vue-select-header .icon.arrow-downward {
-  fill: #333;
+  fill: #333 !important;
 }
 </style>

@@ -255,7 +255,7 @@
         </div>
       </div>
 <!--Sticky Sidebar start-->
-      <div  class="col-span-1 p-3 mt-12">
+      <div  class="col-span-1 p-3">
         <div class="sticky top-20 start-0 p-2 rounded-xl">
 
           <div v-if="userRecipes && userRecipes.length > 0 && recipe" class="sticky top-20 start-0 py-2 rounded-xl">
@@ -489,11 +489,12 @@ onMounted(() => {
   window.scrollTo(0, 0);
   fetchRecipeData(route.params.id);
   fetchComments();
+  watch(() => route.params.id, (newId) => {
+    fetchRecipeData(newId);
+  });
 });
 
-watch(() => route.params.id, (newId) => {
-  fetchRecipeData(newId);
-});
+
 
 const toggleActive = (index) => {
   if (instructions.value[index]) {
