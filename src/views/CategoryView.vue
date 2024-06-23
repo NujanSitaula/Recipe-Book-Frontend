@@ -35,7 +35,8 @@
           </router-link>
           <div class="p-4">
             <div class="flex items-center justify-between mb-2">
-              <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">{{ recipe.dietary_information && recipe.dietary_information.charAt(0).toUpperCase() + recipe.dietary_information.slice(1).toLowerCase() }}</span>
+              <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">{{ recipe.dietary_information && recipe.dietary_information.charAt(0).toUpperCase() + recipe.dietary_information.slice(1).toLowerCase() }}
+              </span>
             </div>
             <router-link :to="`/recipe/${recipe.id}`">
               <h3 class="font-bold text-lg">{{ recipe.name }}</h3>
