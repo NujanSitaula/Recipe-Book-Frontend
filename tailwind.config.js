@@ -14,6 +14,7 @@ export default {
                  100: '#DB2B39',
                  200: '#c12432',
                  300: '#FFEAEA',
+
                 },
                 'accent': {
                   100: '#FEDD01'

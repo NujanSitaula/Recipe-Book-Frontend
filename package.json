@@ -21,6 +21,7 @@
     "swiper": "^11.1.4",
     "vue": "^3.4.21",
     "vue-instantsearch": "^4.16.2",
+    "vue-next-select": "^2.10.5",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
