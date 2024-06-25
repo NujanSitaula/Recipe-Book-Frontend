@@ -7,7 +7,6 @@ import notificationSound from './assets/notification.wav';
 const userStore = useUserStore();
 const showPopup = ref(null); // Add this line
 const notificationTime = ref(null); // This will hold the timestamp of the notification
-const navOpen = ref(false);
 const isSidebarOpen = ref(false);
 
 
@@ -127,56 +126,18 @@ const closeSidebar = () => {
           </button>
           </div>
         </div>
-        <transition  name="slide-fade">
+
+        <transition name="slide-fade">
           <nav v-show="isSidebarOpen">
 
-            <aside id="default-sidebar" class="fixed top-0 right-0 z-40 w-64 h-screen transition-transform translate-x-0" aria-label="Sidebar">
-              <div   class="h-full px-3 py-4 overflow-y-auto bg-white">
-                <div class="flex  md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse gap-2">
-                  <button type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-dark hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
-                    <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-                  </button>
-                  <router-link to="/login"> <button v-if="!userStore.isLoggedIn" type="button" class="text-white bg-primary-100 hover:bg-primary-200 focus:ring-4 focus:outline-none focus:ring-primary-200 font-medium rounded-lg text-sm px-4 py-2 text-center">Login / Signup</button></router-link>
-                  <div v-if="userStore.isLoggedIn" class="hs-dropdown relative inline-flex" data-hs-dropdown-placement="bottom-right">
-                    <button id="hs-dropdown-with-header" type="button" class="w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full text-white hover:bg-white/20 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
-                      <img class="inline-block size-[38px] rounded-full" :src="userStore.user && userStore.user.data ? userStore.user.data.image : 'Loading Name...'" alt="Image Description">
-                    </button>
-
-                    <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 z-10 bg-white shadow-md rounded-lg p-2" aria-labelledby="hs-dropdown-with-header">
-                      <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg">
-                        <p class="text-sm text-gray-500">Signed in as</p>
-                        <p class="text-sm font-medium text-gray-800">{{userStore.user && userStore.user.data ? userStore.user.data.email : 'Loading Name...'}}</p>
-                      </div>
-                      <div class="mt-2 py-2 first:pt-0 last:pb-0">
-                        <RouterLink to="/profile" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-red-500" href="#">
-                          <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-                          <p class="inline-flex items-center gap-x-2 hover:text-gray-500" >Profile</p>
-                        </RouterLink>
-
-                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-red-500" href="#">
-                          <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                          Purchases
-                        </a>
-                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-red-500" href="#">
-                          <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m8 17 4 4 4-4"/></svg>
-                          Downloads
-                        </a>
-                        <a @click="logout" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-red-500" href="#">
-                          <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                          Log Out
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="relative  lg:hidden md:hidden">
-                    <button @click="closeSidebar" data-collapse-toggle="navbar-sticky" type="button" class="items-center p-2 w-10 h-10 justify-between text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-sticky" aria-expanded="false">
-                      <span class="sr-only">Open main menu</span>
-                      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
+            <aside id="default-sidebar" class="fixed top-0 right-0 z-40 w-64 pb-6 h-screen transition-transform translate-x-0" aria-label="Sidebar">
+              <div   class="h-full pl-10 py-4 overflow-y-auto bg-white">
+                <button @click="closeSidebar" data-drawer-target="sidebar-multi-level-sidebar" data-drawer-toggle="sidebar-multi-level-sidebar" aria-controls="sidebar-multi-level-sidebar" type="button" class="inline-flex items-center ml-44  ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 ">
+                  <span class="sr-only">Open sidebar</span>
+                  <svg width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M19 5L5 19M5.00001 5L19 19" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+                  </svg>
+                  <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+                </button>
 
                 <ul class="space-y-2 font-medium">
                   <li>
