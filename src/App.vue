@@ -68,7 +68,15 @@ const closeSidebar = () => {
   left: 20px; /* Position the popup from the left */
   z-index: 1000; /* Ensure the popup is above other elements */
 }
+/* These classes are used dynamically by Vue.js for transitions */
+.slide-fade-enter-active, .slide-fade-leave-active {
+  transition: all 0.7s ease-in-out;
+  position: absolute;
 
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(100%);
+}
 </style>
 <template>
   <!-- ========== HEADER ========== -->
