@@ -1,6 +1,7 @@
 <template>
+  <Toaster ref="toaster" />
 
-  <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto main-content">
+  <div :key="componentKey.value" class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto main-content">
     <div class="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
       <div class="lg:col-span-2">
         <div class="py-6 lg:pe-8">
@@ -303,10 +304,12 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted, nextTick, watchEffect } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 import { config } from "../../config.js";
+import Toaster from "@/views/Toaster.vue";
+
 
 const route = useRoute();
 const recipe = ref(null);
@@ -318,6 +321,9 @@ const commentContent = ref('');
 
 const user = ref(null);
 const isLoadingButton = ref(false);
+
+const toaster = ref();
+
 
 let userData = JSON.parse(localStorage.getItem('user'));
 let username = userData ? userData.data.username : null;
@@ -336,6 +342,7 @@ const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value;
 };
 const isFilled = ref(false);
+const componentKey = ref(0);
 
 
 axios.defaults.baseURL = config.BASE_URL;
@@ -428,7 +435,16 @@ const fetchRecipeData = async (id) => {
         console.error('Error: Ingredients data is not an object', ingredientsData);
       }
     }
-  } catch (error) {
+    const savedStateResponse = await axios.get(`/is-recipe-saved/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+      },
+    });
+    console.log('Saved state response:', savedStateResponse); // Log the saved state response
+    if (savedStateResponse.data.status === 'success') {
+      isFilled.value = savedStateResponse.data.isSaved;
+    }
+}catch (error) {
     console.error('Error:', error);
   } finally {
     isLoading.value = false;
@@ -526,21 +542,41 @@ const scrollToComments = () => {
     commentsSection.scrollIntoView({ behavior: 'smooth' });
   }
 };
-
-const saveRecipe = (recipeId) => {
-  axios.post('/save-recipe', { recipe_id: recipeId }, {
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-    }
-  })
-      .then(response => {
-        isFilled.value = true; // Change the fill status of the SVG
-      })
-      .catch(error => {
-        console.error('Error saving recipe:', error);
+const saveRecipe = async (recipeId) => {
+  try {
+    if (isFilled.value) {
+      const response = await axios.post(`/unsave-recipe`, { recipe_id: recipeId }, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+        },
       });
+      if (response.data.status === 'success') {
+        console.log('Recipe unsaved successfully');
+        isFilled.value = false;
+        toaster.value.showToast('Recipe unsaved successfully', 'success');
+        componentKey.value++;
+      }
+    } else {
+      console.log('Attempting to save recipe:', recipeId); // Add log before making request
+      const response = await axios.post(`/save-recipe`, { recipe_id: recipeId }, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      });
+      console.log('Save response:', response); // Add log to check response
+      if (response.data.status === 'success') {
+        await nextTick();
+        isFilled.value = true;
+        toaster.value.showToast('Recipe saved successfully', 'success');
+        componentKey.value++;
+        console.log('Recipe saved successfully');
+      }
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    toaster.value.showToast('An error occurred while saving the recipe.', 'failure');
+  }
 };
-
 </script>
 <style scoped>
 .active {
