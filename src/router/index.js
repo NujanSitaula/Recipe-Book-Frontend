@@ -10,6 +10,7 @@ import ProfileView from '@/views/ProfileView.vue';
 import ProfileDetailsView from '@/components/profile/ProfileDetailsView.vue';
 import ProfileSavedView from '@/components/profile/ProfileSavedView.vue';
 import TfaSetupView from "@/components/profile/TfaSetupView.vue";
+import MyRecipesView from "@/components/profile/MyRecipesView.vue";
 import AddRecipeView from "@/views/AddRecipeView.vue";
 import CategoryView from "@/views/CategoryView.vue";
 
@@ -64,6 +65,10 @@ const router = createRouter({
         path: 'setup-tfa',
         name: 'setup-tfa',
         component: TfaSetupView
+      },{
+        path: 'myrecipes',
+        name: 'myrecipes',
+        component: MyRecipesView
       }
     ]
     },
