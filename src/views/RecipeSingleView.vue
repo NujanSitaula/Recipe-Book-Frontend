@@ -1,6 +1,8 @@
 <template>
   <Toaster ref="toaster" />
-
+  <div v-if="isLoading">Loading...</div>
+  <div v-else>
+    <div v-if="dataFetched">
   <div :key="componentKey.value" class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto main-content">
     <div class="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
       <div class="lg:col-span-2">
@@ -299,6 +301,8 @@
 <!--Sticky Sidebar ends-->
     </div>
   </div>
+    </div>
+    </div>
 
 
 </template>
@@ -314,6 +318,7 @@ import Toaster from "@/views/Toaster.vue";
 const route = useRoute();
 const recipe = ref(null);
 const isLoading = ref(false);
+const dataFetched = ref(false);
 const comments = ref([]);
 const replyingTo = ref(null);
 const replyContent = ref('');
@@ -365,6 +370,7 @@ const handleFollowUnfollow = async (user) => {
   }
 };
 const fetchUserRecipes = async (userId) => {
+  isLoading.value = true;
   try {
     const response = await axios.get(`/recipe/user/${userId}`);
     if (response.data.status === 'success') {
@@ -444,6 +450,7 @@ const fetchRecipeData = async (id) => {
     if (savedStateResponse.data.status === 'success') {
       isFilled.value = savedStateResponse.data.isSaved;
     }
+    dataFetched.value = true;
 }catch (error) {
     console.error('Error:', error);
   } finally {
@@ -520,14 +527,6 @@ const postReply = async (commentId) => {
     console.error('Error:', error);
   }
 };
-onMounted(() => {
-  window.scrollTo(0, 0);
-  fetchRecipeData(route.params.id);
-  fetchComments();
-  watch(() => route.params.id, (newId) => {
-    fetchRecipeData(newId);
-  });
-});
 
 
 
@@ -577,6 +576,18 @@ const saveRecipe = async (recipeId) => {
     toaster.value.showToast('An error occurred while saving the recipe.', 'failure');
   }
 };
+onMounted(async() => {
+  window.scrollTo(0, 0);
+  await fetchRecipeData(route.params.id);
+  fetchComments();
+});
+watch(() => route.params.id, async (newId, oldId) => {
+  if (newId !== oldId) {
+    dataFetched.value = false; // Reset dataFetched to false when the route changes
+    await nextTick();
+    await fetchRecipeData(newId);
+  }
+});
 </script>
 <style scoped>
 .active {

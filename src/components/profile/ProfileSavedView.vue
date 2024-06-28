@@ -1,24 +1,24 @@
 <template>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-4 gap-6">
+  <div v-if="isLoading">Loading...</div>
+  <div v-else>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-4 gap-6 my-1">
     <div v-for="recipe in savedRecipes" :key="recipe.id" class="bg-white rounded-lg shadow-md overflow-hidden hover-zoom relative">
       <router-link :to="`/recipe/${recipe.id}`">
         <div class="relative">
-          <img :src="recipe.image" alt="Recipe Image" class="w-full h-64 object-cover transition-transform duration-300">
+        <img :src="recipe.image" alt="Recipe Image" class="w-full h-64 object-cover transition-transform duration-300">
           <div class="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
               <path d="M3.172 5.172a4.002 4.002 0 015.656 0L10 6.343l1.172-1.171a4.002 4.002 0 115.656 5.656L10 17.657l-6.828-6.829a4.002 4.002 0 010-5.656z"/>
             </svg>
           </div>
         </div>
-      </router-link>
+
       <div class="p-4">
         <div class="flex items-center justify-between mb-2">
               <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">{{ recipe.dietary_information && recipe.dietary_information.charAt(0).toUpperCase() + recipe.dietary_information.slice(1).toLowerCase() }}
               </span>
         </div>
-        <router-link :to="`/recipe/${recipe.id}`">
           <h3 class="font-bold text-lg">{{ recipe.name }}</h3>
-        </router-link>
         <p class="text-gray-600 limited-text">{{ recipe.description }}</p>
         <div class="flex items-center mt-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
@@ -28,33 +28,47 @@
           <span class="text-gray-600 ml-4">124.99₺</span>
         </div>
       </div>
+      </router-link>
     </div>
+  </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { ref, onMounted } from 'vue';
 
 export default {
-  data() {
-    return {
-      savedRecipes: [],
+  setup() {
+    const savedRecipes = ref([]);
+    const isLoading = ref(false);
+
+    const fetchSavedRecipes = async () => {
+      try {
+        const response = await axios.get('/saved-recipes', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          },
+        });
+        console.log('Saved recipes response:', response.data); // Debugging statement
+        savedRecipes.value = response.data;
+      } catch (error) {
+        console.error('Error fetching saved recipes:', error);
+      }
     };
-  },
-  async created() {
-    try {
-      const response = await axios.get('/saved-recipes', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      });
-      this.savedRecipes = response.data;
-    } catch (error) {
-      console.error('Error:', error);
-    }
+
+    onMounted(() => {
+      fetchSavedRecipes();
+    });
+
+    return {
+      savedRecipes,
+      isLoading,
+    };
   },
 };
 </script>
+
 
 <style scoped>
 /* Add any additional styling here */
