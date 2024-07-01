@@ -588,9 +588,6 @@ watch(() => route.params.id, async (newId, oldId) => {
     await fetchRecipeData(newId);
   }
 });
-
-
-
 </script>
 <style scoped>
 .active {

@@ -86,7 +86,6 @@ export default defineComponent({
         }
 
         this.user = response.data.data[0];
-        // localStorage.setItem('user', JSON.stringify(this.user));
         this.twoFactorEnabled = this.user['2fa'] === 1;
         this.privateAccountEnabled = this.user['private_account'] === 1;
         this.recipeRecommendations = this.user['recipe_recommendation'] === 1;
@@ -456,8 +455,8 @@ export default defineComponent({
       <p class="pb-2">Setup 2FA</p>
     </router-link>
 
-    <router-link to="/" active-class="active-link" class="inline-flex mr-8">
-      <p class="pb-2">Preferences</p>
+    <router-link to="/profile/myrecipes" active-class="active-link" class="inline-flex mr-8">
+      <p class="pb-2">My Recipes</p>
     </router-link>
   </nav>
       <hr>
