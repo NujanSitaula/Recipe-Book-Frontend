@@ -3,7 +3,8 @@
   <div v-else>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-4 gap-6 my-1">
     <div v-for="recipe in savedRecipes" :key="recipe.id" class="bg-white rounded-lg shadow-md overflow-hidden hover-zoom relative">
-      <router-link :to="`/recipe/${recipe.id}`">
+      <Router-link :to="`/recipe/${recipe.id}`">
+
         <div class="relative">
         <img :src="recipe.image" alt="Recipe Image" class="w-full h-64 object-cover transition-transform duration-300">
           <div class="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md cursor-pointer">
@@ -28,7 +29,7 @@
           <span class="text-gray-600 ml-4">124.99₺</span>
         </div>
       </div>
-      </router-link>
+      </Router-link>
     </div>
   </div>
   </div>

@@ -86,7 +86,7 @@ export default defineComponent({
         }
 
         this.user = response.data.data[0];
-        localStorage.setItem('user', JSON.stringify(this.user));
+        // localStorage.setItem('user', JSON.stringify(this.user));
         this.twoFactorEnabled = this.user['2fa'] === 1;
         this.privateAccountEnabled = this.user['private_account'] === 1;
         this.recipeRecommendations = this.user['recipe_recommendation'] === 1;

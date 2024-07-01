@@ -308,12 +308,20 @@
 </template>
 
 <script setup>
+
+
 import { ref, watch, onMounted, nextTick, watchEffect } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 import { config } from "../../config.js";
 import Toaster from "@/views/Toaster.vue";
 
+const props = defineProps({
+  id: {
+    type: String,
+    required: true
+  }
+});
 
 const route = useRoute();
 const recipe = ref(null);
@@ -353,6 +361,7 @@ const componentKey = ref(0);
 axios.defaults.baseURL = config.BASE_URL;
 
 const handleFollowUnfollow = async (user) => {
+
   isLoadingButton.value = true;
   try {
     const response = await axios.post(`/follow/${user.id}`, '', {
@@ -368,6 +377,7 @@ const handleFollowUnfollow = async (user) => {
   } finally {
     isLoadingButton.value = false;
   }
+
 };
 const fetchUserRecipes = async (userId) => {
   isLoading.value = true;
@@ -581,13 +591,15 @@ onMounted(async() => {
   await fetchRecipeData(route.params.id);
   fetchComments();
 });
-watch(() => route.params.id, async (newId, oldId) => {
+watch(() => props.id, async (newId) => {
   if (newId !== oldId) {
     dataFetched.value = false; // Reset dataFetched to false when the route changes
     await nextTick();
     await fetchRecipeData(newId);
   }
 });
+
+
 </script>
 <style scoped>
 .active {
