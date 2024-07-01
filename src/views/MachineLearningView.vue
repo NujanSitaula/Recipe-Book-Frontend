@@ -1,4 +1,75 @@
 <template>
+  <div class="max-w-2xl mx-auto">
+    <!-- Comment 1 -->
+    <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+      <div class="flex items-start">
+        <div class="flex-shrink-0">
+          <div class="bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center text-gray-700">
+            +14
+          </div>
+        </div>
+        <div class="ml-4 w-full">
+          <div class="flex justify-between items-center mb-2">
+            <div>
+              <h4 class="text-gray-900 font-bold">Bonnie Green</h4>
+              <span class="text-gray-600 text-sm">Mar. 15, 2022</span>
+            </div>
+            <div class="text-gray-500">
+              ...
+            </div>
+          </div>
+          <p class="text-gray-800">The article covers the essentials, challenges, myths and stages the UX designer should consider while creating the design strategy.</p>
+          <button class="mt-2 text-blue-500 hover:underline">Reply</button>
+        </div>
+      </div>
+    </div>
+    <!-- Comment 2 -->
+    <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+      <div class="flex items-start">
+        <div class="flex-shrink-0">
+          <div class="bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center text-gray-700">
+            +3
+          </div>
+        </div>
+        <div class="ml-4 w-full">
+          <div class="flex justify-between items-center mb-2">
+            <div>
+              <h4 class="text-gray-900 font-bold">Jese Leos</h4>
+              <span class="text-gray-600 text-sm">Feb. 12, 2022</span>
+            </div>
+            <div class="text-gray-500">
+              ...
+            </div>
+          </div>
+          <p class="text-gray-800">Much appreciated! Glad you liked it <span class="emoji">😊</span></p>
+          <button class="mt-2 text-blue-500 hover:underline">Reply</button>
+        </div>
+      </div>
+    </div>
+    <!-- Comment 3 -->
+    <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+      <div class="flex items-start">
+        <div class="flex-shrink-0">
+          <div class="bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center text-gray-700">
+            +12
+          </div>
+        </div>
+        <div class="ml-4 w-full">
+          <div class="flex justify-between items-center mb-2">
+            <div>
+              <h4 class="text-gray-900 font-bold">Danny Hart</h4>
+              <span class="text-gray-600 text-sm">Feb. 8, 2022</span>
+            </div>
+            <div class="text-gray-500">
+              ...
+            </div>
+          </div>
+          <p class="text-gray-800">Very straight-to-point article. Really worth time reading. Thank you! But tools are just the instruments for the UX designers. The knowledge of the design tools are as important as the creation of the design strategy.</p>
+          <button class="mt-2 text-blue-500 hover:underline">Reply</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="flex flex-col items-center justify-center ">
     <h3 class="mt-10 text-2xl font-bold text-gray-700">Upload Image Below To Generate Recipe:</h3>
     <div class="flex items-center justify-center w-full mt-5 relative">

@@ -456,8 +456,8 @@ export default defineComponent({
       <p class="pb-2">Setup 2FA</p>
     </router-link>
 
-    <router-link to="/profile/myrecipes" active-class="active-link" class="inline-flex mr-8">
-      <p class="pb-2">My Recipes</p>
+    <router-link to="/" active-class="active-link" class="inline-flex mr-8">
+      <p class="pb-2">Preferences</p>
     </router-link>
   </nav>
       <hr>
