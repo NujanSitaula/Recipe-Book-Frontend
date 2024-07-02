@@ -576,9 +576,9 @@ const saveRecipe = async (recipeId) => {
     toaster.value.showToast('An error occurred while saving the recipe.', 'failure');
   }
 };
-onMounted(async() => {
+onMounted(() => {
   window.scrollTo(0, 0);
-  await fetchRecipeData(route.params.id);
+  fetchRecipeData(route.params.id);
   fetchComments();
 });
 watch(() => route.params.id, async (newId, oldId) => {
