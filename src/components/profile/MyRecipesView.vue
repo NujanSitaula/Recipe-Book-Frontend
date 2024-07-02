@@ -33,7 +33,7 @@
   </div>
 </template>
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 
 export default {
@@ -43,25 +43,37 @@ export default {
 
     const fetchUserRecipes = async () => {
       const user = JSON.parse(localStorage.getItem('user')); // Fetch the user data from local storage
-      const userId = user.data.id; // Get the user ID from the user data
-      try {
-        const response = await axios.get(`/recipe/user/${userId}`,{
-          headers:{
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-          }
-        });
-        userRecipes.value = response.data.data;
-        console.log('User recipes:', userRecipes.value); // Debugging statement
-      } catch (error) {
-        console.error('Error fetching user recipes:', error);
-      } finally {
-        isLoading.value = false;
+      if (user && user.data) { // Check if user data exists
+        const userId = user.data.id; // Get the user ID from the user data
+        try {
+          const response = await axios.get(`/recipe/user/${userId}`,{
+            headers:{
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            }
+          });
+          // Create a new array with the fetched recipes and assign it to userRecipes.value
+          userRecipes.value = [...response.data.data];
+          console.log('User recipes:', userRecipes.value); // Debugging statement
+        } catch (error) {
+          console.error('Error fetching user recipes:', error);
+          throw error; // Throw the error to stop execution
+        } finally {
+          isLoading.value = false; // Set isLoading to false after the data fetch
+        }
       }
     };
 
-    onMounted(() => {
-      fetchUserRecipes();
-    });
+    // Watch the user data in local storage
+    watch(() => localStorage.getItem('user'), () => {
+      // Add a delay before starting the data fetching
+      setTimeout(fetchUserRecipes, 100); // Delay of 1 second
+    }, { immediate: true });
+
+    // Add a watch to update isLoading whenever userRecipes changes
+    watch(userRecipes, () => {
+      isLoading.value = userRecipes.value.length === 0;
+    }, { immediate: true }); // Run the watcher immediately when the component is created
+
     return {
       userRecipes,
       isLoading,
