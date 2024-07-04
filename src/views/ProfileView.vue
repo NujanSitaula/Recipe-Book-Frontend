@@ -3,6 +3,7 @@ import { defineComponent, ref, watchEffect } from 'vue';
 import { useUserStore } from '@/stores/userStore';
 import Toaster from "@/views/Toaster.vue";
 import Modal from "@/components/profile/ProfileDetailsView.vue";
+import ProfileEditModal from "@/components/profile/ProfileEditModal.vue";
 import axios from 'axios';
 import { config } from "../../config.js";
 
@@ -10,7 +11,7 @@ axios.defaults.baseURL = config.BASE_URL;
 
 export default defineComponent({
   name: 'ProfileView',
-  components: { Toaster, Modal },
+  components: { Toaster, Modal, ProfileEditModal },
 
   setup() {
     const userStore = useUserStore();
@@ -20,6 +21,14 @@ export default defineComponent({
     const toaster = ref(null);
     const twoFactorEnabled = ref(false);
     const privateAccountEnabled = ref(false);
+    const isEditModalOpen = ref(false);
+    const openEditModal = () => {
+      isEditModalOpen.value = true;
+    };
+
+    const closeEditModal = () => {
+      isEditModalOpen.value = false;
+    };
 
     watchEffect(() => {
       if (userStore.user === null) {
@@ -47,6 +56,10 @@ export default defineComponent({
       toaster,
       twoFactorEnabled,
       privateAccountEnabled,
+      isEditModalOpen,
+      openEditModal,
+      closeEditModal,
+
     };
   },
   data() {
@@ -227,6 +240,12 @@ export default defineComponent({
     margin-right: auto;
     display:block;
   }
+  .group:hover .group-hover\:opacity-50 {
+    opacity: 50;
+  }
+  .group:hover .group-hover\:opacity-100 {
+    opacity: 100;
+  }
   .image{
     margin-left: auto;
     margin-right: auto;  
@@ -261,7 +280,17 @@ export default defineComponent({
     <div class="w-full h-52 bg-gray-300 shadow-lg shadow-gray-100" style="background-image: url('https://marketplace.canva.com/EAFIddmg8b0/1/0/1600w/canva-white-minimalist-corporate-personal-profile-linkedin-banner-t5iKXmGyEtU.jpg'); background-position: center; background-size: cover;"></div>
     <div class="flex flex-col absolute ml-5 pro_main" style="margin-top: -40px;">
       <div class=" rounded-full flex items-center justify-center pro_image">
-        <img class="w-28 h-28 rounded-full border-2 border-white image " :src="userStore.user && userStore.user.data ? userStore.user.data.image : 'Dwfault.png'" alt="Profile Picture">
+        <div class="relative group">
+          <img class="w-28 h-28 rounded-full border-2 border-white image" :src="userStore.user && userStore.user.data ? userStore.user.data.image : 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'" alt="Profile Picture">
+          <div class="absolute inset-0 bg-gray-200 opacity-0 group-hover:opacity-50 transition-opacity duration-200 rounded-full"></div>
+          <button class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200" @click="openEditModal">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+          </button>
+          <ProfileEditModal v-if="isEditModalOpen" :isOpen="isEditModalOpen" @close="closeEditModal" />
+
+        </div>
         <div class="mt-7 ml-2 profile-name">
         <p class="text-2xl font-semibold text-gray-800">{{userStore.user && userStore.user.data ? userStore.user.data.firstName : 'Loading Name...'}} {{userStore.user && userStore.user.data ? userStore.user.data.lastName : 'Loading Name...'}}</p>
       <p class="text-l font-semibold text-gray-500">@{{userStore.user && userStore.user.data ? userStore.user.data.username : 'Loading Username...'}}</p>

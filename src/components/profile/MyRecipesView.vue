@@ -42,38 +42,33 @@ export default {
     const isLoading = ref(true);
 
     const fetchUserRecipes = async () => {
-      const user = JSON.parse(localStorage.getItem('user')); // Fetch the user data from local storage
-      if (user && user.data) { // Check if user data exists
-        const userId = user.data.id; // Get the user ID from the user data
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user && user.data) {
+        const userId = user.data.id;
         try {
           const response = await axios.get(`/recipe/user/${userId}`,{
             headers:{
               'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             }
           });
-          // Create a new array with the fetched recipes and assign it to userRecipes.value
           userRecipes.value = [...response.data.data];
           console.log('User recipes:', userRecipes.value); // Debugging statement
         } catch (error) {
           console.error('Error fetching user recipes:', error);
           throw error; // Throw the error to stop execution
         } finally {
-          isLoading.value = false; // Set isLoading to false after the data fetch
+          isLoading.value = false;
         }
       }
     };
 
-    // Watch the user data in local storage
     watch(() => localStorage.getItem('user'), () => {
-      // Add a delay before starting the data fetching
-      setTimeout(fetchUserRecipes, 100); // Delay of 1 second
+      setTimeout(fetchUserRecipes, 100);
     }, { immediate: true });
 
-    // Add a watch to update isLoading whenever userRecipes changes
     watch(userRecipes, () => {
       isLoading.value = userRecipes.value.length === 0;
-    }, { immediate: true }); // Run the watcher immediately when the component is created
-
+    }, { immediate: true });
     return {
       userRecipes,
       isLoading,
