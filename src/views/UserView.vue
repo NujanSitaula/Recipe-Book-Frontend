@@ -87,7 +87,7 @@
                           </svg>
                         </button>
                       </div>
-                      <div class="p-4 overflow-y-auto grid grid-cols-2" v-for="(followees,index) in sortedFollowers" :key="index">
+                      <div class="p-4 overflow-y-auto grid grid-cols-2" v-for="(followees,index) in sortedFollowees" :key="index">
                         <div class="col-span-1 inline-flex">
                             <img class="w-14 h-14 rounded-full border-2 border-white image " :src="followees.image" alt="User Image" />
 
