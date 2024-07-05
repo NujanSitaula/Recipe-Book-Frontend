@@ -24,10 +24,64 @@ export default defineComponent({
     const openFileUpload = () => {
       fileInput.value.click();
     };
+    const coverFileInput = ref(null);
+    const openCoverFileUpload = () => {
+      coverFileInput.value.click();
+    };
     const file = ref(null);
     const tempImageUrl = ref(localStorage.getItem('tempImageUrl') || null);
+    const tempCoverImageUrl = ref(localStorage.getItem('tempCoverImageUrl') || null);
     const errorMessage = ref('');
+    const handleCoverFileUpload = async (event) => {
+      if (event.target.files && event.target.files.length > 0) {
+        const selectedFile = event.target.files[0];
+        const fileSize = selectedFile.size / 1024 / 1024; // size in MB
+        const validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/svg+xml'];
+        if (!validImageTypes.includes(selectedFile.type)) {
+          toaster.value.showToast('Invalid file type. Please select an image file.', 'failure');
+          return;
+        }
+        if (fileSize > 2) { // Change this to the maximum file size you want to allow (in MB)
+          toaster.value.showToast('File size exceeds limit. Please select an image file less than 2MB.', 'failure');
+          return;
+        }
 
+        // Create a FormData instance
+        const formData = new FormData();
+        formData.append('cover_image', selectedFile);
+
+        try {
+          // Send the form data to update user cover image
+          const response = await axios({
+            method: 'post',
+            url: '/user/update-image',
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+              'Content-Type': 'multipart/form-data',
+            },
+            data: formData,
+          });
+
+          if (response.status === 200) {
+            // If the image is uploaded successfully, update tempCoverImageUrl and local storage
+            const reader = new FileReader();
+            reader.onload = () => {
+              tempCoverImageUrl.value = reader.result;
+              localStorage.setItem('tempCoverImageUrl', reader.result);
+              // Update userStore.user.data.cover_image
+              userStore.user.data.cover_image = reader.result;
+            };
+            reader.readAsDataURL(selectedFile);
+          } else {
+            toaster.value.showToast('Failed to update user cover image', 'failure');
+          }
+        } catch (error) {
+          toaster.value.showToast('An error occurred while updating user cover image', 'failure');
+        }
+      } else {
+        toaster.value.showToast('No file selected', 'failure');
+      }
+    };
     const handleFileUpload = async (event) => {
       if (event.target.files && event.target.files.length > 0) {
         const selectedFile = event.target.files[0];
@@ -66,7 +120,6 @@ export default defineComponent({
               localStorage.setItem('tempImageUrl', reader.result);
               userStore.user.data.image = reader.result;
               toaster.value.showToast('Profile image updated successfully', 'success');
-
             };
             reader.readAsDataURL(selectedFile);
           } else {
@@ -81,15 +134,16 @@ export default defineComponent({
     };
 
     watchEffect(() => {
+      if (userStore.user && userStore.user.data) {
+        tempImageUrl.value = userStore.user.data.image;
+      }
+      if (userStore.user && userStore.user.data) {
+        tempCoverImageUrl.value = userStore.user.data.cover_image;
+      }
       if (userStore.user === null) {
         userStore.fetchUser();
       } else {
         localStorage.setItem('user', JSON.stringify(userStore.user));
-      }
-    });
-    watchEffect(() => {
-      if (userStore.user && userStore.user.data) {
-        tempImageUrl.value = userStore.user.data.image;
       }
     });
     const openModal = () => {
@@ -116,6 +170,9 @@ export default defineComponent({
       tempImageUrl,
       errorMessage,
       handleFileUpload,
+      openCoverFileUpload,
+      coverFileInput,
+      handleCoverFileUpload,
     };
   },
   data() {
@@ -136,6 +193,8 @@ export default defineComponent({
       promotionalUpdates: false,
       systemNotifications: false,
       cookType: '',
+      tempCoverImageUrl: localStorage.getItem('tempCoverImageUrl') || null,
+
 
     };
   },
@@ -334,11 +393,20 @@ export default defineComponent({
     <div class="overflow-hidden">
     <div class="max-w-[60rem] mx-auto px-4 sm:px-6 lg:px-8 main-content">
   <div class="mb-20 main">
-    <div class="w-full h-52 bg-gray-300 shadow-lg shadow-gray-100" style="background-image: url('https://marketplace.canva.com/EAFIddmg8b0/1/0/1600w/canva-white-minimalist-corporate-personal-profile-linkedin-banner-t5iKXmGyEtU.jpg'); background-position: center; background-size: cover;"></div>
-    <div class="flex flex-col absolute ml-5 pro_main" style="margin-top: -40px;">
+    <div class="relative w-full h-52 bg-gray-300 shadow-lg shadow-gray-100 group"
+    :style="`background-image: url('${userStore.user && userStore.user.data && userStore.user.data.cover_image ? userStore.user.data.cover_image : 'https://marketplace.canva.com/EAFIddmg8b0/1/0/1600w/canva-white-minimalist-corporate-personal-profile-linkedin-banner-t5iKXmGyEtU.jpg'}'); background-position: center; background-size: cover;`">
+     <div class=" absolute inset-0 bg-gray-200 opacity-0 group-hover:opacity-50 transition-opacity duration-200"></div>
+      <button class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 border-none" @click="openCoverFileUpload">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+      </button>
+      <input ref="coverFileInput" id="coverFileInput" type="file" class="hidden" @change="handleCoverFileUpload" />
+    </div>
+     <div class="flex flex-col absolute ml-5 pro_main" style="margin-top: -40px;">
       <div class=" rounded-full flex items-center justify-center pro_image">
         <div class="relative group">
-          <img class="w-28 h-28 rounded-full border-2 border-white image" :src="userStore.user && userStore.user.data ? userStore.user.data.image : 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'" alt="Profile Picture">
+          <img class="w-28 h-28 rounded-full border-2 border-white image" :src="userStore.user && userStore.user.data && userStore.user.data.image ? userStore.user.data.image : 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'" alt="Profile Picture">
           <div class="absolute inset-0 bg-gray-200 opacity-0 group-hover:opacity-50 transition-opacity duration-200 rounded-full"></div>
           <button class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200" @click="openFileUpload">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
