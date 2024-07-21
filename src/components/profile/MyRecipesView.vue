@@ -33,7 +33,7 @@
   </div>
 </template>
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 
 export default {
@@ -42,26 +42,33 @@ export default {
     const isLoading = ref(true);
 
     const fetchUserRecipes = async () => {
-      const user = JSON.parse(localStorage.getItem('user')); // Fetch the user data from local storage
-      const userId = user.data.id; // Get the user ID from the user data
-      try {
-        const response = await axios.get(`/recipe/user/${userId}`,{
-          headers:{
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-          }
-        });
-        userRecipes.value = response.data.data;
-        console.log('User recipes:', userRecipes.value); // Debugging statement
-      } catch (error) {
-        console.error('Error fetching user recipes:', error);
-      } finally {
-        isLoading.value = false;
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user && user.data) {
+        const userId = user.data.id;
+        try {
+          const response = await axios.get(`/recipe/user/${userId}`,{
+            headers:{
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            }
+          });
+          userRecipes.value = [...response.data.data];
+          console.log('User recipes:', userRecipes.value); // Debugging statement
+        } catch (error) {
+          console.error('Error fetching user recipes:', error);
+          throw error; // Throw the error to stop execution
+        } finally {
+          isLoading.value = false;
+        }
       }
     };
 
-    onMounted(() => {
-      fetchUserRecipes();
-    });
+    watch(() => localStorage.getItem('user'), () => {
+      setTimeout(fetchUserRecipes, 100);
+    }, { immediate: true });
+
+    watch(userRecipes, () => {
+      isLoading.value = userRecipes.value.length === 0;
+    }, { immediate: true });
     return {
       userRecipes,
       isLoading,
